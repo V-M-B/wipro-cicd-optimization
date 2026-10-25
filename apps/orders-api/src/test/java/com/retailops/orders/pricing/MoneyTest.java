@@ -62,6 +62,23 @@ class MoneyTest {
     }
 
     @Test
+    void sumAddsAndRoundsToCents() {
+        assertThat(Money.sum(new BigDecimal("1.10"), new BigDecimal("2.205"), new BigDecimal("-0.30")))
+                .isEqualTo(new BigDecimal("3.00"));
+        assertThat(Money.sum(new BigDecimal("19.99"))).isEqualTo(new BigDecimal("19.99"));
+    }
+
+    @Test
+    void sumOfNothingIsZero() {
+        assertThat(Money.sum()).isEqualTo(Money.ZERO);
+    }
+
+    @Test
+    void sumRejectsNullAmounts() {
+        assertThatThrownBy(() -> Money.sum(Money.ZERO, null)).isInstanceOf(NullPointerException.class);
+    }
+
+    @Test
     void roundRejectsNull() {
         assertThatThrownBy(() -> Money.round(null)).isInstanceOf(NullPointerException.class);
     }

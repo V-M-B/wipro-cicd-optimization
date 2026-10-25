@@ -71,7 +71,7 @@ public class PricingService {
         BigDecimal net = afterTier.subtract(coupon.discount());
         BigDecimal tax = taxPolicy.tax(net, request.region());
         BigDecimal shipping = shippingPolicy.cost(net, units, request.region(), request.tier(), coupon.freeShipping());
-        BigDecimal total = net.add(tax).add(shipping);
+        BigDecimal total = Money.sum(net, tax, shipping);
         return new PriceBreakdown(subtotal, bulkDiscount, tierDiscount, coupon.discount(), tax, shipping, total);
     }
 }

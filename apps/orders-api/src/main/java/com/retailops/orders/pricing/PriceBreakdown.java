@@ -15,7 +15,7 @@ public record PriceBreakdown(
         BigDecimal total) {
 
     public BigDecimal discount() {
-        return bulkDiscount.add(tierDiscount).add(couponDiscount);
+        return Money.sum(bulkDiscount, tierDiscount, couponDiscount);
     }
 
     public BigDecimal netMerchandise() {

@@ -1,0 +1,1 @@
+{"label": "a", "id": 1, "category": "frontend", "sha": "928b3448a3d5777b9a0bf261dbb4841ed366113d", "state": {"ci-baseline.yml": "success", "ci-cache.yml": "success", "ci-optimized.yml": "success"}, "finished_at": "2026-10-25T18:34:58Z"}
