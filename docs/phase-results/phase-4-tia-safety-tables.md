@@ -1,11 +1,11 @@
-Source: `experiments/results/tia-faults-20261025T173830Z.json` (repo HEAD `b17eecf2`)
+Source: `experiments/results/tia-faults-20261025T183611Z.json` (repo HEAD `3d71444a`)
 
 | App | Faults | Detected by full suite | Not detected by any test | Not viable | Hybrid recall | Static-only recall | Mean share of test units selected (hybrid) | (static-only) |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| analytics | 20 | 12 | 8 | 0 | 100.0% | 100.0% | 23.2% | 100.0% |
+| analytics | 20 | 15 | 5 | 0 | 100.0% | 100.0% | 43.2% | 63.2% |
 | orders-api | 20 | 17 | 3 | 0 | 100.0% | 100.0% | 36.2% | 45.6% |
 | web | 20 | 15 | 5 | 0 | 100.0% | 100.0% | 31.2% | 77.6% |
-| **all** | 60 | 44 | 16 | 0 | 100.0% | 100.0% | | |
+| **all** | 60 | 47 | 13 | 0 | 100.0% | 100.0% | | |
 
 Selection share is over each app's unit and integration test units (e2e excluded: always run in full on web source changes). Units: Java test classes, Vitest files, pytest modules.
 
@@ -55,26 +55,26 @@ Selection share is over each app's unit and integration test units (e2e excluded
 | web-18 | relational | `api.ts:204` | undetected-by-suite | 0 | 10 – | 33 – |
 | web-19 | negation | `cart.ts:82` | detected | 4 | 18 ✓ | 36 ✓ |
 | web-20 | boolean | `search.ts:99` | detected | 2 | 16 ✓ | 35 ✓ |
-| analytics-01 | constant | `datasets.py:193` | undetected-by-suite | 0 | 20 – | 33 – |
-| analytics-02 | relational | `customers.py:145` | detected | 2 | 8 ✓ | 33 ✓ |
-| analytics-03 | relational | `timeseries.py:196` | detected | 1 | 5 ✓ | 33 ✓ |
-| analytics-04 | relational | `api.py:149` | detected | 1 | 8 ✓ | 33 ✓ |
-| analytics-05 | relational | `datasets.py:243` | detected | 1 | 20 ✓ | 33 ✓ |
-| analytics-06 | off-by-one | `datasets.py:238` | undetected-by-suite | 0 | 20 – | 33 – |
-| analytics-07 | constant | `customers.py:285` | undetected-by-suite | 0 | 8 – | 33 – |
-| analytics-08 | relational | `csv_io.py:107` | detected | 4 | 6 ✓ | 33 ✓ |
-| analytics-09 | off-by-one | `timeseries.py:199` | detected | 2 | 5 ✓ | 33 ✓ |
-| analytics-10 | logical | `csv_io.py:190` | detected | 5 | 6 ✓ | 33 ✓ |
-| analytics-11 | logical | `csv_io.py:269` | detected | 2 | 6 ✓ | 33 ✓ |
-| analytics-12 | negation | `customers.py:198` | detected | 3 | 8 ✓ | 33 ✓ |
-| analytics-13 | logical | `csv_io.py:3` | undetected-by-suite | 0 | 6 – | 33 – |
-| analytics-14 | logical | `funnel.py:4` | undetected-by-suite | 0 | 5 – | 33 – |
-| analytics-15 | negation | `customers.py:204` | detected | 3 | 8 ✓ | 33 ✓ |
-| analytics-16 | negation | `csv_io.py:134` | detected | 4 | 6 ✓ | 33 ✓ |
-| analytics-17 | logical | `customers.py:196` | undetected-by-suite | 0 | 8 – | 33 – |
-| analytics-18 | negation | `csv_io.py:141` | detected | 6 | 6 ✓ | 33 ✓ |
-| analytics-19 | boolean | `csv_io.py:260` | undetected-by-suite | 0 | 6 – | 33 – |
-| analytics-20 | constant | `datasets.py:239` | undetected-by-suite | 0 | 20 – | 33 – |
+| analytics-01 | relational | `timeseries.py:249` | undetected-by-suite | 0 | 12 – | 26 – |
+| analytics-02 | logical | `csv_io.py:190` | detected | 5 | 13 ✓ | 13 ✓ |
+| analytics-03 | constant | `datasets.py:209` | undetected-by-suite | 0 | 32 – | 32 – |
+| analytics-04 | relational | `timeseries.py:83` | detected | 1 | 12 ✓ | 26 ✓ |
+| analytics-05 | logical | `csv_io.py:269` | detected | 2 | 13 ✓ | 13 ✓ |
+| analytics-06 | relational | `csv_io.py:212` | detected | 3 | 13 ✓ | 13 ✓ |
+| analytics-07 | relational | `datasets.py:240` | undetected-by-suite | 0 | 32 – | 32 – |
+| analytics-08 | logical | `revenue.py:90` | undetected-by-suite | 0 | 15 – | 27 – |
+| analytics-09 | off-by-one | `common.py:96` | detected | 3 | 28 ✓ | 28 ✓ |
+| analytics-10 | relational | `common.py:61` | detected | 8 | 28 ✓ | 28 ✓ |
+| analytics-11 | logical | `csv_io.py:175` | detected | 5 | 13 ✓ | 13 ✓ |
+| analytics-12 | off-by-one | `timeseries.py:55` | detected | 2 | 12 ✓ | 26 ✓ |
+| analytics-13 | constant | `customers.py:283` | undetected-by-suite | 0 | 13 – | 26 – |
+| analytics-14 | logical | `csv_io.py:162` | detected | 5 | 13 ✓ | 13 ✓ |
+| analytics-15 | off-by-one | `customers.py:267` | detected | 2 | 13 ✓ | 26 ✓ |
+| analytics-16 | off-by-one | `timeseries.py:48` | detected | 2 | 12 ✓ | 26 ✓ |
+| analytics-17 | off-by-one | `timeseries.py:58` | detected | 2 | 12 ✓ | 26 ✓ |
+| analytics-18 | constant | `products.py:132` | detected | 1 | 12 ✓ | 26 ✓ |
+| analytics-19 | constant | `api_models.py:37` | detected | 1 | 8 ✓ | 10 ✓ |
+| analytics-20 | constant | `timeseries.py:217` | detected | 1 | 12 ✓ | 26 ✓ |
 
 ✓ selection contains a failing unit · ✗ miss · – no test detects the fault at all
 
@@ -88,11 +88,8 @@ Selection share is over each app's unit and integration test units (e2e excluded
 - `web-14` `apps/web/src/lib/api.ts:45` (relational): `if (status >= 500 && status <= 599) return 'server';` → `if (status >= 500 && status < 599) return 'server';`
 - `web-16` `apps/web/src/lib/cart.ts:155` (relational): `if (amount <= 0) return 0;` → `if (amount < 0) return 0;`
 - `web-18` `apps/web/src/lib/api.ts:204` (relational): `for (let attempt = 0; attempt < maxAttempts; attempt += 1) {` → `for (let attempt = 0; attempt <= maxAttempts; attempt += 1) {`
-- `analytics-01` `apps/analytics/app/datasets.py:193` (constant): `active=rng.random() > 0.05,` → `active=rng.random() > 0.06,`
-- `analytics-06` `apps/analytics/app/datasets.py:238` (off-by-one): `pi = min(bisect.bisect_left(cum_popularity, rng.random() * total_popul` → `pi = min(bisect.bisect_left(cum_popularity, rng.random() * total_popul`
-- `analytics-07` `apps/analytics/app/metrics/customers.py:285` (constant): `discount_rate: float = 0.01,` → `discount_rate: float = 0.02,`
-- `analytics-13` `apps/analytics/app/io/csv_io.py:3` (logical): `Readers collect *all* row errors (up to ``max_errors``) and raise a si` → `Readers collect *all* row errors (up to ``max_errors``) or raise a sin`
-- `analytics-14` `apps/analytics/app/metrics/funnel.py:4` (logical): `passed through CREATED, PAID and SHIPPED. CANCELLED orders are assumed` → `passed through CREATED, PAID or SHIPPED. CANCELLED orders are assumed `
-- `analytics-17` `apps/analytics/app/metrics/customers.py:196` (logical): `Columns run up to the last month with data (or ``end``), so the matrix` → `Columns run up to the last month with data (and ``end``), so the matri`
-- `analytics-19` `apps/analytics/app/io/csv_io.py:260` (boolean): `for fname, a, b in zip(ORDER_HEADER_FIELDS, first_raw, header_raw, str` → `for fname, a, b in zip(ORDER_HEADER_FIELDS, first_raw, header_raw, str`
-- `analytics-20` `apps/analytics/app/datasets.py:239` (constant): `quantities[pi] = quantities.get(pi, 0) + 1 + min(9, int(rng.expovariat` → `quantities[pi] = quantities.get(pi, 0) + 1 + min(9, int(rng.expovariat`
+- `analytics-01` `apps/analytics/app/metrics/timeseries.py:249` (relational): `if abs(z) > threshold:` → `if abs(z) >= threshold:`
+- `analytics-03` `apps/analytics/app/datasets.py:209` (constant): `activity = [rng.paretovariate(1.6) * TIER_ACTIVITY[c.tier] for c in cu` → `activity = [rng.paretovariate(1.7) * TIER_ACTIVITY[c.tier] for c in cu`
+- `analytics-07` `apps/analytics/app/datasets.py:240` (relational): `if rng.random() < config.bundle_rate:` → `if rng.random() <= config.bundle_rate:`
+- `analytics-08` `apps/analytics/app/metrics/revenue.py:90` (logical): `if lo is None or hi is None:` → `if lo is None and hi is None:`
+- `analytics-13` `apps/analytics/app/metrics/customers.py:283` (constant): `gross_margin: float = 0.3,` → `gross_margin: float = 0.4,`

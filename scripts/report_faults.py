@@ -18,7 +18,7 @@ def pct(x):
 
 def main() -> int:
     sys.stdout.reconfigure(encoding="utf-8")
-    path = Path(sys.argv[1]) if len(sys.argv) > 1 else sorted((ROOT / "experiments/results").glob("tia-faults-*.json"))[-1]
+    path = (ROOT / sys.argv[1]).resolve() if len(sys.argv) > 1 else sorted((ROOT / "experiments/results").glob("tia-faults-*.json"))[-1]
     data = json.loads(path.read_text(encoding="utf-8"))
     s, rs = data["summary"], data["results"]
     print(f"Source: `{path.relative_to(ROOT).as_posix()}` (repo HEAD `{data['head'][:8]}`)\n")
