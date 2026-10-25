@@ -1,0 +1,11 @@
+{
+  "label": "phase0-baseline-10runs",
+  "exported_at": "20261025T181852Z",
+  "repo": "V-M-B/wipro-cicd-optimization",
+  "workflows": [
+    "ci-baseline.yml"
+  ],
+  "branch_glob": null,
+  "since": "2026-10-25T16:57:00Z",
+  "include_failed": false
+}

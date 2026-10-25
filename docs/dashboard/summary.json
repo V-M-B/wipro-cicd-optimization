@@ -1,0 +1,27 @@
+{
+  "ci-baseline.yml": {
+    "runs": 10,
+    "wall_clock_p50_s": 373.0,
+    "wall_clock_p95_s": 2342.6,
+    "wall_clock_min_s": 308.0,
+    "wall_clock_max_s": 2402.0,
+    "time_to_first_job_p50_s": 3.0,
+    "queue_total_p50_s": 3.0,
+    "job_seconds_p50": 370.0,
+    "billable_min_p50": 7.0,
+    "cost_usd_p50": 0.042,
+    "cost_usd_per_1000_runs_p50": 42.0,
+    "overhead_share_p50": 0.2059232239013375,
+    "category_p50_s": {
+      "build": 5.0,
+      "checkout": 1.0,
+      "image-build": 67.5,
+      "install": 67.0,
+      "lint": 6.0,
+      "publish": 21.0,
+      "runner-overhead": 2.5,
+      "test": 194.5,
+      "toolchain": 5.0
+    }
+  }
+}
