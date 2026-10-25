@@ -124,3 +124,8 @@ def test_compare_no_overlap(populated):
     a = workflow_runs(populated, "ci-baseline.yml")
     res = compare(a, [])
     assert res["pairs"] == 0 and res["rows"] == []
+
+
+def test_log_parse_strips_ansi_colors():
+    line = "2026-10-25T10:03:00.0000000Z \x1b[2m      Tests \x1b[22m \x1b[1m\x1b[32m728 passed\x1b[39m\x1b[22m\x1b[90m (728)\x1b[39m"
+    assert logs.parse(line) == [("tests_vitest", "total", 728.0)]

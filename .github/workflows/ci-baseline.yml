@@ -55,19 +55,19 @@ jobs:
         working-directory: apps/web
         run: npm run lint && npm run typecheck
 
-      - name: web - unit tests
+      - name: web - unit tests with coverage
         working-directory: apps/web
-        run: npm test
+        run: npm run test:coverage
 
       - name: web - build
         working-directory: apps/web
         run: npm run build
 
-      - name: web - install Playwright browser
+      - name: web - install Playwright browsers
         working-directory: apps/web
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps chromium firefox webkit
 
-      - name: web - e2e tests
+      - name: web - e2e tests (chromium, firefox, webkit)
         working-directory: apps/web
         run: npm run e2e
 
@@ -79,11 +79,11 @@ jobs:
         working-directory: apps/analytics
         run: ruff check .
 
-      - name: analytics - tests
+      - name: analytics - tests with coverage
         working-directory: apps/analytics
-        run: pytest --junitxml=reports/junit.xml
+        run: pytest --junitxml=reports/junit.xml --cov=app --cov-report=xml:reports/coverage.xml
 
-      - name: Upload test reports
+      - name: Upload test and coverage reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -91,7 +91,9 @@ jobs:
           path: |
             apps/orders-api/target/surefire-reports/*.xml
             apps/orders-api/target/failsafe-reports/*.xml
+            apps/orders-api/target/site/jacoco*/jacoco.xml
             apps/web/reports/*.xml
+            apps/web/coverage/coverage-final.json
             apps/analytics/reports/*.xml
           retention-days: 30
 

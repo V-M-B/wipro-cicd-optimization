@@ -4,6 +4,7 @@ from __future__ import annotations
 import re
 
 TS_PREFIX = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+Z\s?")
+ANSI = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
 
 PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     ("cache_hit", re.compile(r"Cache restored from key:\s*(\S+)")),
@@ -22,7 +23,7 @@ PYTEST_SUMMARY = re.compile(r"^=+ (.*\b(?:passed|failed)\b.*) in ([\d.]+)s")
 
 
 def strip(line: str) -> str:
-    return TS_PREFIX.sub("", line.rstrip("\r\n"))
+    return ANSI.sub("", TS_PREFIX.sub("", line.rstrip("\r\n")))
 
 
 def parse(log_text: str) -> list[tuple[str, str, float | None]]:
