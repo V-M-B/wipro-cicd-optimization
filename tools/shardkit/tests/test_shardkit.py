@@ -169,3 +169,15 @@ def test_suite_time_includes_setup(tmp_path):
                  '<testcase classname="com.x.SlowIT" name="a" time="0.5"/>'
                  '<testcase classname="com.x.SlowIT" name="b" time="0.5"/></testsuite>')
     assert core.parse_junit([str(x)], "junit") == {"com.x.SlowIT": 18.0}
+
+
+def test_units_file(tmp_path, capsys):
+    f = tmp_path / "units.txt"
+    f.write_text("com.x.ATest,com.x.BTest\ncom.x.CTest")
+    d = tmp_path / "d.json"
+    d.write_text('{"com.x.ATest": 5, "com.x.BTest": 4, "com.x.CTest": 1}')
+    assert cli.main(["plan", "--framework", "junit", "--units-file", str(f), "--durations", str(d),
+                     "--shards", "2", "--index", "0", "--style", "maven"]) == 0
+    assert capsys.readouterr().out.strip() == "com.x.ATest"
+    with pytest.raises(SystemExit):
+        cli.main(["plan", "--framework", "junit", "--shards", "2", "--index", "0"])

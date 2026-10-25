@@ -279,3 +279,37 @@ def _toml(cfg: dict) -> str:
     for app in cfg["app"]:
         lines += ["", "[[app]]"] + [f"{k} = {val(v)}" for k, v in app.items()]
     return "\n".join(lines)
+
+
+def test_istanbul_and_jacoco_converters(tmp_path, capsys):
+    d = tmp_path / "ist"
+    d.mkdir()
+    (d / "0.test").write_text("src/lib/a.test.ts")
+    (d / "0.json").write_text(json.dumps({
+        "/home/runner/work/r/r/apps/web/src/lib/a.ts": {"path": "/home/runner/work/r/r/apps/web/src/lib/a.ts", "s": {"0": 3}},
+        "/home/runner/work/r/r/apps/web/src/lib/b.ts": {"path": "/home/runner/work/r/r/apps/web/src/lib/b.ts", "s": {"0": 0}},
+    }))
+    (d / "1.test").write_text("src/lib/orphan.test.ts")  # no json -> skipped
+    m = cov.from_istanbul_dir(d, "apps/web")
+    assert m == {"apps/web/src/lib/a.ts": {"apps/web/src/lib/a.test.ts"}}
+
+    j = tmp_path / "jac"
+    j.mkdir()
+    (j / "com.x.pricing.PricingTest.xml").write_text(
+        '<report name="r"><package name="com/x/pricing">'
+        '<sourcefile name="Pricing.java"><counter type="INSTRUCTION" missed="0" covered="9"/>'
+        '<counter type="LINE" missed="1" covered="4"/></sourcefile>'
+        '<sourcefile name="Unused.java"><counter type="LINE" missed="5" covered="0"/></sourcefile>'
+        '</package></report>')
+    m = cov.from_jacoco_dir(j, "apps/j")
+    assert m == {"apps/j/src/main/java/com/x/pricing/Pricing.java": {"apps/j/src/test/java/com/x/pricing/PricingTest.java"}}
+
+    assert cli.main(["coverage-istanbul", "--dir", str(d), "--prefix", "apps/web", "--out", str(tmp_path / "w.json")]) == 0
+    assert cli.main(["coverage-jacoco", "--dir", str(j), "--prefix", "apps/j", "--out", str(tmp_path / "j.json")]) == 0
+    assert "1 source files mapped" in capsys.readouterr().out
+
+
+def test_force_full(repo):
+    r = select(repo, CONFIG, [], force_full="main branch")["apps"]
+    assert {d["mode"] for d in r.values()} == {"full"}
+    assert r["j"]["reasons"] == ["forced: main branch"]

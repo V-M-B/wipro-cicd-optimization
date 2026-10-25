@@ -20,12 +20,14 @@ from .select import changed_files, normalize, select
 def cmd_select(a) -> int:
     repo = Path(a.repo).resolve()
     config = tomllib.loads(Path(a.config).read_text(encoding="utf-8"))
-    if a.changed:
+    if a.force_full:
+        changed = []
+    elif a.changed:
         changed = normalize(Path(a.changed).read_text(encoding="utf-8").split())
     else:
         changed = changed_files(repo, a.base, a.head)
     t0 = time.perf_counter()
-    result = select(repo, config, changed, use_dynamic=not a.static_only)
+    result = select(repo, config, changed, use_dynamic=not a.static_only, force_full=a.force_full)
     result["selection_seconds"] = round(time.perf_counter() - t0, 3)
     result["base"], result["head"], result["static_only"] = a.base, a.head, a.static_only
     text = json.dumps(result, indent=2)
@@ -60,6 +62,20 @@ def cmd_coverage_python(a) -> int:
     return 0
 
 
+def cmd_coverage_istanbul(a) -> int:
+    m = cov.from_istanbul_dir(Path(a.dir), prefix=a.prefix)
+    cov.write_map(Path(a.out), m, source="istanbul per-test-file coverage")
+    print(f"{len(m)} source files mapped -> {a.out}")
+    return 0
+
+
+def cmd_coverage_jacoco(a) -> int:
+    m = cov.from_jacoco_dir(Path(a.dir), prefix=a.prefix)
+    cov.write_map(Path(a.out), m, source="jacoco per-test-class coverage")
+    print(f"{len(m)} source files mapped -> {a.out}")
+    return 0
+
+
 def cmd_coverage_merge(a) -> int:
     merged: dict[str, set[str]] = {}
     for p in a.inputs:
@@ -82,6 +98,7 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--head", default="HEAD")
     s.add_argument("--changed", help="file with changed paths (one per line) instead of git diff")
     s.add_argument("--static-only", action="store_true")
+    s.add_argument("--force-full", metavar="REASON", help="select every suite of every app (safety net runs)")
     s.add_argument("--out")
     s.set_defaults(func=cmd_select)
 
@@ -98,6 +115,18 @@ def main(argv: list[str] | None = None) -> int:
     c.add_argument("--prefix", default="", help="repo-relative app root to prepend, e.g. apps/analytics")
     c.add_argument("--out", required=True)
     c.set_defaults(func=cmd_coverage_python)
+
+    ci = sub.add_parser("coverage-istanbul", help="build a map from per-test-file istanbul JSON")
+    ci.add_argument("--dir", required=True)
+    ci.add_argument("--prefix", required=True, help="repo-relative app root, e.g. apps/web")
+    ci.add_argument("--out", required=True)
+    ci.set_defaults(func=cmd_coverage_istanbul)
+
+    cj = sub.add_parser("coverage-jacoco", help="build a map from per-test-class JaCoCo XML reports")
+    cj.add_argument("--dir", required=True)
+    cj.add_argument("--prefix", required=True, help="repo-relative app root, e.g. apps/orders-api")
+    cj.add_argument("--out", required=True)
+    cj.set_defaults(func=cmd_coverage_jacoco)
 
     mg = sub.add_parser("coverage-merge", help="merge several coverage maps")
     mg.add_argument("inputs", nargs="+")

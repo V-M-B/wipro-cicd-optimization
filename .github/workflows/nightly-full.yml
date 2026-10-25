@@ -1,0 +1,129 @@
+# Nightly full run with per-test coverage. Produces the dynamic coverage maps used by tia
+# (experiments/coverage/*.json) and commits them to main. Pushes made with GITHUB_TOKEN do not
+# trigger other workflows, so this does not start pipeline runs.
+name: nightly-full
+
+on:
+  schedule:
+    - cron: "41 1 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightly-full
+  cancel-in-progress: false
+
+jobs:
+  analytics-map:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: apps/analytics/requirements*.txt
+      - name: Install
+        working-directory: apps/analytics
+        run: pip install -r requirements-dev.txt
+      - name: Full suite with per-test coverage contexts
+        working-directory: apps/analytics
+        run: |
+          pytest -q --cov=app --cov-context=test --cov-report= --junitxml=reports/junit.xml
+          coverage json --show-contexts -o reports/coverage-contexts.json
+      - name: Build coverage map
+        run: PYTHONPATH=tools/tia/src python3 -m tia.cli coverage-python --coverage-json apps/analytics/reports/coverage-contexts.json --prefix apps/analytics --out out/analytics.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: map-analytics
+          path: out/analytics.json
+
+  web-map:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - name: Install
+        working-directory: apps/web
+        run: npm ci
+      - name: Coverage per test file
+        working-directory: apps/web
+        run: |
+          mkdir -p ../../out/web-per-test
+          n=0
+          for f in $(find src -name '*.test.ts' -o -name '*.test.tsx' | sort); do
+            rm -rf coverage
+            npx vitest run --coverage --coverage.reporter=json "$f" > /dev/null
+            cp coverage/coverage-final.json "../../out/web-per-test/$n.json"
+            echo "$f" > "../../out/web-per-test/$n.test"
+            n=$((n+1))
+          done
+          echo "measured $n test files"
+      - name: Build coverage map
+        run: PYTHONPATH=tools/tia/src python3 -m tia.cli coverage-istanbul --dir out/web-per-test --prefix apps/web --out out/web.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: map-web
+          path: out/web.json
+
+  orders-map:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+          cache-dependency-path: apps/orders-api/pom.xml
+      - name: Compile
+        working-directory: apps/orders-api
+        run: ./mvnw -B -q test-compile
+      - name: Coverage per unit test class
+        working-directory: apps/orders-api
+        run: |
+          mkdir -p ../../out/orders-per-class
+          for f in $(find src/test/java -name '*Test.java' | sort); do
+            fqn=$(echo "$f" | sed 's#src/test/java/##; s#\.java$##; s#/#.#g')
+            rm -f target/jacoco.exec
+            ./mvnw -B -q jacoco:prepare-agent surefire:test jacoco:report -Dtest="$fqn" -Dsurefire.failIfNoSpecifiedTests=false
+            cp target/site/jacoco/jacoco.xml "../../out/orders-per-class/$fqn.xml"
+          done
+          ls ../../out/orders-per-class | wc -l
+      - name: Build coverage map
+        run: PYTHONPATH=tools/tia/src python3 -m tia.cli coverage-jacoco --dir out/orders-per-class --prefix apps/orders-api --out out/orders-api.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: map-orders-api
+          path: out/orders-api.json
+
+  commit-maps:
+    needs: [analytics-map, web-map, orders-map]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: map-*
+          path: experiments/coverage
+          merge-multiple: true
+      - name: Commit coverage maps
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add experiments/coverage
+          if git diff --cached --quiet; then echo "no change"; exit 0; fi
+          git commit -m "nightly: refresh tia coverage maps (run ${{ github.run_id }})"
+          git push

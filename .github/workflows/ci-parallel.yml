@@ -24,7 +24,7 @@ concurrency:
 env:
   REGISTRY: ghcr.io
   IMAGE_PREFIX: ghcr.io/${{ github.repository_owner }}/retailops-parallel
-  SHARDKIT: python3 tools/shardkit/src/shardkit/cli.py
+  SHARDKIT: env PYTHONPATH=tools/shardkit/src python3 -m shardkit.cli
 
 jobs:
   plan:
@@ -285,7 +285,7 @@ jobs:
           cache-to: type=gha,scope=parallel-${{ matrix.app }},mode=max
 
   publish:
-    if: github.event_name == 'push'
+    if: github.event_name != 'pull_request'
     needs: [static-checks, orders-unit, orders-it, web-unit, web-e2e, analytics-test, images]
     runs-on: ubuntu-latest
     timeout-minutes: 15

@@ -37,7 +37,13 @@ def cmd_durations(a) -> int:
 
 
 def _units(a) -> list[str]:
-    units = core.discover(a.units, a.framework, strip_prefix=a.strip_prefix)
+    if a.units_file:
+        text = Path(a.units_file).read_text(encoding="utf-8").replace(",", " ")
+        units = sorted({u.strip() for u in text.split() if u.strip()})
+    elif a.units:
+        units = core.discover(a.units, a.framework, strip_prefix=a.strip_prefix)
+    else:
+        raise SystemExit("give --units or --units-file")
     if not units:
         raise SystemExit("no test units discovered")
     return units
@@ -85,7 +91,8 @@ def main(argv: list[str] | None = None) -> int:
     for name, func in (("plan", cmd_plan), ("compare", cmd_compare)):
         s = sub.add_parser(name)
         s.add_argument("--framework", choices=core.FRAMEWORKS, required=True)
-        s.add_argument("--units", action="append", required=True, help="glob of test files, repeatable")
+        s.add_argument("--units", action="append", help="glob of test files, repeatable")
+        s.add_argument("--units-file", help="explicit unit list (newline/space/comma separated), e.g. from tia")
         s.add_argument("--strip-prefix", help="strip this path prefix from discovered file units")
         s.add_argument("--durations", help="durations JSON; missing file means round-robin")
         s.add_argument("--shards", type=int, required=True)

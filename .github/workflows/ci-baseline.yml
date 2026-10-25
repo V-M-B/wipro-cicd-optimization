@@ -98,7 +98,7 @@ jobs:
           retention-days: 30
 
       - name: Log in to GHCR
-        if: github.event_name == 'push'
+        if: github.event_name != 'pull_request'
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
 
       - name: Build images
@@ -109,7 +109,7 @@ jobs:
           done
 
       - name: Push images
-        if: github.event_name == 'push'
+        if: github.event_name != 'pull_request'
         run: |
           prefix=$(echo "$IMAGE_PREFIX" | tr '[:upper:]' '[:lower:]')
           for app in orders-api web analytics; do

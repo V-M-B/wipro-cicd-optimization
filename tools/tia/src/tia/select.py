@@ -129,7 +129,7 @@ class App:
 
 
 def decide(app: App, changed: list[str], settings: dict, now: float | None = None,
-           use_dynamic: bool = True) -> AppDecision:
+           use_dynamic: bool = True, force_full: str | None = None) -> AppDecision:
     d = AppDecision(app.name)
     suites = app.suite_files()
     d.total_units = {s: len(v) for s, v in suites.items()}
@@ -140,6 +140,9 @@ def decide(app: App, changed: list[str], settings: dict, now: float | None = Non
         d.reasons.append(reason)
         d.suites = {s: sorted(app.unit(t) for t in ts) for s, ts in suites.items()}
         return d
+
+    if force_full:
+        return full(f"forced: {force_full}")
 
     always = settings.get("always_full_globs", [])
     for f in changed:
@@ -216,10 +219,10 @@ def decide(app: App, changed: list[str], settings: dict, now: float | None = Non
 
 
 def select(repo: Path, config: dict, changed: list[str], now: float | None = None,
-           use_dynamic: bool = True) -> dict:
+           use_dynamic: bool = True, force_full: str | None = None) -> dict:
     settings = config.get("settings", {})
     apps = [App(a, repo) for a in config["app"]]
-    decisions = [decide(a, changed, settings, now, use_dynamic).to_dict() for a in apps]
+    decisions = [decide(a, changed, settings, now, use_dynamic, force_full).to_dict() for a in apps]
     return {"changed": changed, "apps": {d["app"]: d for d in decisions}}
 
 

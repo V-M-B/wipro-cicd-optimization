@@ -24,3 +24,4 @@ node_modules/
 # cipro database is rebuildable from experiments/results/raw via `cipro rebuild`
 experiments/results/cipro.sqlite
 tools/*/.venv/
+tia-selection.json
