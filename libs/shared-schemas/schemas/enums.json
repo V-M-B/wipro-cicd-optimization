@@ -1,0 +1,9 @@
+{
+  "$id": "enums",
+  "enums": {
+    "OrderStatus": ["CREATED", "PAID", "SHIPPED", "DELIVERED", "CANCELLED"],
+    "Region": ["NORTH", "SOUTH", "EAST", "WEST"],
+    "CustomerTier": ["STANDARD", "SILVER", "GOLD", "PLATINUM"],
+    "Category": ["ELECTRONICS", "GROCERY", "APPAREL", "HOME", "TOYS"]
+  }
+}

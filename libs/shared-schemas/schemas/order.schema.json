@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Order",
+  "type": "object",
+  "required": ["id", "customerId", "status", "lines", "createdAt", "total"],
+  "properties": {
+    "id": {"type": "string"},
+    "customerId": {"type": "string"},
+    "status": {"$ref": "enums#OrderStatus"},
+    "lines": {"type": "array", "items": {"$ref": "OrderLine"}},
+    "couponCode": {"type": "string"},
+    "createdAt": {"type": "string", "format": "date-time"},
+    "total": {"type": "number"}
+  }
+}

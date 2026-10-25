@@ -1,0 +1,26 @@
+# Cost model inputs. Every price carries its source and the date it was checked.
+# All prices in USD per minute.
+
+[github_hosted]
+source = "https://docs.github.com/en/billing/reference/actions-runner-pricing"
+checked = "2026-10-25"
+# GitHub rounds each job's minutes up to the nearest whole minute.
+rounding = "per_job_ceil_minute"
+
+[github_hosted.per_minute]
+"ubuntu-latest" = 0.006       # Linux 2-core x64
+"linux-2core-arm64" = 0.005
+"windows-latest" = 0.010
+"macos-latest" = 0.062
+"linux-4core" = 0.012
+"linux-8core" = 0.022
+"linux-16core" = 0.042
+
+[self_hosted]
+# A $0.002/min "cloud platform" charge for self-hosted runners was announced in Dec 2025 and then
+# postponed by GitHub (https://resources.github.com/actions/2026-pricing-changes-for-github-actions/).
+# Third-party 2026 articles disagree on whether it is in effect, so reports show both scenarios.
+platform_fee_per_minute_scenario = 0.002
+platform_fee_source = "https://resources.github.com/actions/2026-pricing-changes-for-github-actions/"
+platform_fee_checked = "2026-10-25"
+# Compute cost for self-hosted runners is modeled from CPU-seconds in Phase 5 using a cited VM spot price.

@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "shardkit"
+version = "0.1.0"
+description = "Duration-balanced test sharding from JUnit XML history"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest==8.4.2", "pytest-cov==7.0.0"]
+
+[project.scripts]
+shardkit = "shardkit.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

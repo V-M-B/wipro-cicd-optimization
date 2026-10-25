@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Product",
+  "type": "object",
+  "required": ["id", "sku", "name", "category", "unitPrice", "active"],
+  "properties": {
+    "id": {"type": "string"},
+    "sku": {"type": "string"},
+    "name": {"type": "string"},
+    "category": {"$ref": "enums#Category"},
+    "unitPrice": {"type": "number"},
+    "active": {"type": "boolean"}
+  }
+}

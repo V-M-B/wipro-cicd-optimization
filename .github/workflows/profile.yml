@@ -1,0 +1,61 @@
+# Collects CI timings with cipro and publishes the dashboard to GitHub Pages.
+name: profile
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: profile
+  cancel-in-progress: true
+
+jobs:
+  profile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install cipro
+        run: pip install -e tools/cipro
+      - name: Rebuild from committed raw data and fetch new runs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cipro rebuild
+          for wf in ci-baseline.yml ci-optimized.yml ci-ephemeral.yml; do
+            if [ -f ".github/workflows/$wf" ]; then
+              cipro fetch --repo "$GITHUB_REPOSITORY" --workflow "$wf" --last 200
+            fi
+          done
+      - name: Build dashboard
+        run: |
+          args=""
+          for wf in ci-baseline.yml ci-optimized.yml ci-ephemeral.yml; do
+            [ -f ".github/workflows/$wf" ] && args="$args --workflow $wf"
+          done
+          pair=""
+          [ -f .github/workflows/ci-optimized.yml ] && pair="--pair ci-baseline.yml:ci-optimized.yml"
+          cipro report $args $pair --repo "$GITHUB_REPOSITORY" --title "RetailOps CI profile" --out site
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+  deploy:
+    needs: profile
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

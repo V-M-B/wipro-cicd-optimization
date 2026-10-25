@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PriceQuote",
+  "type": "object",
+  "required": ["subtotal", "discount", "tax", "shipping", "total"],
+  "properties": {
+    "subtotal": {"type": "number"},
+    "discount": {"type": "number"},
+    "tax": {"type": "number"},
+    "shipping": {"type": "number"},
+    "total": {"type": "number"}
+  }
+}

@@ -1,0 +1,222 @@
+#!/usr/bin/env node
+/**
+ * Generates table-driven Vitest files under src/lib/__generated__/.
+ *
+ * The expected values are NOT produced by the app code. They come from an independent oracle
+ * written here with exact integer arithmetic (cents and basis points, round-half-even on integer
+ * division), transcribing the pricing rules documented in README.md. The generated tests therefore
+ * cross-check the app's floating-point implementation in src/lib/cart.ts and src/lib/money.ts
+ * against a second implementation of the same specification.
+ *
+ * Inputs are chosen by a fixed-seed LCG, so output is byte-for-byte reproducible:
+ *   node scripts/generate-tables.mjs          # (re)write the files
+ *   node scripts/generate-tables.mjs --check  # exit 1 if the committed files are stale
+ */
+import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const OUT_DIR = join(ROOT, 'src', 'lib', '__generated__');
+const CHECK = process.argv.includes('--check');
+
+// ---------------------------------------------------------------- deterministic PRNG
+function lcg(seed) {
+  let state = seed >>> 0;
+  return () => {
+    state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
+    return state / 2 ** 32;
+  };
+}
+const QUOTE_CASES = 40;
+const pick = (rand, items) => items[Math.floor(rand() * items.length)];
+
+// ---------------------------------------------------------------- integer oracle
+/** round-half-even of numerator/denominator for non-negative or negative integers. */
+function divHalfEven(numerator, denominator) {
+  const n = BigInt(numerator);
+  const d = BigInt(denominator);
+  const sign = n < 0n ? -1n : 1n;
+  const abs = n < 0n ? -n : n;
+  let q = abs / d;
+  const r = abs % d;
+  if (2n * r > d || (2n * r === d && q % 2n === 1n)) q += 1n;
+  return Number(sign * q);
+}
+
+/** Specification constants, transcribed from the README (rates in basis points, money in cents). */
+const SPEC = {
+  tierBp: { STANDARD: 0, SILVER: 500, GOLD: 1000, PLATINUM: 1500 },
+  bulk: [
+    [100, 1000],
+    [50, 700],
+    [10, 300],
+  ],
+  taxBp: { NORTH: 800, SOUTH: 600, EAST: 725, WEST: 875 },
+  shippingCents: { NORTH: 799, SOUTH: 699, EAST: 599, WEST: 899 },
+  freeShippingCents: 10000,
+  coupons: {
+    SAVE10: { kind: 'PERCENT', bp: 1000, minCents: 5000 },
+    WELCOME15: { kind: 'PERCENT', bp: 1500, minCents: 0, maxCents: 2500 },
+    FLAT5: { kind: 'FIXED', cents: 500, minCents: 2500 },
+    BIG50: { kind: 'FIXED', cents: 5000, minCents: 30000 },
+    FREESHIP: { kind: 'FREE_SHIPPING', minCents: 0 },
+  },
+};
+
+const PRODUCT_PRICES_CENTS = [2499, 3950, 19900, 1275, 640, 1500, 8995, 825, 4500, 999, 5450, 101, 1010, 333];
+const SMALL_BASKET_PRICES_CENTS = [640, 825, 999, 101, 333, 1275, 1500, 1010, 2499];
+const SMALL_QUANTITIES = [1, 1, 2, 2, 3, 4];
+const QUANTITIES = [1, 1, 2, 3, 5, 9, 10, 11, 25, 49, 50, 51, 99, 100, 150];
+const TIERS = ['STANDARD', 'SILVER', 'GOLD', 'PLATINUM'];
+const REGIONS = ['NORTH', 'SOUTH', 'EAST', 'WEST'];
+const COUPON_CODES = [undefined, undefined, 'SAVE10', 'WELCOME15', 'FLAT5', 'BIG50', 'FREESHIP', 'BOGUS', ' save10 '];
+
+function bulkBp(quantity) {
+  for (const [min, bp] of SPEC.bulk) if (quantity >= min) return bp;
+  return 0;
+}
+
+function oracleQuote({ lines, tier, region, couponCode }) {
+  const lineCents = lines.map((l) => l.quantity * l.priceCents);
+  const subtotal = lineCents.reduce((a, b) => a + b, 0);
+  const bulk = lines.reduce((acc, l, i) => acc + divHalfEven(lineCents[i] * bulkBp(l.quantity), 10000), 0);
+  const afterBulk = subtotal - bulk;
+  const tierCents = divHalfEven(afterBulk * SPEC.tierBp[tier], 10000);
+  const eligible = afterBulk - tierCents;
+  const code = (couponCode ?? '').trim().toUpperCase();
+  const coupon = code ? SPEC.coupons[code] : undefined;
+  let couponCents = 0;
+  let freeShipping = false;
+  if (coupon && eligible >= coupon.minCents) {
+    if (coupon.kind === 'PERCENT') {
+      couponCents = divHalfEven(eligible * coupon.bp, 10000);
+      if (coupon.maxCents !== undefined) couponCents = Math.min(couponCents, coupon.maxCents);
+    } else if (coupon.kind === 'FIXED') {
+      couponCents = Math.min(coupon.cents, eligible);
+    } else {
+      freeShipping = true;
+    }
+  }
+  const discount = bulk + tierCents + couponCents;
+  const taxable = subtotal - discount;
+  const tax = taxable > 0 ? divHalfEven(taxable * SPEC.taxBp[region], 10000) : 0;
+  const shipping =
+    lines.length === 0 || freeShipping || taxable >= SPEC.freeShippingCents ? 0 : SPEC.shippingCents[region];
+  return { subtotal, discount, tax, shipping, total: taxable + tax + shipping };
+}
+
+const money = (cents) => (cents / 100).toFixed(2);
+const num = (cents) => String(Number(money(cents)));
+
+// ---------------------------------------------------------------- file builders
+const HEADER = `// GENERATED by scripts/generate-tables.mjs - do not edit by hand.
+// Expected values come from the script's integer-cents oracle, not from the code under test.
+`;
+
+function transitionsFile() {
+  const statuses = ['CREATED', 'PAID', 'SHIPPED', 'DELIVERED', 'CANCELLED'];
+  // Specification of the lifecycle, as written in the README.
+  const allowed = new Set(['CREATED>PAID', 'PAID>SHIPPED', 'SHIPPED>DELIVERED', 'CREATED>CANCELLED', 'PAID>CANCELLED']);
+  const rows = [];
+  for (const from of statuses) for (const to of statuses) rows.push([from, to, allowed.has(`${from}>${to}`)]);
+  const table = rows.map(([f, t, a]) => `  ['${f}', '${t}', ${a}],`).join('\n');
+  return `${HEADER}import { describe, expect, it } from 'vitest';
+import type { Order } from '../../generated/schemas';
+import { InvalidTransitionError, canTransition, transitionOrder } from '../orderStatus';
+
+const base: Order = { id: 'O-10001', customerId: 'C-0001', status: 'CREATED', lines: [], createdAt: '2024-03-01T09:00:00Z', total: 0 };
+
+describe('order status transition matrix (generated, ${rows.length} cases)', () => {
+  it.each([
+${table}
+  ] as const)('%s -> %s allowed=%s', (from, to, allowed) => {
+    expect(canTransition(from, to)).toBe(allowed);
+    const order = { ...base, status: from };
+    if (allowed) {
+      expect(transitionOrder(order, to).status).toBe(to);
+    } else {
+      expect(() => transitionOrder(order, to)).toThrow(InvalidTransitionError);
+    }
+  });
+});
+`;
+}
+
+function quoteFile() {
+  const rand = lcg(424242);
+  const rows = [];
+  for (let i = 0; i < QUOTE_CASES; i += 1) {
+    // Even cases are small baskets (below the free-shipping threshold more often than not).
+    const small = i % 2 === 0;
+    const lineCount = 1 + Math.floor(rand() * (small ? 3 : 4));
+    const prices = small ? [...SMALL_BASKET_PRICES_CENTS] : [...PRODUCT_PRICES_CENTS];
+    const lines = [];
+    for (let j = 0; j < lineCount; j += 1) {
+      const idx = Math.floor(rand() * prices.length);
+      const [priceCents] = prices.splice(idx, 1);
+      lines.push({ sku: `GEN-${String(1000 + priceCents).slice(-4)}`, quantity: pick(rand, small ? SMALL_QUANTITIES : QUANTITIES), priceCents });
+    }
+    const tier = TIERS[i % TIERS.length];
+    const region = REGIONS[Math.floor(i / TIERS.length) % REGIONS.length];
+    const couponCode = pick(rand, COUPON_CODES);
+    const expected = oracleQuote({ lines, tier, region, couponCode });
+    rows.push({ lines, tier, region, couponCode, expected });
+  }
+  const table = rows
+    .map((r, i) => {
+      const lines = r.lines.map((l) => `{ sku: '${l.sku}', quantity: ${l.quantity}, unitPrice: ${num(l.priceCents)} }`);
+      const coupon = r.couponCode === undefined ? 'undefined' : `'${r.couponCode}'`;
+      const e = r.expected;
+      return (
+        `  {\n    name: 'case ${String(i + 1).padStart(2, '0')}: ${r.tier}/${r.region}/${r.lines.length} lines/${r.couponCode?.trim() || 'no coupon'}',\n` +
+        `    input: { tier: '${r.tier}', region: '${r.region}', couponCode: ${coupon}, lines: [${lines.join(', ')}] },\n` +
+        `    expected: { subtotal: ${num(e.subtotal)}, discount: ${num(e.discount)}, tax: ${num(e.tax)}, shipping: ${num(e.shipping)}, total: ${num(e.total)} },\n  },`
+      );
+    })
+    .join('\n');
+  return `${HEADER}import { describe, expect, it } from 'vitest';
+import type { CustomerTier, OrderLine, Region } from '../../generated/schemas';
+import { computeQuote, toPriceQuote } from '../cart';
+
+interface Case {
+  name: string;
+  input: { tier: CustomerTier; region: Region; couponCode: string | undefined; lines: OrderLine[] };
+  expected: { subtotal: number; discount: number; tax: number; shipping: number; total: number };
+}
+
+const cases: Case[] = [
+${table}
+];
+
+describe('computeQuote matches the integer-cents oracle (generated, ${rows.length} cases)', () => {
+  it.each(cases)('$name', ({ input, expected }) => {
+    const { couponCode, ...rest } = input;
+    const quote = computeQuote(couponCode === undefined ? rest : { ...rest, couponCode });
+    expect(toPriceQuote(quote)).toEqual(expected);
+    expect(quote.discount).toBeCloseTo(quote.bulkDiscount + quote.tierDiscount + quote.couponDiscount, 10);
+  });
+});
+`;
+}
+
+const files = {
+  'transitions.generated.test.ts': transitionsFile(),
+  'quote.generated.test.ts': quoteFile(),
+};
+
+mkdirSync(OUT_DIR, { recursive: true });
+let stale = 0;
+for (const [name, content] of Object.entries(files)) {
+  const path = join(OUT_DIR, name);
+  if (CHECK) {
+    if (!existsSync(path) || readFileSync(path, 'utf8') !== content) {
+      console.error(`stale: ${name}`);
+      stale += 1;
+    }
+  } else {
+    writeFileSync(path, content);
+    console.log(`wrote src/lib/__generated__/${name}`);
+  }
+}
+if (stale > 0) process.exit(1);
