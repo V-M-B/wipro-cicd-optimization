@@ -31,6 +31,18 @@ export function formatPercent(rate: number, decimals = 0): string {
   return `${roundHalfEven(rate * 100, decimals).toFixed(decimals)}%`;
 }
 
+/**
+ * Relative change from `previous` to `current` as a signed percentage: (120, 100) → "+20.0%".
+ * Returns "—" when there is no baseline to compare against (previous is 0 or either value is not finite).
+ */
+export function formatPercentChange(current: number, previous: number, decimals = 1): string {
+  if (!Number.isFinite(current) || !Number.isFinite(previous) || previous === 0) return '—';
+  const change = (current - previous) / Math.abs(previous);
+  const magnitude = formatPercent(Math.abs(change), decimals);
+  if (magnitude === formatPercent(0, decimals)) return magnitude;
+  return `${change > 0 ? '+' : '-'}${magnitude}`;
+}
+
 /** Group digits with commas: 1234567 → "1,234,567". */
 export function formatNumber(value: number): string {
   if (!Number.isFinite(value)) return '—';
