@@ -196,11 +196,12 @@ class OrderControllerTest {
     @Test
     void quoteReturnsBreakdown() throws Exception {
         when(orderService.quote(any())).thenReturn(new PriceQuote(new BigDecimal("49.98"), new BigDecimal("0.00"),
-                new BigDecimal("4.00"), new BigDecimal("5.99"), new BigDecimal("59.97")));
+                new BigDecimal("4.00"), new BigDecimal("5.99"), new BigDecimal("59.97"), "USD"));
         mvc.perform(post("/api/orders/quote").contentType(MediaType.APPLICATION_JSON).content(BODY))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.subtotal").value(49.98))
                 .andExpect(jsonPath("$.shipping").value(5.99))
-                .andExpect(jsonPath("$.total").value(59.97));
+                .andExpect(jsonPath("$.total").value(59.97))
+                .andExpect(jsonPath("$.currency").value("USD"));
     }
 }
