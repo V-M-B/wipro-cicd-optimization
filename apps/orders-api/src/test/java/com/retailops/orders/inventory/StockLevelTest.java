@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import com.retailops.schemas.InventoryLevel;
+
 class StockLevelTest {
 
     @ParameterizedTest(name = "onHand={0} reserved={1} -> available {2}")
@@ -19,6 +21,12 @@ class StockLevelTest {
     @CsvSource({"7, true", "8, false", "0, false"})
     void canFulfil(int quantity, boolean expected) {
         assertThat(new StockLevel("SKU-0001", 10, 3).canFulfil(quantity)).isEqualTo(expected);
+    }
+
+    @Test
+    void convertsToTheSharedSchema() {
+        assertThat(new StockLevel("ELE-1001", 10, 3).toSchema())
+                .isEqualTo(new InventoryLevel("ELE-1001", 10, 3, 7));
     }
 
     @Test

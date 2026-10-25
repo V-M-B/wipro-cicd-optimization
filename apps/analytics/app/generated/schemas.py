@@ -51,6 +51,13 @@ class Customer(BaseModel):
     region: Region
 
 
+class InventoryLevel(BaseModel):
+    sku: str
+    onHand: int
+    reserved: int
+    available: int
+
+
 class Order(BaseModel):
     id: str
     customerId: str

@@ -20,6 +20,13 @@ export interface Customer {
   region: Region;
 }
 
+export interface InventoryLevel {
+  sku: string;
+  onHand: number;
+  reserved: number;
+  available: number;
+}
+
 export interface OrderLine {
   sku: string;
   quantity: number;
