@@ -1,0 +1,9 @@
+{
+  "com.retailops.orders.catalog.ProductCatalogHttpIT": 4.39,
+  "com.retailops.orders.catalog.RepositoryQueriesIT": 2.307,
+  "com.retailops.orders.inventory.ConcurrentStockReservationIT": 2.476,
+  "com.retailops.orders.migration.FlywayMigrationIT": 2.74,
+  "com.retailops.orders.order.OrderLifecycleHttpIT": 0.743,
+  "com.retailops.orders.order.OrderPaginationIT": 2.76,
+  "com.retailops.orders.pricing.PricingConfigurationIT": 18.091
+}

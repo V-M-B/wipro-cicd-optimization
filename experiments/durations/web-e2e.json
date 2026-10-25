@@ -1,0 +1,8 @@
+{
+  "catalog-customers.spec.ts": 17.602,
+  "create-order.spec.ts": 11.663,
+  "navigation.spec.ts": 12.477,
+  "order-detail.spec.ts": 10.064,
+  "orders-list.spec.ts": 11.543,
+  "resilience.spec.ts": 7.326
+}

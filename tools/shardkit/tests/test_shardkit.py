@@ -161,3 +161,11 @@ def test_strip_prefix(tmp_path, capsys):
     (tmp_path / "e2e/a.spec.ts").write_text("")
     units = core.discover([str(tmp_path / "e2e/*.spec.ts")], "playwright", strip_prefix=str(tmp_path))
     assert units == ["e2e/a.spec.ts"]
+
+
+def test_suite_time_includes_setup(tmp_path):
+    x = tmp_path / "TEST-it.xml"
+    x.write_text('<testsuite name="com.x.SlowIT" time="18.0">'
+                 '<testcase classname="com.x.SlowIT" name="a" time="0.5"/>'
+                 '<testcase classname="com.x.SlowIT" name="b" time="0.5"/></testsuite>')
+    assert core.parse_junit([str(x)], "junit") == {"com.x.SlowIT": 18.0}

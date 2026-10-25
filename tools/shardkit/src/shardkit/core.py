@@ -46,6 +46,7 @@ def parse_junit(paths: list[str], framework: str, root: str | None = None) -> di
         for suite in tree.iter("testsuite"):
             suite_name = suite.get("name") or ""
             suite_file = suite.get("file")
+            per_unit: dict[str, float] = defaultdict(float)
             for case in suite.findall("testcase"):
                 t = float(case.get("time") or 0)
                 cls = case.get("classname") or suite_name
@@ -55,6 +56,14 @@ def parse_junit(paths: list[str], framework: str, root: str | None = None) -> di
                     unit = _posix(case.get("file") or suite_file or suite_name or cls)
                 else:
                     unit = _pytest_unit(cls, case.get("file"), rootp)
+                per_unit[unit] += t
+            # A suite that maps to exactly one unit may carry class/file setup time (e.g. Spring context
+            # start-up in @BeforeAll) that per-testcase times exclude; use the larger of the two.
+            suite_time = float(suite.get("time") or 0)
+            if len(per_unit) == 1:
+                (unit, case_sum), = per_unit.items()
+                per_unit[unit] = max(case_sum, suite_time)
+            for unit, t in per_unit.items():
                 totals[unit] += t
     return {k: round(v, 3) for k, v in sorted(totals.items())}
 

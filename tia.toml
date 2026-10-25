@@ -1,0 +1,54 @@
+# Test impact analysis configuration (see tools/tia/README.md and ADR-0005).
+
+[settings]
+coverage_max_age_days = 7
+widen_without_coverage = true
+# Any change here runs every suite of every app.
+always_full_globs = [".github/workflows/**", "tia.toml", "tools/**", "libs/shared-schemas/codegen.py"]
+
+[[app]]
+name = "orders-api"
+language = "java"
+root = "apps/orders-api"
+sources = ["src/main/java/**/*.java"]
+support = ["src/test/java/**/support/*.java"]
+suites = { unit = ["src/test/java/**/*Test.java"], integration = ["src/test/java/**/*IT.java"] }
+unit_style = "java-class"
+full_globs = ["pom.xml", "mvnw", ".mvn/**", "Dockerfile*", "src/main/resources/**", "src/test/resources/**"]
+ignore_globs = ["*.md", "**/*.md", "scripts/**"]
+mirror = { "src/main/java/" = "src/test/java/" }
+# @SpringBootTest classes boot the whole context; Spring's context cache makes per-class coverage unreliable.
+full_suite_on_source_change = ["integration"]
+unknown_file_full_exts = [".java"]
+coverage_map = "experiments/coverage/orders-api.json"
+
+[[app]]
+name = "web"
+language = "ts"
+root = "apps/web"
+sources = ["src/**/*.ts", "src/**/*.tsx"]
+support = ["src/test/**/*.ts", "src/test/**/*.tsx", "e2e/fixtures/**/*.ts"]
+suites = { unit = ["src/**/*.test.ts", "src/**/*.test.tsx"], e2e = ["e2e/**/*.spec.ts"] }
+full_globs = ["package.json", "package-lock.json", "vite.config.ts", "tsconfig*.json", "eslint.config.js",
+              "playwright.config.ts", "index.html", "nginx.conf", "Dockerfile*", "public/**", "src/styles.css",
+              "src/test/setup.ts"]
+ignore_globs = ["*.md", "**/*.md"]
+mirror = { "src/" = "src/" }
+# Playwright drives the built bundle in a browser; imports do not connect specs to src.
+full_suite_on_source_change = ["e2e"]
+unknown_file_full_exts = [".ts", ".tsx"]
+coverage_map = "experiments/coverage/web.json"
+
+[[app]]
+name = "analytics"
+language = "python"
+root = "apps/analytics"
+sources = ["app/**/*.py"]
+support = ["tests/**/conftest.py", "tests/factories.py", "tests/**/__init__.py"]
+suites = { unit = ["tests/**/test_*.py"] }
+python_roots = ["."]
+full_globs = ["requirements*.txt", "pyproject.toml", "Dockerfile*"]
+ignore_globs = ["*.md", "**/*.md"]
+mirror = { "app/" = "tests/" }
+unknown_file_full_exts = [".py"]
+coverage_map = "experiments/coverage/analytics.json"

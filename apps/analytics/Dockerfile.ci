@@ -1,0 +1,19 @@
+# syntax=docker/dockerfile:1
+# Optimised image build used by ci-optimized.yml (Phase 2). The baseline Dockerfile stays frozen.
+# The pip layer is keyed only by requirements.txt; application code is copied last.
+FROM python:3.12-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+WORKDIR /srv/analytics
+RUN useradd --create-home --uid 10001 analytics
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY app ./app
+
+USER analytics
+EXPOSE 8000
+CMD ["uvicorn", "app.api:app", "--host", "0.0.0.0", "--port", "8000"]
