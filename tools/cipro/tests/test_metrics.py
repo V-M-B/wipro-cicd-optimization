@@ -138,6 +138,10 @@ def test_summarize(populated):
     assert s["wall_clock_min_s"] <= s["wall_clock_p50_s"] <= s["wall_clock_p95_s"] <= s["wall_clock_max_s"]
     assert s["category_p50_s"]["image-build"] == 200
     assert s["cost_usd_per_1000_runs_p50"] == pytest.approx(s["cost_usd_p50"] * 1000)
+    runs = workflow_runs(populated, "ci-baseline.yml")
+    assert s["cost_usd_mean"] == pytest.approx(sum(r.cost_usd for r in runs) / len(runs))
+    assert s["cost_usd_per_1000_runs_mean"] == pytest.approx(s["cost_usd_mean"] * 1000)
+    assert s["billable_min_mean"] == pytest.approx(sum(r.billable_min for r in runs) / len(runs))
     empty = summarize([])
     assert empty["runs"] == 0 and empty["wall_clock_p50_s"] is None
 

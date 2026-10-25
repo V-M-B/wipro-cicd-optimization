@@ -213,6 +213,10 @@ def summarize(runs: list[RunMetrics]) -> dict:
         return [getattr(r, attr) for r in runs if getattr(r, attr) is not None]
 
     wall = col("wall_clock_s")
+
+    def mean(xs):
+        return sum(xs) / len(xs) if xs else None
+
     cats: dict[str, list[float]] = defaultdict(list)
     for r in runs:
         for c, v in r.category_s.items():
@@ -229,6 +233,11 @@ def summarize(runs: list[RunMetrics]) -> dict:
         "billable_min_p50": median(col("billable_min")),
         "cost_usd_p50": median(col("cost_usd")),
         "cost_usd_per_1000_runs_p50": (median(col("cost_usd")) or 0) * 1000,
+        # Means matter for cost: with a heavy tail, the bill for 1000 runs is driven by the mean, not the median.
+        "wall_clock_mean_s": mean(wall),
+        "billable_min_mean": mean(col("billable_min")),
+        "cost_usd_mean": mean(col("cost_usd")),
+        "cost_usd_per_1000_runs_mean": (mean(col("cost_usd")) or 0) * 1000,
         "overhead_share_p50": median([r.overhead_share for r in runs if r.overhead_share is not None]),
         "category_p50_s": {c: median(v) for c, v in sorted(cats.items())},
     }

@@ -1,0 +1,227 @@
+[
+  {
+    "job": "build-test-publish",
+    "step": "orders-api - build and test",
+    "category": "test",
+    "n": 10,
+    "p50_s": 74.0,
+    "p95_s": 80.2,
+    "mean_s": 73.2
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Build images",
+    "category": "image-build",
+    "n": 10,
+    "p50_s": 67.5,
+    "p95_s": 72.55,
+    "mean_s": 67.1
+  },
+  {
+    "job": "build-test-publish",
+    "step": "web - install Playwright browsers",
+    "category": "install",
+    "n": 10,
+    "p50_s": 56.0,
+    "p95_s": 2025.95,
+    "mean_s": 559.0
+  },
+  {
+    "job": "build-test-publish",
+    "step": "analytics - tests with coverage",
+    "category": "test",
+    "n": 10,
+    "p50_s": 53.0,
+    "p95_s": 56.1,
+    "mean_s": 48.6
+  },
+  {
+    "job": "build-test-publish",
+    "step": "web - e2e tests (chromium, firefox, webkit)",
+    "category": "test",
+    "n": 10,
+    "p50_s": 48.5,
+    "p95_s": 52.0,
+    "mean_s": 46.6
+  },
+  {
+    "job": "build-test-publish",
+    "step": "web - unit tests with coverage",
+    "category": "test",
+    "n": 10,
+    "p50_s": 22.0,
+    "p95_s": 23.55,
+    "mean_s": 19.9
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Push images",
+    "category": "publish",
+    "n": 10,
+    "p50_s": 19.0,
+    "p95_s": 21.0,
+    "mean_s": 18.3
+  },
+  {
+    "job": "build-test-publish",
+    "step": "analytics - install",
+    "category": "install",
+    "n": 10,
+    "p50_s": 6.5,
+    "p95_s": 9.100000000000001,
+    "mean_s": 6.8
+  },
+  {
+    "job": "build-test-publish",
+    "step": "web - lint and typecheck",
+    "category": "lint",
+    "n": 10,
+    "p50_s": 6.0,
+    "p95_s": 7.0,
+    "mean_s": 5.6
+  },
+  {
+    "job": "build-test-publish",
+    "step": "web - build",
+    "category": "build",
+    "n": 10,
+    "p50_s": 5.0,
+    "p95_s": 6.0,
+    "mean_s": 4.8
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Set up Node 20",
+    "category": "toolchain",
+    "n": 10,
+    "p50_s": 4.0,
+    "p95_s": 5.0,
+    "mean_s": 4.3
+  },
+  {
+    "job": "build-test-publish",
+    "step": "web - install",
+    "category": "install",
+    "n": 10,
+    "p50_s": 4.0,
+    "p95_s": 4.0,
+    "mean_s": 3.4
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 10,
+    "p50_s": 2.0,
+    "p95_s": 3.0,
+    "mean_s": 1.8
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Checkout",
+    "category": "checkout",
+    "n": 10,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.7
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Upload test and coverage reports",
+    "category": "publish",
+    "n": 10,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 1.0
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Log in to GHCR",
+    "category": "publish",
+    "n": 10,
+    "p50_s": 1.0,
+    "p95_s": 1.5500000000000007,
+    "mean_s": 0.9
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Set up Java 21",
+    "category": "toolchain",
+    "n": 10,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.4
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Set up Python 3.12",
+    "category": "toolchain",
+    "n": 10,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.3
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Shared schemas - verify generated code",
+    "category": "lint",
+    "n": 10,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.2
+  },
+  {
+    "job": "build-test-publish",
+    "step": "analytics - lint",
+    "category": "lint",
+    "n": 10,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Post Set up Python 3.12",
+    "category": "runner-overhead",
+    "n": 10,
+    "p50_s": 0.0,
+    "p95_s": 0.5500000000000007,
+    "mean_s": 0.1
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Post Set up Node 20",
+    "category": "runner-overhead",
+    "n": 10,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Post Set up Java 21",
+    "category": "runner-overhead",
+    "n": 10,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.3
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Post Checkout",
+    "category": "runner-overhead",
+    "n": 10,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.4
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 10,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  }
+]
