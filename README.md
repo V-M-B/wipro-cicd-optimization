@@ -18,6 +18,9 @@ autoscaled runners. Every number is measured from the GitHub Actions API and rep
 | `apps/analytics` | Python 3.12, FastAPI, pytest |
 | `libs/shared-schemas` | JSON Schemas + generator for Java/TS/Python types |
 | `tools/cipro` | CI profiler (fetch, report, compare, export) |
+| `tools/tia` | Test impact analysis: picks the tests to run for a change, per app and suite |
+| `tools/shardkit` | Duration-balanced test sharding from previous JUnit XML timings |
+| `scripts/` | Experiment helpers: `replay.py` (replays curated commits onto `exp/*` branches), `inject_faults.py` (synthetic faults for the TIA safety study) |
 | `.github/workflows/ci-baseline.yml` | Frozen "legacy" pipeline (tag `baseline-v1`) |
 | `experiments/results` | Raw API JSON and immutable exports |
 
