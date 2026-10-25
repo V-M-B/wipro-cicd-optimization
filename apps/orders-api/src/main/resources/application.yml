@@ -26,6 +26,11 @@ spring:
 server:
   port: 8080
   shutdown: graceful
+  # Order lists and the product catalog are large JSON arrays; compress them when the client accepts gzip.
+  compression:
+    enabled: true
+    mime-types: application/json,application/problem+json
+    min-response-size: 2KB
 
 management:
   endpoints:
