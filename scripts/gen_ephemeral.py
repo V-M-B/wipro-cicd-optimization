@@ -6,7 +6,7 @@ Differences, and nothing else:
   - Playwright browser cache/install steps removed (browsers + system deps baked into the image)
   - every job is gated on the repository variable ARC_ENABLED == 'true', so pushes do not queue forever
     while the local cluster is down
-  - triggers: exp/** pushes and manual dispatch only (never main), so main never depends on a laptop
+  - triggers: exp/e/** pushes (replay round E) and manual dispatch only (never main)
 
 Run: python scripts/gen_ephemeral.py   (CI does not run this; the generated file is committed)
 """
@@ -31,7 +31,7 @@ def main() -> int:
         + t[header_end:]
     )
     t = t.replace("name: ci-optimized", "name: ci-ephemeral", 1)
-    t = t.replace('    branches: [main, "exp/**"]', '    branches: ["exp/**"]')
+    t = t.replace('    branches: [main, "exp/a/**", "exp/e/**"]', '    branches: ["exp/e/**"]')
     t = t.replace("group: ci-optimized-", "group: ci-ephemeral-")
     t = t.replace("retailops-optimized", "retailops-ephemeral").replace("scope=optimized-", "scope=ephemeral-")
     t = t.replace("runs-on: ubuntu-latest", "runs-on: arc-retailops")

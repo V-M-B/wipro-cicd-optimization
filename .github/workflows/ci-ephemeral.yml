@@ -4,7 +4,7 @@ name: ci-ephemeral
 
 on:
   push:
-    branches: ["exp/**"]
+    branches: ["exp/e/**"]
   workflow_dispatch:
 
 permissions:

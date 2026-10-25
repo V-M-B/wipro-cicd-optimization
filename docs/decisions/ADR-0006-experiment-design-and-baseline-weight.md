@@ -39,3 +39,20 @@
   Caches are therefore warmed by a run on `main` before each replay round.
 - A smaller absolute baseline makes fixed overheads (job start-up, per-job minute rounding) relatively larger.
   That is a finding, not a flaw: it is exactly the trade-off parallelization has on small pipelines.
+
+## Addendum (2026-10-25): replay rounds to respect the 20-concurrent-job limit
+
+One experiment commit triggering every stage would start about 36 jobs (baseline 1, cache 1, parallel up to 17,
+optimized up to 19), above the GitHub Free limit of 20 concurrent Linux jobs. Queueing would then inflate the
+parallel stages' wall-clock for reasons unrelated to the pipeline. Stage workflows therefore listen on round-specific
+branch prefixes, and every round includes the frozen baseline (which listens on all of `exp/**`):
+
+| Round | Branch prefix | Workflows | Max concurrent jobs per commit |
+|---|---|---|---|
+| A | `exp/a/**` | baseline, cache, optimized | 21 at most when every app is impacted, usually under 12 |
+| B | `exp/b/**` | baseline, parallel | 18 |
+| E | `exp/e/**` | baseline, optimized (hosted), ephemeral (ARC) | 20 hosted + self-hosted pods |
+
+The same 30 patches are replayed in each round, one commit at a time. Every stage is compared with the baseline
+run on the same commit; stage-to-stage comparisons are made within a round (cache vs optimized in A,
+optimized hosted vs ephemeral in E) or through their paired reduction against the baseline.

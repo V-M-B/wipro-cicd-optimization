@@ -5,7 +5,7 @@ name: ci-optimized
 
 on:
   push:
-    branches: [main, "exp/**"]
+    branches: [main, "exp/a/**", "exp/e/**"]
   workflow_dispatch:
 
 permissions:
