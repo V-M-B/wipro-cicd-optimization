@@ -22,11 +22,24 @@ class PageResponseTest {
         assertThat(page.totalElements()).isEqualTo(10);
         assertThat(page.totalPages()).isEqualTo(4);
         assertThat(page.hasNext()).isTrue();
+        assertThat(page.hasPrevious()).isTrue();
     }
 
     @Test
     void lastPageHasNoNext() {
         assertThat(new PageResponse<>(List.of("a"), 3, 3, 10, 4).hasNext()).isFalse();
+    }
+
+    @Test
+    void firstPageHasNoPrevious() {
+        assertThat(new PageResponse<>(List.of("a"), 0, 3, 10, 4).hasPrevious()).isFalse();
+    }
+
+    @Test
+    void pageBeyondTheEndHasPreviousButNoNext() {
+        PageResponse<String> page = new PageResponse<>(List.of(), 7, 3, 10, 4);
+        assertThat(page.hasPrevious()).isTrue();
+        assertThat(page.hasNext()).isFalse();
     }
 
     @Test
@@ -45,5 +58,6 @@ class PageResponseTest {
         assertThat(page.content()).isEmpty();
         assertThat(page.totalPages()).isZero();
         assertThat(page.hasNext()).isFalse();
+        assertThat(page.hasPrevious()).isFalse();
     }
 }
