@@ -76,12 +76,18 @@ describe('status KPIs', () => {
 describe('volume KPIs', () => {
   it('ranks SKUs by units, excluding cancelled orders', () => {
     expect(topSkus(orders)).toEqual([
-      { sku: 'GRO-2001', quantity: 6 },
-      { sku: 'APP-3001', quantity: 3 },
-      { sku: 'ELE-1001', quantity: 3 },
-      { sku: 'TOY-5001', quantity: 3 },
+      { sku: 'GRO-2001', quantity: 6, share: 0.4 },
+      { sku: 'APP-3001', quantity: 3, share: 0.2 },
+      { sku: 'ELE-1001', quantity: 3, share: 0.2 },
+      { sku: 'TOY-5001', quantity: 3, share: 0.2 },
     ]);
-    expect(topSkus(orders, 1)).toEqual([{ sku: 'GRO-2001', quantity: 6 }]);
+    expect(topSkus(orders, 1)).toEqual([{ sku: 'GRO-2001', quantity: 6, share: 0.4 }]);
+  });
+
+  it('reports a zero share when nothing has sold', () => {
+    const cancelled = orders.map((o) => ({ ...o, status: 'CANCELLED' as const }));
+    expect(topSkus(cancelled)).toEqual([]);
+    expect(topSkus([])).toEqual([]);
   });
 
   it('buckets orders per UTC day over a trailing window', () => {
