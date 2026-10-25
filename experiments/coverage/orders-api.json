@@ -1,0 +1,407 @@
+{
+ "generated_at_epoch": 1792945468,
+ "source": "jacoco per-test-class coverage",
+ "map": {
+  "apps/orders-api/src/main/java/com/retailops/orders/OrdersApiApplication.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/inventory/InventoryControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/api/GlobalExceptionHandler.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/api/GlobalExceptionHandlerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/inventory/InventoryControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/api/PageResponse.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/api/PageResponseTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/catalog/CreateProductRequest.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/RequestValidationTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/catalog/PriceUpdateRequest.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/RequestValidationTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/catalog/ProductController.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductControllerTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/catalog/ProductEntity.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductMapperTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/catalog/ProductMapper.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductMapperTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/catalog/ProductService.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/common/BusinessRuleException.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/api/GlobalExceptionHandlerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderFilterTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderLinesTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/CouponEvaluatorTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/QuantityRulesTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/common/DuplicateResourceException.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/api/GlobalExceptionHandlerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/inventory/InventoryServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/common/NotFoundException.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/api/GlobalExceptionHandlerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/inventory/InventoryControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/inventory/InventoryServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/customer/CreateCustomerRequest.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/RequestValidationTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/customer/CustomerController.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerControllerTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/customer/CustomerEntity.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerMapperTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/customer/CustomerMapper.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerMapperTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/customer/CustomerService.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/customer/TierChangeRequest.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerControllerTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/inventory/InsufficientStockException.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/api/GlobalExceptionHandlerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/inventory/InventoryServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/inventory/InventoryController.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/inventory/InventoryControllerTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/inventory/InventoryService.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/inventory/InventoryServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/inventory/RestockRequest.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/inventory/InventoryControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/RequestValidationTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/inventory/StockItemEntity.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/inventory/InventoryServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/inventory/StockLevel.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/inventory/InventoryControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/inventory/InventoryServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/inventory/StockLevelTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/order/CreateOrderRequest.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/RequestValidationTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/order/IllegalStatusTransitionException.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/api/GlobalExceptionHandlerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderEntityTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderStateMachineTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/order/OrderController.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/order/OrderEntity.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderEntityTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderMapperTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/order/OrderFilter.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderFilterTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/order/OrderLineEntity.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderEntityTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderMapperTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/order/OrderLineRequest.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderLinesTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/RequestValidationTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/order/OrderLines.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderLinesTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/order/OrderMapper.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderMapperTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/order/OrderService.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/order/OrderStateMachine.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderEntityTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderStateMachineTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/order/StatusTransitionRequest.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/RequestValidationTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/BulkDiscountPolicy.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/BulkDiscountPolicyTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/Coupon.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/CouponEvaluatorTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponEntity.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponEvaluator.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/CouponEvaluatorTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponOutcome.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/CouponEvaluatorTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponRejectedException.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/api/GlobalExceptionHandlerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/CouponEvaluatorTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponRejectionReason.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/api/GlobalExceptionHandlerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/CouponEvaluatorTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponType.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/CouponEvaluatorTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/Money.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/BulkDiscountPolicyTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/CouponEvaluatorTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedShippingMatrixTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/MoneyTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/ShippingPolicyTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/TaxPolicyTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/TierDiscountPolicyTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/PriceBreakdown.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderEntityTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderMapperTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/PricedLine.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/PricedOrder.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/PricingProperties.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedShippingMatrixTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingPropertiesTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/ShippingPolicyTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/TaxPolicyTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/PricingRequest.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/PricingService.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/QuoteService.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/ShippingPolicy.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedShippingMatrixTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/ShippingPolicyTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/TaxPolicy.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/TaxPolicyTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/pricing/TierDiscountPolicy.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/TierDiscountPolicyTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/validation/EmailValidator.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/EmailValidatorTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/RequestValidationTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/validation/QuantityRules.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderLinesTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/QuantityRulesTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/RequestValidationTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/validation/SkuValidator.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderLinesTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/RequestValidationTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/SkuValidatorTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/validation/ValidEmail.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/RequestValidationTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/validation/ValidQuantity.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/RequestValidationTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/orders/validation/ValidSku.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/RequestValidationTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/schemas/Category.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductMapperTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/RequestValidationTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/schemas/Customer.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerMapperTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/schemas/CustomerTier.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerMapperTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedShippingMatrixTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/ShippingPolicyTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/TierDiscountPolicyTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/RequestValidationTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/schemas/Order.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderMapperTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/schemas/OrderLine.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderMapperTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/schemas/OrderStatus.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/api/GlobalExceptionHandlerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderEntityTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderFilterTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderMapperTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderStateMachineTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/schemas/PriceQuote.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/schemas/Product.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductMapperTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/catalog/ProductServiceTest.java"
+  ],
+  "apps/orders-api/src/main/java/com/retailops/schemas/Region.java": [
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerControllerTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerMapperTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/customer/CustomerServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/order/OrderServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedPricingScenariosTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/GeneratedShippingMatrixTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingPropertiesTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/PricingServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/QuoteServiceTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/ShippingPolicyTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/pricing/TaxPolicyTest.java",
+   "apps/orders-api/src/test/java/com/retailops/orders/validation/RequestValidationTest.java"
+  ]
+ }
+}

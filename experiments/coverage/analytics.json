@@ -1,0 +1,111 @@
+{
+ "generated_at_epoch": 1792945360,
+ "source": "coverage.py dynamic contexts",
+ "map": {
+  "apps/analytics/app/api.py": [
+   "apps/analytics/tests/api/test_api_large.py",
+   "apps/analytics/tests/api/test_csv_api.py",
+   "apps/analytics/tests/api/test_customers_api.py",
+   "apps/analytics/tests/api/test_funnel_api.py",
+   "apps/analytics/tests/api/test_health_demo.py",
+   "apps/analytics/tests/api/test_products_api.py",
+   "apps/analytics/tests/api/test_revenue_api.py",
+   "apps/analytics/tests/api/test_timeseries_api.py"
+  ],
+  "apps/analytics/app/datasets.py": [
+   "apps/analytics/tests/api/test_api_large.py",
+   "apps/analytics/tests/api/test_health_demo.py",
+   "apps/analytics/tests/io/test_csv_customers.py",
+   "apps/analytics/tests/io/test_csv_large.py",
+   "apps/analytics/tests/metrics/test_abc.py",
+   "apps/analytics/tests/metrics/test_customers_large.py",
+   "apps/analytics/tests/metrics/test_funnel_large.py",
+   "apps/analytics/tests/metrics/test_products_large.py",
+   "apps/analytics/tests/metrics/test_revenue_large.py",
+   "apps/analytics/tests/metrics/test_timeseries_large.py",
+   "apps/analytics/tests/test_datasets.py",
+   "apps/analytics/tests/test_datasets_large.py"
+  ],
+  "apps/analytics/app/io/csv_io.py": [
+   "apps/analytics/tests/api/test_csv_api.py",
+   "apps/analytics/tests/io/test_csv_customers.py",
+   "apps/analytics/tests/io/test_csv_large.py",
+   "apps/analytics/tests/io/test_csv_orders.py",
+   "apps/analytics/tests/io/test_csv_parsers.py",
+   "apps/analytics/tests/io/test_csv_products.py"
+  ],
+  "apps/analytics/app/metrics/common.py": [
+   "apps/analytics/tests/api/test_api_large.py",
+   "apps/analytics/tests/api/test_customers_api.py",
+   "apps/analytics/tests/api/test_funnel_api.py",
+   "apps/analytics/tests/api/test_health_demo.py",
+   "apps/analytics/tests/api/test_products_api.py",
+   "apps/analytics/tests/api/test_revenue_api.py",
+   "apps/analytics/tests/api/test_timeseries_api.py",
+   "apps/analytics/tests/io/test_csv_orders.py",
+   "apps/analytics/tests/metrics/test_abc.py",
+   "apps/analytics/tests/metrics/test_affinity.py",
+   "apps/analytics/tests/metrics/test_churn_clv.py",
+   "apps/analytics/tests/metrics/test_cohorts.py",
+   "apps/analytics/tests/metrics/test_common.py",
+   "apps/analytics/tests/metrics/test_customers_large.py",
+   "apps/analytics/tests/metrics/test_customers_rfm.py",
+   "apps/analytics/tests/metrics/test_customers_segments.py",
+   "apps/analytics/tests/metrics/test_funnel.py",
+   "apps/analytics/tests/metrics/test_funnel_large.py",
+   "apps/analytics/tests/metrics/test_products.py",
+   "apps/analytics/tests/metrics/test_products_large.py",
+   "apps/analytics/tests/metrics/test_revenue.py",
+   "apps/analytics/tests/metrics/test_revenue_large.py",
+   "apps/analytics/tests/metrics/test_timeseries_anomalies.py",
+   "apps/analytics/tests/metrics/test_timeseries_growth.py",
+   "apps/analytics/tests/metrics/test_timeseries_large.py",
+   "apps/analytics/tests/metrics/test_timeseries_smoothing.py",
+   "apps/analytics/tests/test_datasets.py"
+  ],
+  "apps/analytics/app/metrics/customers.py": [
+   "apps/analytics/tests/api/test_api_large.py",
+   "apps/analytics/tests/api/test_customers_api.py",
+   "apps/analytics/tests/api/test_health_demo.py",
+   "apps/analytics/tests/metrics/test_churn_clv.py",
+   "apps/analytics/tests/metrics/test_cohorts.py",
+   "apps/analytics/tests/metrics/test_customers_large.py",
+   "apps/analytics/tests/metrics/test_customers_rfm.py",
+   "apps/analytics/tests/metrics/test_customers_segments.py"
+  ],
+  "apps/analytics/app/metrics/funnel.py": [
+   "apps/analytics/tests/api/test_api_large.py",
+   "apps/analytics/tests/api/test_funnel_api.py",
+   "apps/analytics/tests/api/test_health_demo.py",
+   "apps/analytics/tests/metrics/test_funnel.py",
+   "apps/analytics/tests/metrics/test_funnel_large.py"
+  ],
+  "apps/analytics/app/metrics/products.py": [
+   "apps/analytics/tests/api/test_health_demo.py",
+   "apps/analytics/tests/api/test_products_api.py",
+   "apps/analytics/tests/metrics/test_abc.py",
+   "apps/analytics/tests/metrics/test_affinity.py",
+   "apps/analytics/tests/metrics/test_products.py",
+   "apps/analytics/tests/metrics/test_products_large.py"
+  ],
+  "apps/analytics/app/metrics/revenue.py": [
+   "apps/analytics/tests/api/test_api_large.py",
+   "apps/analytics/tests/api/test_health_demo.py",
+   "apps/analytics/tests/api/test_revenue_api.py",
+   "apps/analytics/tests/io/test_csv_orders.py",
+   "apps/analytics/tests/metrics/test_products.py",
+   "apps/analytics/tests/metrics/test_products_large.py",
+   "apps/analytics/tests/metrics/test_revenue.py",
+   "apps/analytics/tests/metrics/test_revenue_large.py",
+   "apps/analytics/tests/metrics/test_timeseries_growth.py",
+   "apps/analytics/tests/metrics/test_timeseries_large.py"
+  ],
+  "apps/analytics/app/metrics/timeseries.py": [
+   "apps/analytics/tests/api/test_timeseries_api.py",
+   "apps/analytics/tests/metrics/test_timeseries_anomalies.py",
+   "apps/analytics/tests/metrics/test_timeseries_growth.py",
+   "apps/analytics/tests/metrics/test_timeseries_large.py",
+   "apps/analytics/tests/metrics/test_timeseries_smoothing.py"
+  ]
+ }
+}

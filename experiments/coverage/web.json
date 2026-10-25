@@ -1,0 +1,289 @@
+{
+ "generated_at_epoch": 1792945362,
+ "source": "istanbul per-test-file coverage",
+ "map": {
+  "apps/web/src/App.tsx": [
+   "apps/web/src/App.test.tsx"
+  ],
+  "apps/web/src/api/ApiProvider.tsx": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/pages/CreateOrderPage.test.tsx",
+   "apps/web/src/pages/CustomerListPage.test.tsx",
+   "apps/web/src/pages/DashboardPage.test.tsx",
+   "apps/web/src/pages/OrderDetailPage.test.tsx",
+   "apps/web/src/pages/OrderListPage.test.tsx",
+   "apps/web/src/pages/ProductCatalogPage.test.tsx"
+  ],
+  "apps/web/src/api/context.ts": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/pages/CreateOrderPage.test.tsx",
+   "apps/web/src/pages/CustomerListPage.test.tsx",
+   "apps/web/src/pages/DashboardPage.test.tsx",
+   "apps/web/src/pages/OrderDetailPage.test.tsx",
+   "apps/web/src/pages/OrderListPage.test.tsx",
+   "apps/web/src/pages/ProductCatalogPage.test.tsx"
+  ],
+  "apps/web/src/components/Feedback.tsx": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/Feedback.test.tsx",
+   "apps/web/src/pages/CreateOrderPage.test.tsx",
+   "apps/web/src/pages/CustomerListPage.test.tsx",
+   "apps/web/src/pages/DashboardPage.test.tsx",
+   "apps/web/src/pages/OrderDetailPage.test.tsx",
+   "apps/web/src/pages/OrderListPage.test.tsx",
+   "apps/web/src/pages/ProductCatalogPage.test.tsx"
+  ],
+  "apps/web/src/components/HighlightedText.tsx": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/Feedback.test.tsx",
+   "apps/web/src/pages/CustomerListPage.test.tsx",
+   "apps/web/src/pages/ProductCatalogPage.test.tsx"
+  ],
+  "apps/web/src/components/KpiCard.tsx": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/KpiCard.test.tsx",
+   "apps/web/src/pages/DashboardPage.test.tsx"
+  ],
+  "apps/web/src/components/Layout.tsx": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/Layout.test.tsx"
+  ],
+  "apps/web/src/components/OrderFilters.tsx": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/OrderFilters.test.tsx",
+   "apps/web/src/pages/OrderListPage.test.tsx"
+  ],
+  "apps/web/src/components/OrderLineEditor.tsx": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/OrderLineEditor.test.tsx",
+   "apps/web/src/pages/CreateOrderPage.test.tsx"
+  ],
+  "apps/web/src/components/OrderTable.tsx": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/OrderTable.test.tsx",
+   "apps/web/src/pages/OrderListPage.test.tsx"
+  ],
+  "apps/web/src/components/Pagination.tsx": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/Pagination.test.tsx",
+   "apps/web/src/pages/OrderListPage.test.tsx"
+  ],
+  "apps/web/src/components/QuoteSummary.tsx": [
+   "apps/web/src/components/QuoteSummary.test.tsx",
+   "apps/web/src/pages/CreateOrderPage.test.tsx"
+  ],
+  "apps/web/src/components/StatusBadge.tsx": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/OrderTable.test.tsx",
+   "apps/web/src/components/StatusBadge.test.tsx",
+   "apps/web/src/pages/DashboardPage.test.tsx",
+   "apps/web/src/pages/OrderDetailPage.test.tsx",
+   "apps/web/src/pages/OrderListPage.test.tsx"
+  ],
+  "apps/web/src/components/StatusTimeline.tsx": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/StatusTimeline.test.tsx",
+   "apps/web/src/pages/OrderDetailPage.test.tsx"
+  ],
+  "apps/web/src/hooks/useAsync.ts": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/hooks/useAsync.test.tsx",
+   "apps/web/src/pages/CreateOrderPage.test.tsx",
+   "apps/web/src/pages/CustomerListPage.test.tsx",
+   "apps/web/src/pages/DashboardPage.test.tsx",
+   "apps/web/src/pages/OrderDetailPage.test.tsx",
+   "apps/web/src/pages/OrderListPage.test.tsx",
+   "apps/web/src/pages/ProductCatalogPage.test.tsx"
+  ],
+  "apps/web/src/lib/api.ts": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/lib/api.client.test.ts",
+   "apps/web/src/lib/api.errors.test.ts",
+   "apps/web/src/lib/api.retry.test.ts",
+   "apps/web/src/pages/CreateOrderPage.test.tsx",
+   "apps/web/src/pages/CustomerListPage.test.tsx",
+   "apps/web/src/pages/DashboardPage.test.tsx",
+   "apps/web/src/pages/OrderDetailPage.test.tsx",
+   "apps/web/src/pages/OrderListPage.test.tsx",
+   "apps/web/src/pages/ProductCatalogPage.test.tsx"
+  ],
+  "apps/web/src/lib/cart.ts": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/OrderLineEditor.test.tsx",
+   "apps/web/src/components/OrderTable.test.tsx",
+   "apps/web/src/components/QuoteSummary.test.tsx",
+   "apps/web/src/lib/__generated__/quote.generated.test.ts",
+   "apps/web/src/lib/cart.coupon.test.ts",
+   "apps/web/src/lib/cart.discounts.test.ts",
+   "apps/web/src/lib/cart.quote.test.ts",
+   "apps/web/src/lib/cart.subtotal.test.ts",
+   "apps/web/src/lib/cart.taxShipping.test.ts",
+   "apps/web/src/lib/csv.test.ts",
+   "apps/web/src/lib/search.test.ts",
+   "apps/web/src/pages/CreateOrderPage.test.tsx",
+   "apps/web/src/pages/CustomerListPage.test.tsx",
+   "apps/web/src/pages/DashboardPage.test.tsx",
+   "apps/web/src/pages/OrderDetailPage.test.tsx",
+   "apps/web/src/pages/OrderListPage.test.tsx",
+   "apps/web/src/pages/ProductCatalogPage.test.tsx"
+  ],
+  "apps/web/src/lib/csv.ts": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/lib/csv.test.ts",
+   "apps/web/src/pages/OrderListPage.test.tsx"
+  ],
+  "apps/web/src/lib/dates.ts": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/OrderFilters.test.tsx",
+   "apps/web/src/components/OrderLineEditor.test.tsx",
+   "apps/web/src/components/OrderTable.test.tsx",
+   "apps/web/src/components/Pagination.test.tsx",
+   "apps/web/src/components/QuoteSummary.test.tsx",
+   "apps/web/src/lib/csv.test.ts",
+   "apps/web/src/lib/dates.test.ts",
+   "apps/web/src/lib/format.currency.test.ts",
+   "apps/web/src/lib/format.dates.test.ts",
+   "apps/web/src/lib/kpi.test.ts",
+   "apps/web/src/lib/orderQuery.filterSort.test.ts",
+   "apps/web/src/lib/orderQuery.paginate.test.ts",
+   "apps/web/src/lib/queryState.test.ts",
+   "apps/web/src/pages/CreateOrderPage.test.tsx",
+   "apps/web/src/pages/CustomerListPage.test.tsx",
+   "apps/web/src/pages/DashboardPage.test.tsx",
+   "apps/web/src/pages/OrderDetailPage.test.tsx",
+   "apps/web/src/pages/OrderListPage.test.tsx",
+   "apps/web/src/pages/ProductCatalogPage.test.tsx"
+  ],
+  "apps/web/src/lib/download.ts": [
+   "apps/web/src/lib/download.test.ts",
+   "apps/web/src/pages/OrderListPage.test.tsx"
+  ],
+  "apps/web/src/lib/format.ts": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/OrderFilters.test.tsx",
+   "apps/web/src/components/OrderLineEditor.test.tsx",
+   "apps/web/src/components/OrderTable.test.tsx",
+   "apps/web/src/components/QuoteSummary.test.tsx",
+   "apps/web/src/lib/format.currency.test.ts",
+   "apps/web/src/lib/format.dates.test.ts",
+   "apps/web/src/pages/CreateOrderPage.test.tsx",
+   "apps/web/src/pages/CustomerListPage.test.tsx",
+   "apps/web/src/pages/DashboardPage.test.tsx",
+   "apps/web/src/pages/OrderDetailPage.test.tsx",
+   "apps/web/src/pages/OrderListPage.test.tsx",
+   "apps/web/src/pages/ProductCatalogPage.test.tsx"
+  ],
+  "apps/web/src/lib/kpi.ts": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/lib/kpi.test.ts",
+   "apps/web/src/pages/CustomerListPage.test.tsx",
+   "apps/web/src/pages/DashboardPage.test.tsx"
+  ],
+  "apps/web/src/lib/money.ts": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/OrderFilters.test.tsx",
+   "apps/web/src/components/OrderLineEditor.test.tsx",
+   "apps/web/src/components/OrderTable.test.tsx",
+   "apps/web/src/components/QuoteSummary.test.tsx",
+   "apps/web/src/lib/__generated__/quote.generated.test.ts",
+   "apps/web/src/lib/cart.coupon.test.ts",
+   "apps/web/src/lib/cart.discounts.test.ts",
+   "apps/web/src/lib/cart.quote.test.ts",
+   "apps/web/src/lib/cart.subtotal.test.ts",
+   "apps/web/src/lib/cart.taxShipping.test.ts",
+   "apps/web/src/lib/csv.test.ts",
+   "apps/web/src/lib/format.currency.test.ts",
+   "apps/web/src/lib/format.dates.test.ts",
+   "apps/web/src/lib/kpi.test.ts",
+   "apps/web/src/lib/money.helpers.test.ts",
+   "apps/web/src/lib/money.roundHalfEven.test.ts",
+   "apps/web/src/lib/search.test.ts",
+   "apps/web/src/pages/CreateOrderPage.test.tsx",
+   "apps/web/src/pages/CustomerListPage.test.tsx",
+   "apps/web/src/pages/DashboardPage.test.tsx",
+   "apps/web/src/pages/OrderDetailPage.test.tsx",
+   "apps/web/src/pages/OrderListPage.test.tsx",
+   "apps/web/src/pages/ProductCatalogPage.test.tsx"
+  ],
+  "apps/web/src/lib/orderQuery.ts": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/OrderFilters.test.tsx",
+   "apps/web/src/components/OrderTable.test.tsx",
+   "apps/web/src/components/Pagination.test.tsx",
+   "apps/web/src/lib/csv.test.ts",
+   "apps/web/src/lib/kpi.test.ts",
+   "apps/web/src/lib/orderQuery.filterSort.test.ts",
+   "apps/web/src/lib/orderQuery.paginate.test.ts",
+   "apps/web/src/lib/queryState.test.ts",
+   "apps/web/src/pages/OrderListPage.test.tsx"
+  ],
+  "apps/web/src/lib/orderStatus.ts": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/OrderFilters.test.tsx",
+   "apps/web/src/components/OrderTable.test.tsx",
+   "apps/web/src/components/Pagination.test.tsx",
+   "apps/web/src/components/StatusBadge.test.tsx",
+   "apps/web/src/components/StatusTimeline.test.tsx",
+   "apps/web/src/lib/__generated__/transitions.generated.test.ts",
+   "apps/web/src/lib/csv.test.ts",
+   "apps/web/src/lib/kpi.test.ts",
+   "apps/web/src/lib/orderQuery.filterSort.test.ts",
+   "apps/web/src/lib/orderQuery.paginate.test.ts",
+   "apps/web/src/lib/orderStatus.test.ts",
+   "apps/web/src/lib/queryState.test.ts",
+   "apps/web/src/pages/DashboardPage.test.tsx",
+   "apps/web/src/pages/OrderDetailPage.test.tsx",
+   "apps/web/src/pages/OrderListPage.test.tsx"
+  ],
+  "apps/web/src/lib/queryState.ts": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/OrderFilters.test.tsx",
+   "apps/web/src/lib/queryState.test.ts",
+   "apps/web/src/pages/OrderListPage.test.tsx"
+  ],
+  "apps/web/src/lib/search.ts": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/Feedback.test.tsx",
+   "apps/web/src/lib/highlight.test.ts",
+   "apps/web/src/lib/orderQuery.filterSort.test.ts",
+   "apps/web/src/lib/search.test.ts",
+   "apps/web/src/pages/CustomerListPage.test.tsx",
+   "apps/web/src/pages/OrderListPage.test.tsx",
+   "apps/web/src/pages/ProductCatalogPage.test.tsx"
+  ],
+  "apps/web/src/lib/validators.ts": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/components/OrderLineEditor.test.tsx",
+   "apps/web/src/lib/validators.draft.test.ts",
+   "apps/web/src/lib/validators.formats.test.ts",
+   "apps/web/src/pages/CreateOrderPage.test.tsx"
+  ],
+  "apps/web/src/pages/CreateOrderPage.tsx": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/pages/CreateOrderPage.test.tsx"
+  ],
+  "apps/web/src/pages/CustomerListPage.tsx": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/pages/CustomerListPage.test.tsx"
+  ],
+  "apps/web/src/pages/DashboardPage.tsx": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/pages/DashboardPage.test.tsx"
+  ],
+  "apps/web/src/pages/NotFoundPage.tsx": [
+   "apps/web/src/App.test.tsx"
+  ],
+  "apps/web/src/pages/OrderDetailPage.tsx": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/pages/OrderDetailPage.test.tsx"
+  ],
+  "apps/web/src/pages/OrderListPage.tsx": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/pages/OrderListPage.test.tsx"
+  ],
+  "apps/web/src/pages/ProductCatalogPage.tsx": [
+   "apps/web/src/App.test.tsx",
+   "apps/web/src/pages/ProductCatalogPage.test.tsx"
+  ]
+ }
+}
