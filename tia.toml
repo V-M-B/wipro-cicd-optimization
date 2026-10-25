@@ -47,6 +47,8 @@ sources = ["app/**/*.py"]
 support = ["tests/**/conftest.py", "tests/factories.py", "tests/**/__init__.py"]
 suites = { unit = ["tests/**/test_*.py"] }
 python_roots = ["."]
+# The root conftest.py imports the whole FastAPI app for the TestClient fixture; edges through it are import-only.
+hub_globs = ["tests/conftest.py"]
 full_globs = ["requirements*.txt", "pyproject.toml", "Dockerfile*"]
 ignore_globs = ["*.md", "**/*.md"]
 mirror = { "app/" = "tests/" }

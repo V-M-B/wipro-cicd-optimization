@@ -64,4 +64,4 @@ Step categories are assigned by name in `classify.py` (first matching rule wins)
 cd tools/cipro && pytest --cov=cipro
 ```
 
-51 tests, 96% statement coverage at the time of writing. Smoke-tested against `pallets/flask` (`tests.yaml`).
+52 tests, 96% statement coverage at the time of writing. Smoke-tested against `pallets/flask` (`tests.yaml`).

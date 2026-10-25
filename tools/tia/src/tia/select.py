@@ -160,12 +160,39 @@ def decide(app: App, changed: list[str], settings: dict, now: float | None = Non
         if match(app.local(f), app.cfg.get("full_globs", [])):
             return full(f"full trigger: {f}")
 
-    static = g.reverse_closure(app.build_graph(), list(all_tests))
     dynamic, dyn_note = (app.coverage_map(settings.get("coverage_max_age_days", 7), now)
                          if use_dynamic else (None, "dynamic map disabled"))
     d.reasons.append(f"static graph over {len(all_tests)} test files; {dyn_note}")
+    graph = app.build_graph()
+    hubs: list[str] = []
+    if dynamic is not None:
+        # A hub (e.g. a root conftest.py importing the whole API for a fixture) stays a dependency of every
+        # test, so a change to the hub selects everything; but edges *through* it are not followed. This is
+        # only safe with a fresh dynamic map: fixtures inject hub-imported code without a direct import, and
+        # the map is what records those tests (ADR-0005).
+        hubs = [n for n in graph if match(app.local(n), app.cfg.get("hub_globs", []))]
+        for h in hubs:
+            graph[h] = set()
+    static = g.reverse_closure(graph, list(all_tests))
+
+    def mirrored(f: str) -> set[str]:
+        out: set[str] = set()
+        loc = app.local(f)
+        for src_prefix, test_prefix in app.cfg.get("mirror", {}).items():
+            if not loc.startswith(src_prefix):
+                continue
+            sub = loc[len(src_prefix):]
+            if "/" in sub:
+                folder = test_prefix + sub.rsplit("/", 1)[0] + "/"
+                out |= {t for t in all_tests if app.local(t).startswith(folder)}
+            else:
+                top = test_prefix.rstrip("/")
+                out |= {t for t in all_tests
+                        if app.local(t).rsplit("/", 1)[0] == top and app.local(t).count("/") == top.count("/") + 1}
+        return out
 
     selected: set[str] = set()
+    empty_hits: list[str] = []
     for f in relevant:
         if f in all_tests:
             selected.add(f)
@@ -174,30 +201,24 @@ def decide(app: App, changed: list[str], settings: dict, now: float | None = Non
         if dynamic is not None:
             hits |= dynamic.get(f, set()) & set(all_tests)
         if not hits:
-            known = f in static or (dynamic is not None and f in dynamic)
+            known = f in static or (dynamic is not None and f in dynamic) or f in graph
             if not known and f.endswith(tuple(app.cfg.get("unknown_file_full_exts", []))):
                 return full(f"changed file not in any dependency graph: {f}")
+            hits = mirrored(f)
+            if f in graph or known:
+                empty_hits.append(f)
         selected |= hits
 
     # Without a fresh dynamic map, widen: also run tests in the mirrored package/directory of each changed
     # source (catches reflection, DI wiring and other edges invisible to import analysis).
     if dynamic is None and settings.get("widen_without_coverage", True):
-        mirrors = app.cfg.get("mirror", {})
         for f in relevant:
-            loc = app.local(f)
-            for src_prefix, test_prefix in mirrors.items():
-                if not loc.startswith(src_prefix):
-                    continue
-                sub = loc[len(src_prefix):]
-                if "/" in sub:
-                    folder = test_prefix + sub.rsplit("/", 1)[0] + "/"
-                    selected |= {t for t in all_tests if app.local(t).startswith(folder)}
-                else:
-                    # file at the top of the source tree: only tests directly in the mirrored folder
-                    top = test_prefix.rstrip("/")
-                    selected |= {t for t in all_tests
-                                 if app.local(t).rsplit("/", 1)[0] == top and app.local(t).count("/") == top.count("/") + 1}
+            selected |= mirrored(f)
         d.reasons.append("widened to mirrored test packages (no fresh coverage map)")
+    if empty_hits:
+        d.reasons.append(f"no impacted tests found for {len(empty_hits)} file(s); used mirrored tests")
+    if hubs:
+        d.reasons.append(f"hub files not traversed: {', '.join(app.local(h) for h in hubs)}")
 
     # Suites that boot the whole application (e.g. @SpringBootTest) run in full on any source change.
     source_changed = [f for f in relevant if f not in all_tests]

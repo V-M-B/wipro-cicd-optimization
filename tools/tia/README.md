@@ -35,4 +35,7 @@ tia coverage-merge a.json b.json --out merged.json
 
 Configuration reference: docstring at the top of `src/tia/select.py`; real config in `/tia.toml`.
 
-Tests: `cd tools/tia && pytest --cov=tia` (16 tests, 98% coverage).
+Tests: `cd tools/tia && pytest --cov=tia` (20 tests, 98% coverage).
+
+**Hub files** (`hub_globs`): shared fixture modules that import most of the app (e.g. a root `conftest.py`).
+With a fresh coverage map, edges through a hub are not followed; without one, they are. See ADR-0005 addendum.

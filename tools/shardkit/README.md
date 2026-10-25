@@ -27,4 +27,4 @@ shardkit compare --framework junit --durations experiments/durations/orders-unit
 Output styles: `lines`, `json`, `maven` (comma-separated, for `-Dtest`), `args` (space-separated paths, for
 Vitest, Playwright and pytest). `--strip-prefix` makes file units relative to an app directory.
 
-Tests: `cd tools/shardkit && pytest --cov=shardkit` (14 tests, 98% coverage).
+Tests: `cd tools/shardkit && pytest --cov=shardkit` (16 tests, 98% coverage).

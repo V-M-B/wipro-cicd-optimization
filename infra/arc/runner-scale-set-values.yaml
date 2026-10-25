@@ -1,0 +1,16 @@
+# Helm values for gha-runner-scale-set (ARC). Installed by infra/arc/setup.sh.
+# githubConfigUrl and githubConfigSecret are passed on the command line.
+runnerScaleSetName: arc-retailops
+minRunners: 0          # scale to zero when idle
+maxRunners: 6          # bounded by the laptop: 16 CPUs / ~20 GB given to Docker Desktop
+containerMode:
+  type: dind           # Docker-in-Docker sidecar for image builds (see ADR-0007 for the trade-off)
+template:
+  spec:
+    containers:
+      - name: runner
+        image: registry.localhost:5050/retailops-runner:latest
+        command: ["/home/runner/run.sh"]
+        resources:
+          requests: {cpu: "2", memory: "3Gi"}
+          limits: {cpu: "2", memory: "3Gi"}

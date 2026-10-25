@@ -1,0 +1,18 @@
+# k3d cluster for ARC (Phase 5). Create with: k3d cluster create --config infra/arc/k3d-cluster.yaml
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: retailops-ci
+servers: 1
+agents: 0
+image: rancher/k3s:v1.31.5-k3s1
+options:
+  k3s:
+    extraArgs:
+      - arg: --disable=traefik
+        nodeFilters: [server:*]
+registries:
+  create:
+    name: registry.localhost
+    host: "0.0.0.0"
+    hostPort: "5050"
