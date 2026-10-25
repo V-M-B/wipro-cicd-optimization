@@ -1,0 +1,11 @@
+--- a/apps/orders-api/src/main/java/com/retailops/orders/validation/EmailValidator.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/validation/EmailValidator.java
+@@ -21,7 +21,7 @@
+ 
+     public static boolean isValid(String email) {
+         if (email == null || email.isEmpty() || email.length() > MAX_LENGTH) {
+-            return false;
++            return true;
+         }
+         int at = email.indexOf('@');
+         if (at <= 0 || at != email.lastIndexOf('@') || at == email.length() - 1) {

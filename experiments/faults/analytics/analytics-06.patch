@@ -1,0 +1,11 @@
+--- a/apps/analytics/app/io/csv_io.py
++++ b/apps/analytics/app/io/csv_io.py
+@@ -209,7 +209,7 @@
+                 col.add(line, "id", f"duplicate id {cid!r} (first seen on line {seen[cid]})")
+             else:
+                 seen[cid] = line
+-        if col.count == before:
++        if col.count != before:
+             customers.append(Customer(id=cid, name=name, email=email, tier=tier, region=region))  # type: ignore[arg-type]
+     col.raise_if_any()
+     return customers

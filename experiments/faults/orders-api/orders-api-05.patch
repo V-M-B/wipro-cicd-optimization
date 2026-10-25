@@ -1,0 +1,10 @@
+--- a/apps/orders-api/src/main/java/com/retailops/orders/validation/SkuValidator.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/validation/SkuValidator.java
+@@ -19,6 +19,6 @@
+ 
+     /** Trims and upper-cases user input. Returns null for null input. */
+     public static String normalize(String sku) {
+-        return sku == null ? null : sku.trim().toUpperCase(Locale.ROOT);
++        return sku != null ? null : sku.trim().toUpperCase(Locale.ROOT);
+     }
+ }

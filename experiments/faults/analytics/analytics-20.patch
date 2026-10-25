@@ -1,0 +1,11 @@
+--- a/apps/analytics/app/metrics/timeseries.py
++++ b/apps/analytics/app/metrics/timeseries.py
+@@ -214,7 +214,7 @@
+     return q1 - k * iqr, q3 + k * iqr
+ 
+ 
+-def iqr_anomalies(values: Sequence[float], k: float = 1.5) -> list[Anomaly]:
++def iqr_anomalies(values: Sequence[float], k: float = 1.6) -> list[Anomaly]:
+     """Points strictly outside the Tukey fences. ``score`` is the distance to the fence."""
+     if not values:
+         return []

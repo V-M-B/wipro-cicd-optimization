@@ -1,0 +1,86 @@
+diff --git a/apps/analytics/app/generated/schemas.py b/apps/analytics/app/generated/schemas.py
+index f9f356e..d65a5e3 100644
+--- a/apps/analytics/app/generated/schemas.py
++++ b/apps/analytics/app/generated/schemas.py
+@@ -58,6 +58,7 @@ class Order(BaseModel):
+     lines: list[OrderLine]
+     couponCode: str | None = None
+     createdAt: datetime
++    updatedAt: datetime | None = None
+     total: float
+ 
+ 
+diff --git a/apps/orders-api/src/main/java/com/retailops/orders/order/OrderMapper.java b/apps/orders-api/src/main/java/com/retailops/orders/order/OrderMapper.java
+index 73d9f43..79daf21 100644
+--- a/apps/orders-api/src/main/java/com/retailops/orders/order/OrderMapper.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/order/OrderMapper.java
+@@ -11,7 +11,7 @@ public final class OrderMapper {
+     public static Order toDto(OrderEntity entity) {
+         return new Order(entity.getId(), entity.getCustomerId(), entity.getStatus(),
+                 entity.getLines().stream().map(OrderMapper::toDto).toList(),
+-                entity.getCouponCode(), entity.getCreatedAt(), entity.getTotal());
++                entity.getCouponCode(), entity.getCreatedAt(), entity.getUpdatedAt(), entity.getTotal());
+     }
+ 
+     public static OrderLine toDto(OrderLineEntity line) {
+diff --git a/apps/orders-api/src/main/java/com/retailops/orders/order/OrderService.java b/apps/orders-api/src/main/java/com/retailops/orders/order/OrderService.java
+index b117366..b284da9 100644
+--- a/apps/orders-api/src/main/java/com/retailops/orders/order/OrderService.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/order/OrderService.java
+@@ -88,7 +88,7 @@ public class OrderService {
+             before.lines().forEach(l -> inventoryService.commit(l.sku(), l.quantity()));
+         }
+         return new Order(before.id(), before.customerId(), target, before.lines(), before.couponCode(),
+-                before.createdAt(), before.total());
++                before.createdAt(), order.getUpdatedAt(), before.total());
+     }
+ 
+     private OrderEntity find(String id) {
+diff --git a/apps/orders-api/src/main/java/com/retailops/schemas/Order.java b/apps/orders-api/src/main/java/com/retailops/schemas/Order.java
+index c1b8c55..8bd826d 100644
+--- a/apps/orders-api/src/main/java/com/retailops/schemas/Order.java
++++ b/apps/orders-api/src/main/java/com/retailops/schemas/Order.java
+@@ -8,5 +8,6 @@ public record Order(
+         java.util.List<OrderLine> lines,
+         String couponCode,
+         java.time.OffsetDateTime createdAt,
++        java.time.OffsetDateTime updatedAt,
+         java.math.BigDecimal total) {
+ }
+diff --git a/apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java b/apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java
+index 1c241c2..211a310 100644
+--- a/apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java
++++ b/apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java
+@@ -51,7 +51,7 @@ class OrderControllerTest {
+ 
+     private Order order(OrderStatus status) {
+         return new Order("ord-1", "cus-0001", status, List.of(new OrderLine("ELE-1001", 2, new BigDecimal("24.99"))),
+-                null, TestFixtures.NOW_UTC, new BigDecimal("59.97"));
++                null, TestFixtures.NOW_UTC, TestFixtures.NOW_UTC, new BigDecimal("59.97"));
+     }
+ 
+     @Test
+diff --git a/apps/web/src/generated/schemas.ts b/apps/web/src/generated/schemas.ts
+index cc22428..7329789 100644
+--- a/apps/web/src/generated/schemas.ts
++++ b/apps/web/src/generated/schemas.ts
+@@ -33,6 +33,7 @@ export interface Order {
+   lines: OrderLine[];
+   couponCode?: string;
+   createdAt: string;
++  updatedAt?: string;
+   total: number;
+ }
+ 
+diff --git a/libs/shared-schemas/schemas/order.schema.json b/libs/shared-schemas/schemas/order.schema.json
+index 09e2103..1323317 100644
+--- a/libs/shared-schemas/schemas/order.schema.json
++++ b/libs/shared-schemas/schemas/order.schema.json
+@@ -10,6 +10,7 @@
+     "lines": {"type": "array", "items": {"$ref": "OrderLine"}},
+     "couponCode": {"type": "string"},
+     "createdAt": {"type": "string", "format": "date-time"},
++    "updatedAt": {"type": "string", "format": "date-time"},
+     "total": {"type": "number"}
+   }
+ }

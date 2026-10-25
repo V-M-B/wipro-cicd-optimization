@@ -1,0 +1,98 @@
+diff --git a/apps/analytics/app/generated/schemas.py b/apps/analytics/app/generated/schemas.py
+index f9f356e..dfb071f 100644
+--- a/apps/analytics/app/generated/schemas.py
++++ b/apps/analytics/app/generated/schemas.py
+@@ -41,6 +41,7 @@ class OrderLine(BaseModel):
+     sku: str
+     quantity: int
+     unitPrice: float
++    lineTotal: float | None = None
+ 
+ 
+ class Customer(BaseModel):
+diff --git a/apps/orders-api/src/main/java/com/retailops/orders/order/OrderMapper.java b/apps/orders-api/src/main/java/com/retailops/orders/order/OrderMapper.java
+index 73d9f43..0d95ba8 100644
+--- a/apps/orders-api/src/main/java/com/retailops/orders/order/OrderMapper.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/order/OrderMapper.java
+@@ -15,6 +15,6 @@ public final class OrderMapper {
+     }
+ 
+     public static OrderLine toDto(OrderLineEntity line) {
+-        return new OrderLine(line.getSku(), line.getQuantity(), line.getUnitPrice());
++        return new OrderLine(line.getSku(), line.getQuantity(), line.getUnitPrice(), line.getLineTotal());
+     }
+ }
+diff --git a/apps/orders-api/src/main/java/com/retailops/schemas/OrderLine.java b/apps/orders-api/src/main/java/com/retailops/schemas/OrderLine.java
+index 4d3db60..3873137 100644
+--- a/apps/orders-api/src/main/java/com/retailops/schemas/OrderLine.java
++++ b/apps/orders-api/src/main/java/com/retailops/schemas/OrderLine.java
+@@ -4,5 +4,6 @@ package com.retailops.schemas;
+ public record OrderLine(
+         String sku,
+         int quantity,
+-        java.math.BigDecimal unitPrice) {
++        java.math.BigDecimal unitPrice,
++        java.math.BigDecimal lineTotal) {
+ }
+diff --git a/apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java b/apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java
+index 1c241c2..416dc0e 100644
+--- a/apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java
++++ b/apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java
+@@ -50,7 +50,8 @@ class OrderControllerTest {
+             {"customerId":"cus-0001","lines":[{"sku":"ELE-1001","quantity":2}]}""";
+ 
+     private Order order(OrderStatus status) {
+-        return new Order("ord-1", "cus-0001", status, List.of(new OrderLine("ELE-1001", 2, new BigDecimal("24.99"))),
++        return new Order("ord-1", "cus-0001", status,
++                List.of(new OrderLine("ELE-1001", 2, new BigDecimal("24.99"), new BigDecimal("49.98"))),
+                 null, TestFixtures.NOW_UTC, new BigDecimal("59.97"));
+     }
+ 
+diff --git a/apps/orders-api/src/test/java/com/retailops/orders/order/OrderMapperTest.java b/apps/orders-api/src/test/java/com/retailops/orders/order/OrderMapperTest.java
+index a6e8793..adc9c56 100644
+--- a/apps/orders-api/src/test/java/com/retailops/orders/order/OrderMapperTest.java
++++ b/apps/orders-api/src/test/java/com/retailops/orders/order/OrderMapperTest.java
+@@ -29,14 +29,15 @@ class OrderMapperTest {
+         assertThat(dto.createdAt()).isEqualTo(TestFixtures.NOW_UTC);
+         assertThat(dto.total()).isEqualTo(new BigDecimal("70.79"));
+         assertThat(dto.lines()).containsExactly(
+-                new OrderLine("APP-3001", 2, new BigDecimal("15.00")),
+-                new OrderLine("HOM-4001", 3, new BigDecimal("10.00")));
++                new OrderLine("APP-3001", 2, new BigDecimal("15.00"), new BigDecimal("30.00")),
++                new OrderLine("HOM-4001", 3, new BigDecimal("10.00"), new BigDecimal("30.00")));
+     }
+ 
+     @Test
+     void mapsSingleLine() {
+         OrderLineEntity line = new OrderLineEntity(1, "TOY-5001", 1, new BigDecimal("44.99"), new BigDecimal("44.99"));
+-        assertThat(OrderMapper.toDto(line)).isEqualTo(new OrderLine("TOY-5001", 1, new BigDecimal("44.99")));
++        assertThat(OrderMapper.toDto(line))
++                .isEqualTo(new OrderLine("TOY-5001", 1, new BigDecimal("44.99"), new BigDecimal("44.99")));
+     }
+ 
+     @Test
+diff --git a/apps/web/src/generated/schemas.ts b/apps/web/src/generated/schemas.ts
+index cc22428..34184a8 100644
+--- a/apps/web/src/generated/schemas.ts
++++ b/apps/web/src/generated/schemas.ts
+@@ -24,6 +24,7 @@ export interface OrderLine {
+   sku: string;
+   quantity: number;
+   unitPrice: number;
++  lineTotal?: number;
+ }
+ 
+ export interface Order {
+diff --git a/libs/shared-schemas/schemas/order-line.schema.json b/libs/shared-schemas/schemas/order-line.schema.json
+index 7625b44..f395afa 100644
+--- a/libs/shared-schemas/schemas/order-line.schema.json
++++ b/libs/shared-schemas/schemas/order-line.schema.json
+@@ -6,6 +6,7 @@
+   "properties": {
+     "sku": {"type": "string"},
+     "quantity": {"type": "integer"},
+-    "unitPrice": {"type": "number"}
++    "unitPrice": {"type": "number"},
++    "lineTotal": {"type": "number"}
+   }
+ }

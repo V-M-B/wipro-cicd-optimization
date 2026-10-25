@@ -1,0 +1,11 @@
+--- a/apps/orders-api/src/main/java/com/retailops/orders/inventory/InventoryService.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/inventory/InventoryService.java
+@@ -58,7 +58,7 @@
+     @Transactional
+     public void release(String sku, int quantity) {
+         requirePositive(quantity);
+-        if (stockRepository.release(sku, quantity) == 0) {
++        if (stockRepository.release(sku, quantity) != 0) {
+             level(sku);
+             throw new IllegalStateException("Cannot release " + quantity + " of '" + sku + "': not reserved");
+         }

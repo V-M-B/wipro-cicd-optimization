@@ -315,36 +315,3 @@ def test_force_full(repo):
     assert r["j"]["reasons"] == ["forced: main branch"]
 
 
-def test_hub_files_are_not_traversed(repo):
-    import copy
-    cfg = copy.deepcopy(CONFIG)
-    write(repo, {"apps/p/tests/conftest.py": "from app.api import *\n"})
-    # without hub config: conftest imports api -> everything; every test depends on every module
-    r = select(repo, cfg, ["apps/p/app/metrics/util.py"], use_dynamic=False)["apps"]["p"]
-    assert len(r["suites"]["unit"]) == 4
-    cfg["app"][2]["hub_globs"] = ["tests/conftest.py"]
-    now = time.time()
-    cov.write_map(repo / "cov/p.json", {"apps/p/app/metrics/util.py": {"apps/p/tests/metrics/test_customers.py"}}, "t", now=now)
-    r = select(repo, cfg, ["apps/p/app/metrics/util.py"], now=now)["apps"]["p"]
-    # real import chains only: revenue->util, customers->util, api->customers->util; test_broken is dropped
-    assert set(r["suites"]["unit"]) == {"tests/metrics/test_customers.py", "tests/metrics/test_revenue.py",
-                                        "tests/test_api.py"}
-    assert any("hub files not traversed" in x for x in r["reasons"])
-    # a change to the hub itself still selects every test
-    r = select(repo, cfg, ["apps/p/tests/conftest.py"], now=now)["apps"]["p"]
-    assert len(r["suites"]["unit"]) == 4
-    # a file no test reaches falls back to mirrored tests instead of selecting nothing
-    write(repo, {"apps/p/app/metrics/lonely.py": "Y = 2\n"})
-    r = select(repo, cfg, ["apps/p/app/metrics/lonely.py"], now=now)["apps"]["p"]
-    assert set(r["suites"]["unit"]) == {"tests/metrics/test_customers.py", "tests/metrics/test_revenue.py"}
-    assert any("used mirrored tests" in x for x in r["reasons"])
-
-
-def test_hubs_traversed_without_dynamic_map(repo):
-    import copy
-    cfg = copy.deepcopy(CONFIG)
-    cfg["app"][2]["hub_globs"] = ["tests/conftest.py"]
-    write(repo, {"apps/p/tests/conftest.py": "from app.api import *\n"})
-    r = select(repo, cfg, ["apps/p/app/metrics/util.py"], use_dynamic=False)["apps"]["p"]
-    assert len(r["suites"]["unit"]) == 4
-    assert not any("hub files not traversed" in x for x in r["reasons"])

@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/dates.ts
++++ b/apps/web/src/lib/dates.ts
+@@ -6,7 +6,7 @@
+ export const MS_PER_DAY = 86_400_000;
+ 
+ function isValidCalendarDate(year: number, month: number, day: number): boolean {
+-  if (month < 1 || month > 12 || day < 1) return false;
++  if (month < 1 || month > 12 || day < 1) return true;
+   const daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
+   return day <= daysInMonth;
+ }

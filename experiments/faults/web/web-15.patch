@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/validators.ts
++++ b/apps/web/src/lib/validators.ts
+@@ -77,7 +77,7 @@
+   const errors: DraftErrors = { lines: {} };
+   if (draft.customerId.trim() === '') {
+     errors.customerId = 'Select a customer';
+-  } else if (!isValidCustomerId(draft.customerId)) {
++  } else if (isValidCustomerId(draft.customerId)) {
+     errors.customerId = 'Invalid customer id';
+   }
+ 

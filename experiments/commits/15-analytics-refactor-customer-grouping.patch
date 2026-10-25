@@ -1,0 +1,84 @@
+diff --git a/apps/analytics/app/metrics/revenue.py b/apps/analytics/app/metrics/revenue.py
+index 622344f..9568b2f 100644
+--- a/apps/analytics/app/metrics/revenue.py
++++ b/apps/analytics/app/metrics/revenue.py
+@@ -8,7 +8,7 @@ proportion to gross line value, so every breakdown reconciles with the total.
+ from __future__ import annotations
+ 
+ from collections import defaultdict
+-from collections.abc import Iterable, Sequence
++from collections.abc import Callable, Iterable, Sequence
+ from datetime import date
+ 
+ from app.generated.schemas import Customer, Order, OrderStatus, Product
+@@ -30,6 +30,31 @@ from app.metrics.common import (
+ )
+ 
+ Statuses = Iterable[OrderStatus] | None
++CustomerKey = Callable[[Customer], str]
++
++
++def _by_region(customer: Customer) -> str:
++    return customer.region.value
++
++
++def _by_tier(customer: Customer) -> str:
++    return customer.tier.value
++
++
++def _group_key(by_id: dict[str, Customer], order: Order, key: CustomerKey) -> str:
++    """Grouping key of the order's customer; orders of unknown customers go to ``UNKNOWN``."""
++    customer = by_id.get(order.customerId)
++    return key(customer) if customer else UNKNOWN
++
++
++def _revenue_by_customer(
++    orders: Iterable[Order], customers: Iterable[Customer], key: CustomerKey, statuses: Statuses
++) -> dict[str, float]:
++    by_id = index_customers(customers)
++    totals: dict[str, float] = defaultdict(float)
++    for o in revenue_orders(orders, statuses):
++        totals[_group_key(by_id, o, key)] += o.total
++    return {k: money(totals[k]) for k in sorted(totals)}
+ 
+ 
+ def revenue_orders(orders: Iterable[Order], statuses: Statuses = REVENUE_STATUSES) -> list[Order]:
+@@ -99,12 +124,7 @@ def revenue_by_region(
+     statuses: Statuses = REVENUE_STATUSES,
+ ) -> dict[str, float]:
+     """Revenue per customer region; orders of unknown customers go to ``UNKNOWN``."""
+-    by_id = index_customers(customers)
+-    totals: dict[str, float] = defaultdict(float)
+-    for o in revenue_orders(orders, statuses):
+-        customer = by_id.get(o.customerId)
+-        totals[customer.region.value if customer else UNKNOWN] += o.total
+-    return {key: money(totals[key]) for key in sorted(totals)}
++    return _revenue_by_customer(orders, customers, _by_region, statuses)
+ 
+ 
+ def revenue_by_tier(
+@@ -112,12 +132,8 @@ def revenue_by_tier(
+     customers: Iterable[Customer],
+     statuses: Statuses = REVENUE_STATUSES,
+ ) -> dict[str, float]:
+-    by_id = index_customers(customers)
+-    totals: dict[str, float] = defaultdict(float)
+-    for o in revenue_orders(orders, statuses):
+-        customer = by_id.get(o.customerId)
+-        totals[customer.tier.value if customer else UNKNOWN] += o.total
+-    return {key: money(totals[key]) for key in sorted(totals)}
++    """Revenue per customer tier; orders of unknown customers go to ``UNKNOWN``."""
++    return _revenue_by_customer(orders, customers, _by_tier, statuses)
+ 
+ 
+ def revenue_by_category(
+@@ -147,8 +163,7 @@ def aov_by_region(
+     sums: dict[str, float] = defaultdict(float)
+     counts: dict[str, int] = defaultdict(int)
+     for o in revenue_orders(orders, statuses):
+-        customer = by_id.get(o.customerId)
+-        key = customer.region.value if customer else UNKNOWN
++        key = _group_key(by_id, o, _by_region)
+         sums[key] += o.total
+         counts[key] += 1
+     return {key: money(sums[key] / counts[key]) for key in sorted(sums)}

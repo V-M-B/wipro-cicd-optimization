@@ -1,0 +1,39 @@
+diff --git a/apps/analytics/app/io/csv_io.py b/apps/analytics/app/io/csv_io.py
+index 2968b2c..acc1c98 100644
+--- a/apps/analytics/app/io/csv_io.py
++++ b/apps/analytics/app/io/csv_io.py
+@@ -129,9 +129,11 @@ def parse_enum[E: Enum](raw: str, enum_type: type[E]) -> E:
+ 
+ 
+ def parse_email(raw: str) -> str:
++    """Light-weight address check: one ``@``, a non-empty local part and a dotted domain without empty labels."""
+     text = raw.strip()
+     local, sep, domain = text.partition("@")
+-    if not sep or not local or "." not in domain or domain.startswith(".") or domain.endswith(".") or " " in text:
++    labels = domain.split(".")
++    if not sep or not local or " " in text or "@" in domain or len(labels) < 2 or not all(labels):
+         raise _FieldError(f"invalid email address {raw!r}")
+     return text
+ 
+diff --git a/apps/analytics/tests/io/test_csv_parsers.py b/apps/analytics/tests/io/test_csv_parsers.py
+index a417639..822a01a 100644
+--- a/apps/analytics/tests/io/test_csv_parsers.py
++++ b/apps/analytics/tests/io/test_csv_parsers.py
+@@ -84,12 +84,15 @@ def test_parse_enum_invalid_lists_allowed_values():
+         csv_io.parse_enum("CENTRAL", Region)
+ 
+ 
+-@pytest.mark.parametrize("raw", ["a@b.co", "first.last+tag@example.com"])
++@pytest.mark.parametrize("raw", ["a@b.co", "first.last+tag@example.com", "ops@mail.retail.example"])
+ def test_parse_email(raw):
+     assert csv_io.parse_email(raw) == raw
+ 
+ 
+-@pytest.mark.parametrize("raw", ["", "plainaddress", "@example.com", "a@", "a@example", "a@.com", "a@b.", "a b@c.com"])
++@pytest.mark.parametrize(
++    "raw",
++    ["", "plainaddress", "@example.com", "a@", "a@example", "a@.com", "a@b.", "a b@c.com", "a@b..com", "a@@b.com"],
++)
+ def test_parse_email_invalid(raw):
+     with pytest.raises(ValueError, match="invalid email"):
+         csv_io.parse_email(raw)

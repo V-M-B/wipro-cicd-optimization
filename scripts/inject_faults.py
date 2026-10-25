@@ -93,11 +93,42 @@ def strip_strings(line: str) -> str:
     return re.sub(r"(\"(?:\\.|[^\"\\])*\"|'(?:\\.|[^'\\])*'|`[^`]*`)", lambda m: "\0" * len(m.group(0)), line)
 
 
+def python_masked_lines(text: str) -> list[str]:
+    """Lines with every string token (incl. docstrings and f-string text) and comment replaced by NULs,
+    using the tokenizer so multi-line docstrings are masked too."""
+    import io
+    import tokenize
+
+    lines = text.splitlines(keepends=True)
+    masked = [list(line) for line in lines]
+    kinds = {tokenize.STRING, tokenize.COMMENT}
+    for name in ("FSTRING_MIDDLE", "FSTRING_START", "FSTRING_END"):
+        if hasattr(tokenize, name):
+            kinds.add(getattr(tokenize, name))
+    for tok in tokenize.generate_tokens(io.StringIO(text).readline):
+        if tok.type not in kinds:
+            continue
+        (sr, sc), (er, ec) = tok.start, tok.end
+        for r in range(sr - 1, er):
+            a = sc if r == sr - 1 else 0
+            b = ec if r == er - 1 else len(masked[r])
+            for c in range(a, min(b, len(masked[r]))):
+                if masked[r][c] != "\n":
+                    masked[r][c] = "\0"
+    return ["".join(m) for m in masked]
+
+
 def candidates(text: str, lang: str) -> list[tuple[int, int, int, str, str]]:
     ops = PYTHON if lang == "python" else C_LIKE
     out = []
+    py_masked = python_masked_lines(text) if lang == "python" else None
     for i, line in code_lines(text, lang):
-        masked = strip_strings(line.split("//")[0] if lang != "python" else line.split("#")[0])
+        if py_masked is not None:
+            masked = py_masked[i]
+            if not masked.strip("\0 \t\r\n"):
+                continue
+        else:
+            masked = strip_strings(line.split("//")[0])
         for kind, pat, repl in ops:
             for m in re.finditer(pat, masked):
                 out.append((i, m.start(), m.end(), repl, kind))

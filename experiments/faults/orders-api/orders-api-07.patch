@@ -1,0 +1,11 @@
+--- a/apps/orders-api/src/main/java/com/retailops/orders/order/OrderFilter.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/order/OrderFilter.java
+@@ -11,7 +11,7 @@
+ public record OrderFilter(String customerId, OrderStatus status, OffsetDateTime from, OffsetDateTime to) {
+ 
+     public OrderFilter {
+-        if (customerId != null && customerId.isBlank()) {
++        if (customerId != null || customerId.isBlank()) {
+             customerId = null;
+         }
+         if (from != null && to != null && !from.isBefore(to)) {

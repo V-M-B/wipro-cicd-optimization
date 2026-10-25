@@ -1,0 +1,11 @@
+--- a/apps/orders-api/src/main/java/com/retailops/orders/pricing/PricingProperties.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/pricing/PricingProperties.java
+@@ -43,7 +43,7 @@
+         surchargeFreeUnits = surchargeFreeUnits == null ? DEFAULT_SURCHARGE_FREE_UNITS : surchargeFreeUnits;
+         taxRates = merge(DEFAULT_TAX_RATES, taxRates);
+         shippingBaseRates = merge(DEFAULT_SHIPPING_BASE_RATES, shippingBaseRates);
+-        if (freeShippingThreshold.signum() < 0 || perUnitShippingSurcharge.signum() < 0 || surchargeFreeUnits < 0) {
++        if (freeShippingThreshold.signum() < 0 || perUnitShippingSurcharge.signum() < 0 && surchargeFreeUnits < 0) {
+             throw new IllegalArgumentException("pricing properties must not be negative");
+         }
+     }

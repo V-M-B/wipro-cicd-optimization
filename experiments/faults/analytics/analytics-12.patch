@@ -1,0 +1,11 @@
+--- a/apps/analytics/app/metrics/timeseries.py
++++ b/apps/analytics/app/metrics/timeseries.py
+@@ -52,7 +52,7 @@
+ def weighted_moving_average(values: Sequence[float], window: int) -> list[float | None]:
+     """Linearly weighted trailing mean (most recent value has weight ``window``)."""
+     _check_window(window)
+-    denom = window * (window + 1) / 2
++    denom = window * (window + 2) / 2
+     out: list[float | None] = []
+     for i in range(len(values)):
+         if i < window - 1:

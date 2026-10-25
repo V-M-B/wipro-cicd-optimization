@@ -1,0 +1,23 @@
+diff --git a/apps/analytics/.dockerignore b/apps/analytics/.dockerignore
+index a583316..a33e9f6 100644
+--- a/apps/analytics/.dockerignore
++++ b/apps/analytics/.dockerignore
+@@ -1,4 +1,5 @@
+ .venv
++*.md
+ reports
+ **/__pycache__
+ **/*.pyc
+diff --git a/apps/orders-api/.dockerignore b/apps/orders-api/.dockerignore
+index e743cde..5dbeaba 100644
+--- a/apps/orders-api/.dockerignore
++++ b/apps/orders-api/.dockerignore
+@@ -1,4 +1,8 @@
+ target/
++# Not needed to build the jar: docs, the Windows wrapper and the test-data generator.
++*.md
++mvnw.cmd
++scripts/
+ .idea/
+ .vscode/
+ *.iml

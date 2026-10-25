@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/cart.ts
++++ b/apps/web/src/lib/cart.ts
+@@ -4,7 +4,7 @@
+ /** Loyalty-tier discount applied after bulk discounts. */
+ export const TIER_DISCOUNT_RATES: Readonly<Record<CustomerTier, number>> = {
+   STANDARD: 0,
+-  SILVER: 0.05,
++  SILVER: 0.06,
+   GOLD: 0.1,
+   PLATINUM: 0.15,
+ };

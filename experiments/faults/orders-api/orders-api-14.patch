@@ -1,0 +1,11 @@
+--- a/apps/orders-api/src/main/java/com/retailops/orders/order/OrderLines.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/order/OrderLines.java
+@@ -24,7 +24,7 @@
+         TreeMap<String, Integer> merged = new TreeMap<>();
+         for (OrderLineRequest line : lines) {
+             String sku = SkuValidator.normalize(line.sku());
+-            if (!SkuValidator.isValid(sku)) {
++            if (SkuValidator.isValid(sku)) {
+                 throw new BusinessRuleException("INVALID_SKU", "Invalid SKU '" + line.sku() + "'");
+             }
+             QuantityRules.requireValid(line.quantity());

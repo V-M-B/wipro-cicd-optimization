@@ -1,0 +1,11 @@
+--- a/apps/analytics/app/io/csv_io.py
++++ b/apps/analytics/app/io/csv_io.py
+@@ -187,7 +187,7 @@
+         if None in row:
+             collector.add(line, None, "too many fields")
+             continue
+-        if all(not (v or "").strip() for v in row.values()):
++        if all(not (v and "").strip() for v in row.values()):
+             continue  # ignore blank lines
+         rows.append((line, row))
+     return rows

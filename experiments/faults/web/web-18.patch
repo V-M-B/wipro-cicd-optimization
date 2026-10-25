@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/api.ts
++++ b/apps/web/src/lib/api.ts
+@@ -201,7 +201,7 @@
+     if (options.signal) init.signal = options.signal;
+ 
+     let lastError: ApiError = new ApiError('unknown', defaultMessage('unknown'));
+-    for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
++    for (let attempt = 0; attempt <= maxAttempts; attempt += 1) {
+       let retryAfter: number | undefined;
+       try {
+         const response = await this.fetchImpl(url, init);

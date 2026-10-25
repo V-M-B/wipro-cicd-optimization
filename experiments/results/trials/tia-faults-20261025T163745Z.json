@@ -1,0 +1,118 @@
+{
+  "head": "b17eecf2e72e7ad06e3f9c4ca33a089574640836",
+  "summary": {
+    "analytics": {
+      "faults": 2,
+      "detected_by_full": 1,
+      "not_viable": 0,
+      "undetected_by_suite": 1,
+      "hybrid_recall": 1.0,
+      "static_recall": 1.0,
+      "hybrid_mean_selected_share": 0.24242424242424243,
+      "static_mean_selected_share": 1.0,
+      "total_units": 33,
+      "hybrid_misses": [],
+      "static_misses": []
+    },
+    "web": {
+      "faults": 1,
+      "detected_by_full": 1,
+      "not_viable": 0,
+      "undetected_by_suite": 0,
+      "hybrid_recall": 1.0,
+      "static_recall": 1.0,
+      "hybrid_mean_selected_share": 0.4090909090909091,
+      "static_mean_selected_share": 0.8181818181818182,
+      "total_units": 44,
+      "hybrid_misses": [],
+      "static_misses": []
+    }
+  },
+  "results": [
+    {
+      "id": "web-01",
+      "app": "web",
+      "file": "apps/web/src/lib/cart.ts",
+      "line": 8,
+      "operator": "constant",
+      "before": "GOLD: 0.1,",
+      "after": "GOLD: 0.2,",
+      "patch": "experiments/faults/web/web-01.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [
+        "src/lib/__generated__/quote.generated.test.ts",
+        "src/lib/cart.discounts.test.ts",
+        "src/lib/cart.quote.test.ts"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 18,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 36,
+        "detected": true
+      },
+      "seconds": 20.1,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-01",
+      "app": "analytics",
+      "file": "apps/analytics/app/datasets.py",
+      "line": 193,
+      "operator": "constant",
+      "before": "active=rng.random() > 0.05,",
+      "after": "active=rng.random() > 0.06,",
+      "patch": "experiments/faults/analytics/analytics-01.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 20,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": false
+      },
+      "seconds": 26.1,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "analytics-02",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/customers.py",
+      "line": 145,
+      "operator": "relational",
+      "before": "if r == 2:",
+      "after": "if r != 2:",
+      "patch": "experiments/faults/analytics/analytics-02.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/metrics/test_customers_rfm.py",
+        "tests/metrics/test_customers_segments.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 8,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 42.0,
+      "status": "detected"
+    }
+  ]
+}

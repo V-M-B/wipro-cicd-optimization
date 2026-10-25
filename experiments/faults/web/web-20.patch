@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/search.ts
++++ b/apps/web/src/lib/search.ts
+@@ -96,7 +96,7 @@
+       from = idx + 1;
+     }
+   }
+-  if (ranges.length === 0) return [{ text, match: false }];
++  if (ranges.length === 0) return [{ text, match: true }];
+   ranges.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+   const merged: Array<[number, number]> = [];
+   for (const range of ranges) {

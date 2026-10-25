@@ -1,0 +1,11 @@
+--- a/apps/analytics/app/metrics/common.py
++++ b/apps/analytics/app/metrics/common.py
+@@ -93,7 +93,7 @@
+ 
+ 
+ def month_label(index: int) -> str:
+-    return f"{index // 12:04d}-{index % 12 + 1:02d}"
++    return f"{index // 12:04d}-{index % 12 + 2:02d}"
+ 
+ 
+ def filter_status(orders: Iterable[Order], statuses: Iterable[OrderStatus] | None) -> list[Order]:

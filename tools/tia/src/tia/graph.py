@@ -192,3 +192,93 @@ def reverse_closure(graph: dict[str, set[str]], tests: list[str]) -> dict[str, s
         for n in reachable(graph, t):
             out[n].add(t)
     return out
+
+
+# ----------------------------------------------------------------------------- pytest fixture-aware hubs
+def _fixture_info(hub: Path):
+    """Parse a conftest: fixture name -> (names referenced in its body, fixtures it requests, autouse),
+    module-level import bindings name -> dotted module, and whether it defines pytest hooks."""
+    tree = ast.parse(hub.read_text(encoding="utf-8", errors="replace"))
+    bindings: dict[str, str] = {}
+    for node in tree.body:
+        if isinstance(node, ast.Import):
+            for a in node.names:
+                bindings[(a.asname or a.name).split(".")[0]] = a.name if a.asname else a.name.split(".")[0]
+        elif isinstance(node, ast.ImportFrom) and node.module and not node.level:
+            for a in node.names:
+                bindings[a.asname or a.name] = f"{node.module}.{a.name}"
+    fixtures: dict[str, tuple[set[str], set[str], bool]] = {}
+    hooks = False
+    for node in tree.body:
+        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            continue
+        if node.name.startswith("pytest_"):
+            hooks = True
+        deco_src = [ast.unparse(d) for d in node.decorator_list]
+        if not any("fixture" in d for d in deco_src):
+            continue
+        autouse = any("autouse=True" in d.replace(" ", "") for d in deco_src)
+        names = {n.id for n in ast.walk(node) if isinstance(n, ast.Name)}
+        attrs = {n.value.id for n in ast.walk(node) if isinstance(n, ast.Attribute) and isinstance(n.value, ast.Name)}
+        requested = {a.arg for a in node.args.args}
+        fixtures[node.name] = (names | attrs, requested, autouse)
+    return fixtures, bindings, hooks
+
+
+def _requested_fixtures(test: Path) -> set[str]:
+    try:
+        tree = ast.parse(test.read_text(encoding="utf-8", errors="replace"))
+    except SyntaxError:
+        return set()
+    out: set[str] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            out |= {a.arg for a in node.args.args}
+        elif isinstance(node, ast.Constant) and isinstance(node.value, str):
+            out.add(node.value)  # pytest.mark.usefixtures("name") and indirect parametrization
+    return out
+
+
+def fixture_aware_hub_edges(hub: Path, tests: list[Path], files: list[Path], repo: Path,
+                            roots: list[Path]) -> dict[str, set[str]] | None:
+    """For each test file beneath the hub, the files it depends on *through* the hub's fixtures.
+    Returns None if the hub defines pytest hooks (then every test depends on all of it)."""
+    fixtures, bindings, hooks = _fixture_info(hub)
+    if hooks:
+        return None
+    index = _py_module_index(files, roots)
+
+    def module_files(dotted: str) -> set[str]:
+        parts = dotted.split(".")
+        out = set()
+        for i in range(1, len(parts) + 1):
+            f = index.get(".".join(parts[:i]))
+            if f is not None:
+                out.add(rel(f, repo))
+        return out
+
+    def fixture_deps(name: str, seen: set[str]) -> set[str]:
+        if name in seen or name not in fixtures:
+            return set()
+        seen.add(name)
+        names, requested, _ = fixtures[name]
+        deps: set[str] = set()
+        for n in names:
+            if n in bindings:
+                deps |= module_files(bindings[n])
+        for r in requested:
+            deps |= fixture_deps(r, seen)
+        return deps
+
+    autouse = {n for n, (_, _, au) in fixtures.items() if au}
+    hub_dir = hub.parent.resolve()
+    out: dict[str, set[str]] = {}
+    for t in tests:
+        if not t.resolve().is_relative_to(hub_dir):
+            continue
+        used = (_requested_fixtures(t) & set(fixtures)) | autouse
+        deps: set[str] = set()
+        for u in used:
+            deps |= fixture_deps(u, set())
+        out[rel(t, repo)] = deps
+    return out

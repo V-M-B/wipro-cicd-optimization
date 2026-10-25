@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/money.ts
++++ b/apps/web/src/lib/money.ts
+@@ -20,7 +20,7 @@
+   const floor = Math.floor(scaled);
+   const diff = scaled - floor;
+   let rounded: number;
+-  if (Math.abs(diff - 0.5) < HALF_EPSILON) {
++  if (Math.abs(diff - 0.5) <= HALF_EPSILON) {
+     rounded = floor % 2 === 0 ? floor : floor + 1;
+   } else {
+     rounded = Math.round(scaled);

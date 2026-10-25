@@ -1,0 +1,11 @@
+--- a/apps/analytics/app/metrics/timeseries.py
++++ b/apps/analytics/app/metrics/timeseries.py
+@@ -45,7 +45,7 @@
+         running += v
+         if i >= window:
+             running -= values[i - window]
+-        out.append(running / window if i >= window - 1 else None)
++        out.append(running / window if i >= window - 2 else None)
+     return out
+ 
+ 

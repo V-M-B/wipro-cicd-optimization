@@ -1,0 +1,79 @@
+diff --git a/apps/analytics/app/api.py b/apps/analytics/app/api.py
+index d02ff37..8f6893b 100644
+--- a/apps/analytics/app/api.py
++++ b/apps/analytics/app/api.py
+@@ -170,6 +170,7 @@ def order_funnel(req: FunnelRequest) -> dict[str, object]:
+         "stages": [s.as_dict() for s in stages],
+         "status_counts": fun.status_counts(req.orders),
+         "cancellation_rate": fun.cancellation_rate(req.orders),
++        "overall_conversion": fun.overall_conversion(stages),
+         "bottleneck": fun.bottleneck(stages),
+     }
+     if req.by_region:
+diff --git a/apps/analytics/app/metrics/funnel.py b/apps/analytics/app/metrics/funnel.py
+index cd59b62..2a89eea 100644
+--- a/apps/analytics/app/metrics/funnel.py
++++ b/apps/analytics/app/metrics/funnel.py
+@@ -77,6 +77,13 @@ def cancellation_rate(orders: Iterable[Order]) -> float:
+     return round(safe_div(counts[OrderStatus.CANCELLED.value], total), 4)
+ 
+ 
++def overall_conversion(stages: list[FunnelStage]) -> float:
++    """Share of created orders that were delivered (0.0 for an empty funnel)."""
++    if not stages:
++        return 0.0
++    return stages[-1].conversion_from_start
++
++
+ def bottleneck(stages: list[FunnelStage]) -> str | None:
+     """Stage with the lowest conversion from its previous stage (first stage excluded)."""
+     candidates = [s for s in stages[1:] if stages[0].reached > 0]
+diff --git a/apps/analytics/tests/api/test_funnel_api.py b/apps/analytics/tests/api/test_funnel_api.py
+index 94fd82c..bec1d39 100644
+--- a/apps/analytics/tests/api/test_funnel_api.py
++++ b/apps/analytics/tests/api/test_funnel_api.py
+@@ -5,6 +5,7 @@ def test_funnel(client, tiny_payload):
+     body = client.post("/funnel", json={"orders": tiny_payload["orders"]}).json()
+     assert [s["reached"] for s in body["stages"]] == [8, 6, 5, 4]
+     assert body["cancellation_rate"] == 0.125
++    assert body["overall_conversion"] == 0.5
+     assert body["bottleneck"] == "PAID"
+     assert body["status_counts"]["DELIVERED"] == 4
+     assert "by_region" not in body
+@@ -20,3 +21,4 @@ def test_funnel_empty(client):
+     body = client.post("/funnel", json={"orders": []}).json()
+     assert body["bottleneck"] is None
+     assert body["cancellation_rate"] == 0.0
++    assert body["overall_conversion"] == 0.0
+diff --git a/apps/analytics/tests/metrics/test_funnel.py b/apps/analytics/tests/metrics/test_funnel.py
+index 7b77545..28cbab0 100644
+--- a/apps/analytics/tests/metrics/test_funnel.py
++++ b/apps/analytics/tests/metrics/test_funnel.py
+@@ -102,6 +102,27 @@ def test_funnel_by_region(tiny_orders, tiny_customers):
+     }
+ 
+ 
++def test_overall_conversion_tiny(tiny_orders):
++    # 8 orders reach CREATED, 4 are delivered
++    assert funnel.overall_conversion(funnel.funnel(tiny_orders)) == 0.5
++
++
++@pytest.mark.parametrize(
++    ("statuses", "expected"),
++    [
++        ([], 0.0),
++        ([OrderStatus.CANCELLED, OrderStatus.CANCELLED], 0.0),
++        ([OrderStatus.DELIVERED, OrderStatus.DELIVERED, OrderStatus.SHIPPED], 0.6667),
++    ],
++)
++def test_overall_conversion(statuses, expected):
++    assert funnel.overall_conversion(funnel.funnel(_orders(statuses))) == expected
++
++
++def test_overall_conversion_without_stages():
++    assert funnel.overall_conversion([]) == 0.0
++
++
+ def test_cancellation_by_period(tiny_orders):
+     assert funnel.cancellation_by_period(tiny_orders) == {"2025-01": 0.0, "2025-02": 0.3333, "2025-03": 0.0}
+ 

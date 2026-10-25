@@ -1,0 +1,11 @@
+--- a/apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponRepository.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponRepository.java
+@@ -12,7 +12,7 @@
+     @Query("""
+             select c from CouponEntity c
+             where c.active = true
+-              and (c.validFrom is null or c.validFrom <= :date)
++              and (c.validFrom is null or c.validFrom < :date)
+               and (c.expiresOn is null or c.expiresOn >= :date)
+             order by c.code""")
+     List<CouponEntity> findRedeemableOn(@Param("date") LocalDate date);

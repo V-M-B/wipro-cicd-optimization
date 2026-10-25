@@ -1,0 +1,600 @@
+{
+  "head": "b17eecf2e72e7ad06e3f9c4ca33a089574640836",
+  "summary": {
+    "analytics": {
+      "faults": 20,
+      "detected_by_full": 15,
+      "not_viable": 0,
+      "undetected_by_suite": 5,
+      "hybrid_recall": 0.9333333333333333,
+      "static_recall": 1.0,
+      "hybrid_mean_selected_share": 0.25252525252525254,
+      "static_mean_selected_share": 1.0,
+      "total_units": 33,
+      "hybrid_misses": [
+        "analytics-19"
+      ],
+      "static_misses": []
+    }
+  },
+  "results": [
+    {
+      "id": "analytics-01",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/timeseries.py",
+      "line": 249,
+      "operator": "relational",
+      "before": "if abs(z) > threshold:",
+      "after": "if abs(z) >= threshold:",
+      "patch": "experiments/faults/analytics/analytics-01.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 5,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": false
+      },
+      "seconds": 21.4,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "analytics-02",
+      "app": "analytics",
+      "file": "apps/analytics/app/io/csv_io.py",
+      "line": 190,
+      "operator": "logical",
+      "before": "if all(not (v or \"\").strip() for v in row.values()):",
+      "after": "if all(not (v and \"\").strip() for v in row.values()):",
+      "patch": "experiments/faults/analytics/analytics-02.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/api/test_csv_api.py",
+        "tests/io/test_csv_customers.py",
+        "tests/io/test_csv_large.py",
+        "tests/io/test_csv_orders.py",
+        "tests/io/test_csv_products.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 6,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 22.0,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-03",
+      "app": "analytics",
+      "file": "apps/analytics/app/datasets.py",
+      "line": 209,
+      "operator": "constant",
+      "before": "activity = [rng.paretovariate(1.6) * TIER_ACTIVITY[c.tier] for c in customers]",
+      "after": "activity = [rng.paretovariate(1.7) * TIER_ACTIVITY[c.tier] for c in customers]",
+      "patch": "experiments/faults/analytics/analytics-03.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 20,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": false
+      },
+      "seconds": 22.1,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "analytics-04",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/timeseries.py",
+      "line": 83,
+      "operator": "relational",
+      "before": "if horizon < 0:",
+      "after": "if horizon <= 0:",
+      "patch": "experiments/faults/analytics/analytics-04.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/metrics/test_timeseries_smoothing.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 5,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 22.0,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-05",
+      "app": "analytics",
+      "file": "apps/analytics/app/io/csv_io.py",
+      "line": 269,
+      "operator": "logical",
+      "before": "coupon = (row.get(\"coupon_code\") or \"\").strip() or None",
+      "after": "coupon = (row.get(\"coupon_code\") or \"\").strip() and None",
+      "patch": "experiments/faults/analytics/analytics-05.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/io/test_csv_large.py",
+        "tests/io/test_csv_orders.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 6,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 23.0,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-06",
+      "app": "analytics",
+      "file": "apps/analytics/app/io/csv_io.py",
+      "line": 212,
+      "operator": "relational",
+      "before": "if col.count == before:",
+      "after": "if col.count != before:",
+      "patch": "experiments/faults/analytics/analytics-06.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/api/test_csv_api.py",
+        "tests/io/test_csv_customers.py",
+        "tests/io/test_csv_large.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 6,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 23.5,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-07",
+      "app": "analytics",
+      "file": "apps/analytics/app/datasets.py",
+      "line": 240,
+      "operator": "relational",
+      "before": "if rng.random() < config.bundle_rate:",
+      "after": "if rng.random() <= config.bundle_rate:",
+      "patch": "experiments/faults/analytics/analytics-07.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 20,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": false
+      },
+      "seconds": 21.6,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "analytics-08",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/revenue.py",
+      "line": 90,
+      "operator": "logical",
+      "before": "if lo is None or hi is None:",
+      "after": "if lo is None and hi is None:",
+      "patch": "experiments/faults/analytics/analytics-08.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 10,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": false
+      },
+      "seconds": 21.8,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "analytics-09",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/common.py",
+      "line": 96,
+      "operator": "off-by-one",
+      "before": "return f\"{index // 12:04d}-{index % 12 + 1:02d}\"",
+      "after": "return f\"{index // 12:04d}-{index % 12 + 2:02d}\"",
+      "patch": "experiments/faults/analytics/analytics-09.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/api/test_customers_api.py",
+        "tests/metrics/test_cohorts.py",
+        "tests/metrics/test_common.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 27,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 22.6,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-10",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/common.py",
+      "line": 61,
+      "operator": "relational",
+      "before": "if granularity == \"week\":",
+      "after": "if granularity != \"week\":",
+      "patch": "experiments/faults/analytics/analytics-10.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/api/test_revenue_api.py",
+        "tests/api/test_timeseries_api.py",
+        "tests/metrics/test_common.py",
+        "tests/metrics/test_funnel.py",
+        "tests/metrics/test_revenue.py",
+        "tests/metrics/test_revenue_large.py",
+        "tests/metrics/test_timeseries_growth.py",
+        "tests/metrics/test_timeseries_large.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 27,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 24.7,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-11",
+      "app": "analytics",
+      "file": "apps/analytics/app/io/csv_io.py",
+      "line": 175,
+      "operator": "logical",
+      "before": "header = [h.strip() for h in (reader.fieldnames or [])]",
+      "after": "header = [h.strip() for h in (reader.fieldnames and [])]",
+      "patch": "experiments/faults/analytics/analytics-11.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/api/test_csv_api.py",
+        "tests/io/test_csv_customers.py",
+        "tests/io/test_csv_large.py",
+        "tests/io/test_csv_orders.py",
+        "tests/io/test_csv_products.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 6,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 21.8,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-12",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/timeseries.py",
+      "line": 55,
+      "operator": "off-by-one",
+      "before": "denom = window * (window + 1) / 2",
+      "after": "denom = window * (window + 2) / 2",
+      "patch": "experiments/faults/analytics/analytics-12.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/api/test_timeseries_api.py",
+        "tests/metrics/test_timeseries_smoothing.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 5,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 24.8,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-13",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/customers.py",
+      "line": 283,
+      "operator": "constant",
+      "before": "gross_margin: float = 0.3,",
+      "after": "gross_margin: float = 0.4,",
+      "patch": "experiments/faults/analytics/analytics-13.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 8,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": false
+      },
+      "seconds": 27.5,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "analytics-14",
+      "app": "analytics",
+      "file": "apps/analytics/app/io/csv_io.py",
+      "line": 162,
+      "operator": "logical",
+      "before": "return parser(row.get(name) or \"\")",
+      "after": "return parser(row.get(name) and \"\")",
+      "patch": "experiments/faults/analytics/analytics-14.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/api/test_csv_api.py",
+        "tests/io/test_csv_customers.py",
+        "tests/io/test_csv_large.py",
+        "tests/io/test_csv_orders.py",
+        "tests/io/test_csv_products.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 6,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 22.7,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-15",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/customers.py",
+      "line": 267,
+      "operator": "off-by-one",
+      "before": "rates = [len(active[m] & active[m + 1]) / len(active[m]) for m in months if active[m]]",
+      "after": "rates = [len(active[m] & active[m + 2]) / len(active[m]) for m in months if active[m]]",
+      "patch": "experiments/faults/analytics/analytics-15.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/metrics/test_churn_clv.py",
+        "tests/metrics/test_cohorts.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 8,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 22.5,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-16",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/timeseries.py",
+      "line": 48,
+      "operator": "off-by-one",
+      "before": "out.append(running / window if i >= window - 1 else None)",
+      "after": "out.append(running / window if i >= window - 2 else None)",
+      "patch": "experiments/faults/analytics/analytics-16.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/api/test_timeseries_api.py",
+        "tests/metrics/test_timeseries_smoothing.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 5,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 24.3,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-17",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/timeseries.py",
+      "line": 58,
+      "operator": "off-by-one",
+      "before": "if i < window - 1:",
+      "after": "if i < window - 2:",
+      "patch": "experiments/faults/analytics/analytics-17.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/api/test_timeseries_api.py",
+        "tests/metrics/test_timeseries_smoothing.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 5,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 22.1,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-18",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/products.py",
+      "line": 132,
+      "operator": "constant",
+      "before": "a: float = 0.8,",
+      "after": "a: float = 0.9,",
+      "patch": "experiments/faults/analytics/analytics-18.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/metrics/test_abc.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 6,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 22.4,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-19",
+      "app": "analytics",
+      "file": "apps/analytics/app/api_models.py",
+      "line": 37,
+      "operator": "constant",
+      "before": "a: float = 0.8",
+      "after": "a: float = 0.9",
+      "patch": "experiments/faults/analytics/analytics-19.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/api/test_products_api.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 2,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 23.4,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-20",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/timeseries.py",
+      "line": 217,
+      "operator": "constant",
+      "before": "def iqr_anomalies(values: Sequence[float], k: float = 1.5) -> list[Anomaly]:",
+      "after": "def iqr_anomalies(values: Sequence[float], k: float = 1.6) -> list[Anomaly]:",
+      "patch": "experiments/faults/analytics/analytics-20.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/metrics/test_timeseries_anomalies.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 5,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 22.5,
+      "status": "detected"
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+diff --git a/apps/web/src/lib/kpi.test.ts b/apps/web/src/lib/kpi.test.ts
+index de0baf7..e19b021 100644
+--- a/apps/web/src/lib/kpi.test.ts
++++ b/apps/web/src/lib/kpi.test.ts
+@@ -76,12 +76,18 @@ describe('status KPIs', () => {
+ describe('volume KPIs', () => {
+   it('ranks SKUs by units, excluding cancelled orders', () => {
+     expect(topSkus(orders)).toEqual([
+-      { sku: 'GRO-2001', quantity: 6 },
+-      { sku: 'APP-3001', quantity: 3 },
+-      { sku: 'ELE-1001', quantity: 3 },
+-      { sku: 'TOY-5001', quantity: 3 },
++      { sku: 'GRO-2001', quantity: 6, share: 0.4 },
++      { sku: 'APP-3001', quantity: 3, share: 0.2 },
++      { sku: 'ELE-1001', quantity: 3, share: 0.2 },
++      { sku: 'TOY-5001', quantity: 3, share: 0.2 },
+     ]);
+-    expect(topSkus(orders, 1)).toEqual([{ sku: 'GRO-2001', quantity: 6 }]);
++    expect(topSkus(orders, 1)).toEqual([{ sku: 'GRO-2001', quantity: 6, share: 0.4 }]);
++  });
++
++  it('reports a zero share when nothing has sold', () => {
++    const cancelled = orders.map((o) => ({ ...o, status: 'CANCELLED' as const }));
++    expect(topSkus(cancelled)).toEqual([]);
++    expect(topSkus([])).toEqual([]);
+   });
+ 
+   it('buckets orders per UTC day over a trailing window', () => {
+diff --git a/apps/web/src/lib/kpi.ts b/apps/web/src/lib/kpi.ts
+index 271a8f6..669a9e4 100644
+--- a/apps/web/src/lib/kpi.ts
++++ b/apps/web/src/lib/kpi.ts
+@@ -51,17 +51,23 @@ export function cancellationRate(orders: readonly Order[]): number {
+ export interface SkuVolume {
+   sku: string;
+   quantity: number;
++  /** Share of all units sold (0..1), across every SKU and not just the ones returned. */
++  share: number;
+ }
+ 
+ /** Best-selling SKUs by units across non-cancelled orders; ties broken by SKU. */
+ export function topSkus(orders: readonly Order[], limit = 5): SkuVolume[] {
+   const volume = new Map<string, number>();
++  let totalUnits = 0;
+   for (const order of orders) {
+     if (order.status === 'CANCELLED') continue;
+-    for (const line of order.lines) volume.set(line.sku, (volume.get(line.sku) ?? 0) + line.quantity);
++    for (const line of order.lines) {
++      volume.set(line.sku, (volume.get(line.sku) ?? 0) + line.quantity);
++      totalUnits += line.quantity;
++    }
+   }
+   return [...volume.entries()]
+-    .map(([sku, quantity]) => ({ sku, quantity }))
++    .map(([sku, quantity]) => ({ sku, quantity, share: totalUnits === 0 ? 0 : quantity / totalUnits }))
+     .sort((a, b) => b.quantity - a.quantity || a.sku.localeCompare(b.sku, 'en'))
+     .slice(0, limit);
+ }
+diff --git a/apps/web/src/pages/DashboardPage.test.tsx b/apps/web/src/pages/DashboardPage.test.tsx
+index d5da670..ba4a2c4 100644
+--- a/apps/web/src/pages/DashboardPage.test.tsx
++++ b/apps/web/src/pages/DashboardPage.test.tsx
+@@ -40,6 +40,9 @@ describe('DashboardPage', () => {
+     const top = screen.getByRole('list', { name: 'Top products' });
+     expect(within(top).getAllByRole('listitem').length).toBeGreaterThan(0);
+     expect(within(top).getAllByRole('listitem').length).toBeLessThanOrEqual(5);
++    for (const item of within(top).getAllByRole('listitem')) {
++      expect(item).toHaveTextContent(/^[A-Z]{3}-\d{4} · [\d,]+ units \(\d+%\)$/);
++    }
+   });
+ 
+   it('charts the last seven days relative to the current date', async () => {
+diff --git a/apps/web/src/pages/DashboardPage.tsx b/apps/web/src/pages/DashboardPage.tsx
+index efcb02e..78de71f 100644
+--- a/apps/web/src/pages/DashboardPage.tsx
++++ b/apps/web/src/pages/DashboardPage.tsx
+@@ -83,7 +83,7 @@ export function DashboardPage() {
+             <ol className="plain-list" aria-label="Top products">
+               {kpis.topSkus.map((item) => (
+                 <li key={item.sku}>
+-                  <code>{item.sku}</code> &middot; {formatNumber(item.quantity)} units
++                  <code>{item.sku}</code> &middot; {formatNumber(item.quantity)} units ({formatPercent(item.share)})
+                 </li>
+               ))}
+             </ol>

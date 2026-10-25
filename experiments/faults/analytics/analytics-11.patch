@@ -1,0 +1,11 @@
+--- a/apps/analytics/app/io/csv_io.py
++++ b/apps/analytics/app/io/csv_io.py
+@@ -172,7 +172,7 @@
+ def _rows(source: str | TextIO, required: tuple[str, ...], collector: _Collector) -> list[tuple[int, dict[str, str]]]:
+     stream = io.StringIO(source) if isinstance(source, str) else source
+     reader = csv.DictReader(stream)
+-    header = [h.strip() for h in (reader.fieldnames or [])]
++    header = [h.strip() for h in (reader.fieldnames and [])]
+     if not header:
+         collector.add(1, None, "missing header row")
+         collector.raise_if_any()

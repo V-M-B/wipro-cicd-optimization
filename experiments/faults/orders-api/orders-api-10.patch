@@ -1,0 +1,11 @@
+--- a/apps/orders-api/src/main/java/com/retailops/orders/inventory/StockLevel.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/inventory/StockLevel.java
+@@ -6,7 +6,7 @@
+ public record StockLevel(String sku, int onHand, int reserved) {
+ 
+     public StockLevel {
+-        if (onHand < 0 || reserved < 0) {
++        if (onHand < 0 && reserved < 0) {
+             throw new IllegalArgumentException("stock quantities must not be negative");
+         }
+         if (reserved > onHand) {

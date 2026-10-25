@@ -1,0 +1,605 @@
+{
+  "seed": 7,
+  "faults": [
+    {
+      "id": "orders-api-01",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/pricing/PricingProperties.java",
+      "line": 46,
+      "operator": "logical",
+      "before": "if (freeShippingThreshold.signum() < 0 || perUnitShippingSurcharge.signum() < 0 || surchargeFreeUnits < 0) {",
+      "after": "if (freeShippingThreshold.signum() < 0 || perUnitShippingSurcharge.signum() < 0 && surchargeFreeUnits < 0) {",
+      "patch": "experiments/faults/orders-api/orders-api-01.patch"
+    },
+    {
+      "id": "orders-api-02",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponRepository.java",
+      "line": 15,
+      "operator": "relational",
+      "before": "and (c.validFrom is null or c.validFrom <= :date)",
+      "after": "and (c.validFrom is null or c.validFrom < :date)",
+      "patch": "experiments/faults/orders-api/orders-api-02.patch"
+    },
+    {
+      "id": "orders-api-03",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/api/PageResponse.java",
+      "line": 21,
+      "operator": "relational",
+      "before": "return page + 1 < totalPages;",
+      "after": "return page + 1 <= totalPages;",
+      "patch": "experiments/faults/orders-api/orders-api-03.patch"
+    },
+    {
+      "id": "orders-api-04",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/validation/QuantityRules.java",
+      "line": 15,
+      "operator": "relational",
+      "before": "return quantity >= MIN && quantity <= MAX;",
+      "after": "return quantity > MIN && quantity <= MAX;",
+      "patch": "experiments/faults/orders-api/orders-api-04.patch"
+    },
+    {
+      "id": "orders-api-05",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/validation/SkuValidator.java",
+      "line": 22,
+      "operator": "relational",
+      "before": "return sku == null ? null : sku.trim().toUpperCase(Locale.ROOT);",
+      "after": "return sku != null ? null : sku.trim().toUpperCase(Locale.ROOT);",
+      "patch": "experiments/faults/orders-api/orders-api-05.patch"
+    },
+    {
+      "id": "orders-api-06",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/inventory/InventoryService.java",
+      "line": 61,
+      "operator": "relational",
+      "before": "if (stockRepository.release(sku, quantity) == 0) {",
+      "after": "if (stockRepository.release(sku, quantity) != 0) {",
+      "patch": "experiments/faults/orders-api/orders-api-06.patch"
+    },
+    {
+      "id": "orders-api-07",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/order/OrderFilter.java",
+      "line": 14,
+      "operator": "logical",
+      "before": "if (customerId != null && customerId.isBlank()) {",
+      "after": "if (customerId != null || customerId.isBlank()) {",
+      "patch": "experiments/faults/orders-api/orders-api-07.patch"
+    },
+    {
+      "id": "orders-api-08",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/pricing/Coupon.java",
+      "line": 28,
+      "operator": "logical",
+      "before": "if (type == CouponType.PERCENTAGE && value.compareTo(new BigDecimal(\"100\")) > 0) {",
+      "after": "if (type == CouponType.PERCENTAGE || value.compareTo(new BigDecimal(\"100\")) > 0) {",
+      "patch": "experiments/faults/orders-api/orders-api-08.patch"
+    },
+    {
+      "id": "orders-api-09",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponEvaluator.java",
+      "line": 45,
+      "operator": "boolean",
+      "before": "case FIXED_AMOUNT -> new CouponOutcome(Money.min(Money.round(coupon.value()), discountBase), false);",
+      "after": "case FIXED_AMOUNT -> new CouponOutcome(Money.min(Money.round(coupon.value()), discountBase), true);",
+      "patch": "experiments/faults/orders-api/orders-api-09.patch"
+    },
+    {
+      "id": "orders-api-10",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/inventory/StockLevel.java",
+      "line": 9,
+      "operator": "logical",
+      "before": "if (onHand < 0 || reserved < 0) {",
+      "after": "if (onHand < 0 && reserved < 0) {",
+      "patch": "experiments/faults/orders-api/orders-api-10.patch"
+    },
+    {
+      "id": "orders-api-11",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponEvaluator.java",
+      "line": 20,
+      "operator": "negation",
+      "before": "if (!coupon.active()) {",
+      "after": "if (coupon.active()) {",
+      "patch": "experiments/faults/orders-api/orders-api-11.patch"
+    },
+    {
+      "id": "orders-api-12",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponRepository.java",
+      "line": 14,
+      "operator": "boolean",
+      "before": "where c.active = true",
+      "after": "where c.active = false",
+      "patch": "experiments/faults/orders-api/orders-api-12.patch"
+    },
+    {
+      "id": "orders-api-13",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/validation/EmailValidator.java",
+      "line": 37,
+      "operator": "boolean",
+      "before": "return false;",
+      "after": "return true;",
+      "patch": "experiments/faults/orders-api/orders-api-13.patch"
+    },
+    {
+      "id": "orders-api-14",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/order/OrderLines.java",
+      "line": 27,
+      "operator": "negation",
+      "before": "if (!SkuValidator.isValid(sku)) {",
+      "after": "if (SkuValidator.isValid(sku)) {",
+      "patch": "experiments/faults/orders-api/orders-api-14.patch"
+    },
+    {
+      "id": "orders-api-15",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponEvaluator.java",
+      "line": 43,
+      "operator": "boolean",
+      "before": "yield new CouponOutcome(Money.min(discount, discountBase), false);",
+      "after": "yield new CouponOutcome(Money.min(discount, discountBase), true);",
+      "patch": "experiments/faults/orders-api/orders-api-15.patch"
+    },
+    {
+      "id": "orders-api-16",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/order/OrderStateMachine.java",
+      "line": 48,
+      "operator": "negation",
+      "before": "if (!canTransition(from, to)) {",
+      "after": "if (canTransition(from, to)) {",
+      "patch": "experiments/faults/orders-api/orders-api-16.patch"
+    },
+    {
+      "id": "orders-api-17",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/validation/EmailValidator.java",
+      "line": 24,
+      "operator": "boolean",
+      "before": "return false;",
+      "after": "return true;",
+      "patch": "experiments/faults/orders-api/orders-api-17.patch"
+    },
+    {
+      "id": "orders-api-18",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/pricing/ShippingPolicy.java",
+      "line": 27,
+      "operator": "logical",
+      "before": "|| tier == CustomerTier.PLATINUM",
+      "after": "&& tier == CustomerTier.PLATINUM",
+      "patch": "experiments/faults/orders-api/orders-api-18.patch"
+    },
+    {
+      "id": "orders-api-19",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/validation/QuantityRules.java",
+      "line": 19,
+      "operator": "negation",
+      "before": "if (!isValid(quantity)) {",
+      "after": "if (isValid(quantity)) {",
+      "patch": "experiments/faults/orders-api/orders-api-19.patch"
+    },
+    {
+      "id": "orders-api-20",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/validation/EmailValidator.java",
+      "line": 32,
+      "operator": "negation",
+      "before": "if (local.length() > MAX_LOCAL_LENGTH || !LOCAL.matcher(local).matches()) {",
+      "after": "if (local.length() > MAX_LOCAL_LENGTH || LOCAL.matcher(local).matches()) {",
+      "patch": "experiments/faults/orders-api/orders-api-20.patch"
+    },
+    {
+      "id": "web-01",
+      "app": "web",
+      "file": "apps/web/src/lib/cart.ts",
+      "line": 8,
+      "operator": "constant",
+      "before": "GOLD: 0.1,",
+      "after": "GOLD: 0.2,",
+      "patch": "experiments/faults/web/web-01.patch"
+    },
+    {
+      "id": "web-02",
+      "app": "web",
+      "file": "apps/web/src/lib/csv.ts",
+      "line": 63,
+      "operator": "boolean",
+      "before": "inQuotes = false;",
+      "after": "inQuotes = true;",
+      "patch": "experiments/faults/web/web-02.patch"
+    },
+    {
+      "id": "web-03",
+      "app": "web",
+      "file": "apps/web/src/lib/money.ts",
+      "line": 23,
+      "operator": "relational",
+      "before": "if (Math.abs(diff - 0.5) < HALF_EPSILON) {",
+      "after": "if (Math.abs(diff - 0.5) <= HALF_EPSILON) {",
+      "patch": "experiments/faults/web/web-03.patch"
+    },
+    {
+      "id": "web-04",
+      "app": "web",
+      "file": "apps/web/src/lib/dates.ts",
+      "line": 9,
+      "operator": "boolean",
+      "before": "if (month < 1 || month > 12 || day < 1) return false;",
+      "after": "if (month < 1 || month > 12 || day < 1) return true;",
+      "patch": "experiments/faults/web/web-04.patch"
+    },
+    {
+      "id": "web-05",
+      "app": "web",
+      "file": "apps/web/src/lib/orderQuery.ts",
+      "line": 40,
+      "operator": "boolean",
+      "before": "if (filters.maxTotal !== undefined && order.total > filters.maxTotal) return false;",
+      "after": "if (filters.maxTotal !== undefined && order.total > filters.maxTotal) return true;",
+      "patch": "experiments/faults/web/web-05.patch"
+    },
+    {
+      "id": "web-06",
+      "app": "web",
+      "file": "apps/web/src/lib/orderQuery.ts",
+      "line": 89,
+      "operator": "logical",
+      "before": "return [...orders].sort((a, b) => sign * cmp(a, b) || a.id.localeCompare(b.id, 'en'));",
+      "after": "return [...orders].sort((a, b) => sign * cmp(a, b) && a.id.localeCompare(b.id, 'en'));",
+      "patch": "experiments/faults/web/web-06.patch"
+    },
+    {
+      "id": "web-07",
+      "app": "web",
+      "file": "apps/web/src/lib/cart.ts",
+      "line": 96,
+      "operator": "logical",
+      "before": "if (!Number.isInteger(line.quantity) || line.quantity < 1) {",
+      "after": "if (!Number.isInteger(line.quantity) && line.quantity < 1) {",
+      "patch": "experiments/faults/web/web-07.patch"
+    },
+    {
+      "id": "web-08",
+      "app": "web",
+      "file": "apps/web/src/lib/dates.ts",
+      "line": 33,
+      "operator": "logical",
+      "before": "if (!isValidCalendarDate(y, m, d) || hh > 23 || mm > 59 || ss > 59) return null;",
+      "after": "if (!isValidCalendarDate(y, m, d) || hh > 23 && mm > 59 || ss > 59) return null;",
+      "patch": "experiments/faults/web/web-08.patch"
+    },
+    {
+      "id": "web-09",
+      "app": "web",
+      "file": "apps/web/src/lib/format.ts",
+      "line": 14,
+      "operator": "negation",
+      "before": "if (!formatter) {",
+      "after": "if (formatter) {",
+      "patch": "experiments/faults/web/web-09.patch"
+    },
+    {
+      "id": "web-10",
+      "app": "web",
+      "file": "apps/web/src/lib/orderQuery.ts",
+      "line": 33,
+      "operator": "logical",
+      "before": "if (filters.status && filters.status !== 'ALL' && order.status !== filters.status) return false;",
+      "after": "if (filters.status || filters.status !== 'ALL' && order.status !== filters.status) return false;",
+      "patch": "experiments/faults/web/web-10.patch"
+    },
+    {
+      "id": "web-11",
+      "app": "web",
+      "file": "apps/web/src/lib/orderStatus.ts",
+      "line": 77,
+      "operator": "relational",
+      "before": "while (queue.length > 0) {",
+      "after": "while (queue.length >= 0) {",
+      "patch": "experiments/faults/web/web-11.patch"
+    },
+    {
+      "id": "web-12",
+      "app": "web",
+      "file": "apps/web/src/lib/orderQuery.ts",
+      "line": 47,
+      "operator": "boolean",
+      "before": "return true;",
+      "after": "return false;",
+      "patch": "experiments/faults/web/web-12.patch"
+    },
+    {
+      "id": "web-13",
+      "app": "web",
+      "file": "apps/web/src/lib/cart.ts",
+      "line": 7,
+      "operator": "constant",
+      "before": "SILVER: 0.05,",
+      "after": "SILVER: 0.06,",
+      "patch": "experiments/faults/web/web-13.patch"
+    },
+    {
+      "id": "web-14",
+      "app": "web",
+      "file": "apps/web/src/lib/api.ts",
+      "line": 45,
+      "operator": "relational",
+      "before": "if (status >= 500 && status <= 599) return 'server';",
+      "after": "if (status >= 500 && status < 599) return 'server';",
+      "patch": "experiments/faults/web/web-14.patch"
+    },
+    {
+      "id": "web-15",
+      "app": "web",
+      "file": "apps/web/src/lib/validators.ts",
+      "line": 80,
+      "operator": "negation",
+      "before": "} else if (!isValidCustomerId(draft.customerId)) {",
+      "after": "} else if (isValidCustomerId(draft.customerId)) {",
+      "patch": "experiments/faults/web/web-15.patch"
+    },
+    {
+      "id": "web-16",
+      "app": "web",
+      "file": "apps/web/src/lib/cart.ts",
+      "line": 155,
+      "operator": "relational",
+      "before": "if (amount <= 0) return 0;",
+      "after": "if (amount < 0) return 0;",
+      "patch": "experiments/faults/web/web-16.patch"
+    },
+    {
+      "id": "web-17",
+      "app": "web",
+      "file": "apps/web/src/lib/orderQuery.ts",
+      "line": 41,
+      "operator": "logical",
+      "before": "if ((filters.from || filters.to) && !isWithinDateRange(order.createdAt, filters.from, filters.to)) return false;",
+      "after": "if ((filters.from || filters.to) || !isWithinDateRange(order.createdAt, filters.from, filters.to)) return false;",
+      "patch": "experiments/faults/web/web-17.patch"
+    },
+    {
+      "id": "web-18",
+      "app": "web",
+      "file": "apps/web/src/lib/api.ts",
+      "line": 204,
+      "operator": "relational",
+      "before": "for (let attempt = 0; attempt < maxAttempts; attempt += 1) {",
+      "after": "for (let attempt = 0; attempt <= maxAttempts; attempt += 1) {",
+      "patch": "experiments/faults/web/web-18.patch"
+    },
+    {
+      "id": "web-19",
+      "app": "web",
+      "file": "apps/web/src/lib/cart.ts",
+      "line": 82,
+      "operator": "negation",
+      "before": "if (!coupon) {",
+      "after": "if (coupon) {",
+      "patch": "experiments/faults/web/web-19.patch"
+    },
+    {
+      "id": "web-20",
+      "app": "web",
+      "file": "apps/web/src/lib/search.ts",
+      "line": 99,
+      "operator": "boolean",
+      "before": "if (ranges.length === 0) return [{ text, match: false }];",
+      "after": "if (ranges.length === 0) return [{ text, match: true }];",
+      "patch": "experiments/faults/web/web-20.patch"
+    },
+    {
+      "id": "analytics-01",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/timeseries.py",
+      "line": 249,
+      "operator": "relational",
+      "before": "if abs(z) > threshold:",
+      "after": "if abs(z) >= threshold:",
+      "patch": "experiments/faults/analytics/analytics-01.patch"
+    },
+    {
+      "id": "analytics-02",
+      "app": "analytics",
+      "file": "apps/analytics/app/io/csv_io.py",
+      "line": 190,
+      "operator": "logical",
+      "before": "if all(not (v or \"\").strip() for v in row.values()):",
+      "after": "if all(not (v and \"\").strip() for v in row.values()):",
+      "patch": "experiments/faults/analytics/analytics-02.patch"
+    },
+    {
+      "id": "analytics-03",
+      "app": "analytics",
+      "file": "apps/analytics/app/datasets.py",
+      "line": 209,
+      "operator": "constant",
+      "before": "activity = [rng.paretovariate(1.6) * TIER_ACTIVITY[c.tier] for c in customers]",
+      "after": "activity = [rng.paretovariate(1.7) * TIER_ACTIVITY[c.tier] for c in customers]",
+      "patch": "experiments/faults/analytics/analytics-03.patch"
+    },
+    {
+      "id": "analytics-04",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/timeseries.py",
+      "line": 83,
+      "operator": "relational",
+      "before": "if horizon < 0:",
+      "after": "if horizon <= 0:",
+      "patch": "experiments/faults/analytics/analytics-04.patch"
+    },
+    {
+      "id": "analytics-05",
+      "app": "analytics",
+      "file": "apps/analytics/app/io/csv_io.py",
+      "line": 269,
+      "operator": "logical",
+      "before": "coupon = (row.get(\"coupon_code\") or \"\").strip() or None",
+      "after": "coupon = (row.get(\"coupon_code\") or \"\").strip() and None",
+      "patch": "experiments/faults/analytics/analytics-05.patch"
+    },
+    {
+      "id": "analytics-06",
+      "app": "analytics",
+      "file": "apps/analytics/app/io/csv_io.py",
+      "line": 212,
+      "operator": "relational",
+      "before": "if col.count == before:",
+      "after": "if col.count != before:",
+      "patch": "experiments/faults/analytics/analytics-06.patch"
+    },
+    {
+      "id": "analytics-07",
+      "app": "analytics",
+      "file": "apps/analytics/app/datasets.py",
+      "line": 240,
+      "operator": "relational",
+      "before": "if rng.random() < config.bundle_rate:",
+      "after": "if rng.random() <= config.bundle_rate:",
+      "patch": "experiments/faults/analytics/analytics-07.patch"
+    },
+    {
+      "id": "analytics-08",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/revenue.py",
+      "line": 90,
+      "operator": "logical",
+      "before": "if lo is None or hi is None:",
+      "after": "if lo is None and hi is None:",
+      "patch": "experiments/faults/analytics/analytics-08.patch"
+    },
+    {
+      "id": "analytics-09",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/common.py",
+      "line": 96,
+      "operator": "off-by-one",
+      "before": "return f\"{index // 12:04d}-{index % 12 + 1:02d}\"",
+      "after": "return f\"{index // 12:04d}-{index % 12 + 2:02d}\"",
+      "patch": "experiments/faults/analytics/analytics-09.patch"
+    },
+    {
+      "id": "analytics-10",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/common.py",
+      "line": 61,
+      "operator": "relational",
+      "before": "if granularity == \"week\":",
+      "after": "if granularity != \"week\":",
+      "patch": "experiments/faults/analytics/analytics-10.patch"
+    },
+    {
+      "id": "analytics-11",
+      "app": "analytics",
+      "file": "apps/analytics/app/io/csv_io.py",
+      "line": 175,
+      "operator": "logical",
+      "before": "header = [h.strip() for h in (reader.fieldnames or [])]",
+      "after": "header = [h.strip() for h in (reader.fieldnames and [])]",
+      "patch": "experiments/faults/analytics/analytics-11.patch"
+    },
+    {
+      "id": "analytics-12",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/timeseries.py",
+      "line": 55,
+      "operator": "off-by-one",
+      "before": "denom = window * (window + 1) / 2",
+      "after": "denom = window * (window + 2) / 2",
+      "patch": "experiments/faults/analytics/analytics-12.patch"
+    },
+    {
+      "id": "analytics-13",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/customers.py",
+      "line": 283,
+      "operator": "constant",
+      "before": "gross_margin: float = 0.3,",
+      "after": "gross_margin: float = 0.4,",
+      "patch": "experiments/faults/analytics/analytics-13.patch"
+    },
+    {
+      "id": "analytics-14",
+      "app": "analytics",
+      "file": "apps/analytics/app/io/csv_io.py",
+      "line": 162,
+      "operator": "logical",
+      "before": "return parser(row.get(name) or \"\")",
+      "after": "return parser(row.get(name) and \"\")",
+      "patch": "experiments/faults/analytics/analytics-14.patch"
+    },
+    {
+      "id": "analytics-15",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/customers.py",
+      "line": 267,
+      "operator": "off-by-one",
+      "before": "rates = [len(active[m] & active[m + 1]) / len(active[m]) for m in months if active[m]]",
+      "after": "rates = [len(active[m] & active[m + 2]) / len(active[m]) for m in months if active[m]]",
+      "patch": "experiments/faults/analytics/analytics-15.patch"
+    },
+    {
+      "id": "analytics-16",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/timeseries.py",
+      "line": 48,
+      "operator": "off-by-one",
+      "before": "out.append(running / window if i >= window - 1 else None)",
+      "after": "out.append(running / window if i >= window - 2 else None)",
+      "patch": "experiments/faults/analytics/analytics-16.patch"
+    },
+    {
+      "id": "analytics-17",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/timeseries.py",
+      "line": 58,
+      "operator": "off-by-one",
+      "before": "if i < window - 1:",
+      "after": "if i < window - 2:",
+      "patch": "experiments/faults/analytics/analytics-17.patch"
+    },
+    {
+      "id": "analytics-18",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/products.py",
+      "line": 132,
+      "operator": "constant",
+      "before": "a: float = 0.8,",
+      "after": "a: float = 0.9,",
+      "patch": "experiments/faults/analytics/analytics-18.patch"
+    },
+    {
+      "id": "analytics-19",
+      "app": "analytics",
+      "file": "apps/analytics/app/api_models.py",
+      "line": 37,
+      "operator": "constant",
+      "before": "a: float = 0.8",
+      "after": "a: float = 0.9",
+      "patch": "experiments/faults/analytics/analytics-19.patch"
+    },
+    {
+      "id": "analytics-20",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/timeseries.py",
+      "line": 217,
+      "operator": "constant",
+      "before": "def iqr_anomalies(values: Sequence[float], k: float = 1.5) -> list[Anomaly]:",
+      "after": "def iqr_anomalies(values: Sequence[float], k: float = 1.6) -> list[Anomaly]:",
+      "patch": "experiments/faults/analytics/analytics-20.patch"
+    }
+  ]
+}

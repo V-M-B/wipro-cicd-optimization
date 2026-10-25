@@ -1,0 +1,79 @@
+diff --git a/apps/web/src/components/StatusBadge.test.tsx b/apps/web/src/components/StatusBadge.test.tsx
+index 600fa06..e57d519 100644
+--- a/apps/web/src/components/StatusBadge.test.tsx
++++ b/apps/web/src/components/StatusBadge.test.tsx
+@@ -1,5 +1,6 @@
+ import { render, screen } from '@testing-library/react';
+ import { describe, expect, it } from 'vitest';
++import { STATUS_DESCRIPTIONS } from '../lib/orderStatus';
+ import { StatusBadge } from './StatusBadge';
+ 
+ describe('StatusBadge', () => {
+@@ -15,4 +16,11 @@ describe('StatusBadge', () => {
+     expect(badge).toHaveAttribute('data-status', status);
+     expect(badge).toHaveClass('badge', `badge-${status.toLowerCase()}`);
+   });
++
++  it('explains the status in a tooltip without changing the visible label', () => {
++    render(<StatusBadge status="PAID" />);
++    const badge = screen.getByText('Paid');
++    expect(badge).toHaveAttribute('title', STATUS_DESCRIPTIONS.PAID);
++    expect(badge).toHaveTextContent(/^Paid$/);
++  });
+ });
+diff --git a/apps/web/src/components/StatusBadge.tsx b/apps/web/src/components/StatusBadge.tsx
+index 1b739b6..5978399 100644
+--- a/apps/web/src/components/StatusBadge.tsx
++++ b/apps/web/src/components/StatusBadge.tsx
+@@ -1,9 +1,9 @@
+ import type { OrderStatus } from '../generated/schemas';
+-import { STATUS_LABELS } from '../lib/orderStatus';
++import { STATUS_DESCRIPTIONS, STATUS_LABELS } from '../lib/orderStatus';
+ 
+ export function StatusBadge({ status }: { status: OrderStatus }) {
+   return (
+-    <span className={`badge badge-${status.toLowerCase()}`} data-status={status}>
++    <span className={`badge badge-${status.toLowerCase()}`} data-status={status} title={STATUS_DESCRIPTIONS[status]}>
+       {STATUS_LABELS[status]}
+     </span>
+   );
+diff --git a/apps/web/src/lib/orderStatus.test.ts b/apps/web/src/lib/orderStatus.test.ts
+index 59d0dec..9213bff 100644
+--- a/apps/web/src/lib/orderStatus.test.ts
++++ b/apps/web/src/lib/orderStatus.test.ts
+@@ -4,6 +4,7 @@ import type { Order } from '../generated/schemas';
+ import {
+   ACTION_LABELS,
+   InvalidTransitionError,
++  STATUS_DESCRIPTIONS,
+   STATUS_LABELS,
+   allowedTransitions,
+   isCancellable,
+@@ -81,6 +82,7 @@ describe('order status state machine', () => {
+     for (const status of OrderStatusValues) {
+       expect(STATUS_LABELS[status]).toMatch(/^[A-Z][a-z]+$/);
+       expect(ACTION_LABELS[status]).toBeTruthy();
++      expect(STATUS_DESCRIPTIONS[status]).toMatch(/^[A-Z].+[^.]$/);
+     }
+   });
+ });
+diff --git a/apps/web/src/lib/orderStatus.ts b/apps/web/src/lib/orderStatus.ts
+index 900389c..d821d91 100644
+--- a/apps/web/src/lib/orderStatus.ts
++++ b/apps/web/src/lib/orderStatus.ts
+@@ -20,6 +20,15 @@ export const STATUS_LABELS: Readonly<Record<OrderStatus, string>> = {
+   CANCELLED: 'Cancelled',
+ };
+ 
++/** One-line explanation of each status, shown as a tooltip on status badges. */
++export const STATUS_DESCRIPTIONS: Readonly<Record<OrderStatus, string>> = {
++  CREATED: 'Order placed; awaiting payment',
++  PAID: 'Payment captured; ready to ship',
++  SHIPPED: 'Handed to the carrier',
++  DELIVERED: 'Received by the customer',
++  CANCELLED: 'Cancelled before shipping; stock released',
++};
++
+ /** Button label for moving an order *into* the given status. */
+ export const ACTION_LABELS: Readonly<Record<OrderStatus, string>> = {
+   CREATED: 'Reopen',

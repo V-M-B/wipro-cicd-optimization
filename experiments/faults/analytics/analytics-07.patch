@@ -1,0 +1,11 @@
+--- a/apps/analytics/app/datasets.py
++++ b/apps/analytics/app/datasets.py
+@@ -237,7 +237,7 @@
+         for _line in range(n_lines):
+             pi = min(bisect.bisect_left(cum_popularity, rng.random() * total_popularity), n_products - 1)
+             quantities[pi] = quantities.get(pi, 0) + 1 + min(9, int(rng.expovariate(1.2)))
+-            if rng.random() < config.bundle_rate:
++            if rng.random() <= config.bundle_rate:
+                 # products are sold in natural pairs (0,1), (2,3), ... -> basket affinity
+                 partner = pi ^ 1
+                 if partner < n_products:

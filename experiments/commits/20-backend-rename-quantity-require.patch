@@ -1,0 +1,52 @@
+diff --git a/apps/orders-api/src/main/java/com/retailops/orders/order/OrderLines.java b/apps/orders-api/src/main/java/com/retailops/orders/order/OrderLines.java
+index 3214d45..d0fa11e 100644
+--- a/apps/orders-api/src/main/java/com/retailops/orders/order/OrderLines.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/order/OrderLines.java
+@@ -27,10 +27,10 @@ public final class OrderLines {
+             if (!SkuValidator.isValid(sku)) {
+                 throw new BusinessRuleException("INVALID_SKU", "Invalid SKU '" + line.sku() + "'");
+             }
+-            QuantityRules.requireValid(line.quantity());
++            QuantityRules.requireInRange(line.quantity());
+             merged.merge(sku, line.quantity(), Integer::sum);
+         }
+-        merged.values().forEach(QuantityRules::requireValid);
++        merged.values().forEach(QuantityRules::requireInRange);
+         if (merged.size() > MAX_DISTINCT_LINES) {
+             throw new BusinessRuleException("TOO_MANY_LINES",
+                     "An order may contain at most " + MAX_DISTINCT_LINES + " distinct SKUs");
+diff --git a/apps/orders-api/src/main/java/com/retailops/orders/validation/QuantityRules.java b/apps/orders-api/src/main/java/com/retailops/orders/validation/QuantityRules.java
+index cfe6946..4fc9fc1 100644
+--- a/apps/orders-api/src/main/java/com/retailops/orders/validation/QuantityRules.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/validation/QuantityRules.java
+@@ -15,7 +15,8 @@ public final class QuantityRules {
+         return quantity >= MIN && quantity <= MAX;
+     }
+ 
+-    public static int requireValid(int quantity) {
++    /** Returns {@code quantity} unchanged, or throws {@code QUANTITY_OUT_OF_RANGE}. */
++    public static int requireInRange(int quantity) {
+         if (!isValid(quantity)) {
+             throw new BusinessRuleException("QUANTITY_OUT_OF_RANGE",
+                     "Quantity " + quantity + " is outside the allowed range " + MIN + ".." + MAX);
+diff --git a/apps/orders-api/src/test/java/com/retailops/orders/validation/QuantityRulesTest.java b/apps/orders-api/src/test/java/com/retailops/orders/validation/QuantityRulesTest.java
+index 92e6c1b..175e861 100644
+--- a/apps/orders-api/src/test/java/com/retailops/orders/validation/QuantityRulesTest.java
++++ b/apps/orders-api/src/test/java/com/retailops/orders/validation/QuantityRulesTest.java
+@@ -14,14 +14,14 @@ class QuantityRulesTest {
+     @ValueSource(ints = {1, 500, 999})
+     void acceptsQuantitiesWithinBounds(int qty) {
+         assertThat(QuantityRules.isValid(qty)).isTrue();
+-        assertThat(QuantityRules.requireValid(qty)).isEqualTo(qty);
++        assertThat(QuantityRules.requireInRange(qty)).isEqualTo(qty);
+     }
+ 
+     @ParameterizedTest
+     @ValueSource(ints = {0, -1, 1000, Integer.MAX_VALUE})
+     void rejectsQuantitiesOutsideBounds(int qty) {
+         assertThat(QuantityRules.isValid(qty)).isFalse();
+-        assertThatThrownBy(() -> QuantityRules.requireValid(qty))
++        assertThatThrownBy(() -> QuantityRules.requireInRange(qty))
+                 .isInstanceOfSatisfying(BusinessRuleException.class,
+                         ex -> assertThat(ex.getCode()).isEqualTo("QUANTITY_OUT_OF_RANGE"));
+     }

@@ -1,0 +1,11 @@
+--- a/apps/orders-api/src/main/java/com/retailops/orders/validation/QuantityRules.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/validation/QuantityRules.java
+@@ -12,7 +12,7 @@
+     }
+ 
+     public static boolean isValid(int quantity) {
+-        return quantity >= MIN && quantity <= MAX;
++        return quantity > MIN && quantity <= MAX;
+     }
+ 
+     public static int requireValid(int quantity) {

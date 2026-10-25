@@ -1,0 +1,78 @@
+diff --git a/apps/web/src/lib/validators.draft.test.ts b/apps/web/src/lib/validators.draft.test.ts
+index 1eb789a..325749c 100644
+--- a/apps/web/src/lib/validators.draft.test.ts
++++ b/apps/web/src/lib/validators.draft.test.ts
+@@ -49,6 +49,10 @@ describe('validateOrderDraft', () => {
+     expect(validateOrderDraft({ ...valid, customerId }).customerId).toBe(message);
+   });
+ 
++  it('ignores whitespace around the customer id', () => {
++    expect(validateOrderDraft({ ...valid, customerId: ' C-0001 ' }).customerId).toBeUndefined();
++  });
++
+   it('requires at least one line', () => {
+     expect(validateOrderDraft({ ...valid, lines: [] }).form).toBe('Add at least one line');
+   });
+@@ -82,6 +86,20 @@ describe('validateOrderDraft', () => {
+     expect(errors.lines).toEqual({ 2: { sku: 'Duplicate of line 1' } });
+   });
+ 
++  it('trims SKUs before validating and de-duplicating them', () => {
++    const errors = validateOrderDraft(
++      {
++        ...valid,
++        lines: [
++          { sku: ' ELE-1001', quantity: 1 },
++          { sku: 'ELE-1001 ', quantity: 2 },
++        ],
++      },
++      new Set(['ELE-1001']),
++    );
++    expect(errors.lines).toEqual({ 1: { sku: 'Duplicate of line 1' } });
++  });
++
+   it('reports quantity errors per line', () => {
+     const errors = validateOrderDraft({ ...valid, lines: [{ sku: 'ELE-1001', quantity: '0' }] });
+     expect(errors.lines[0]).toEqual({ quantity: 'Quantity must be at least 1' });
+diff --git a/apps/web/src/lib/validators.ts b/apps/web/src/lib/validators.ts
+index 2596e48..27d1505 100644
+--- a/apps/web/src/lib/validators.ts
++++ b/apps/web/src/lib/validators.ts
+@@ -75,9 +75,10 @@ export interface DraftErrors {
+ 
+ export function validateOrderDraft(draft: OrderDraft, knownSkus?: ReadonlySet<string>): DraftErrors {
+   const errors: DraftErrors = { lines: {} };
+-  if (draft.customerId.trim() === '') {
++  const customerId = draft.customerId.trim();
++  if (customerId === '') {
+     errors.customerId = 'Select a customer';
+-  } else if (!isValidCustomerId(draft.customerId)) {
++  } else if (!isValidCustomerId(customerId)) {
+     errors.customerId = 'Invalid customer id';
+   }
+ 
+@@ -90,16 +91,18 @@ export function validateOrderDraft(draft: OrderDraft, knownSkus?: ReadonlySet<st
+   const seen = new Map<string, number>();
+   draft.lines.forEach((line, index) => {
+     const lineErrors: LineErrors = {};
+-    if (line.sku.trim() === '') {
++    // Pasted SKUs often carry stray whitespace; validate the value the API will actually receive.
++    const sku = line.sku.trim();
++    if (sku === '') {
+       lineErrors.sku = 'Select a product';
+-    } else if (!isValidSku(line.sku)) {
++    } else if (!isValidSku(sku)) {
+       lineErrors.sku = 'Invalid SKU';
+-    } else if (knownSkus && !knownSkus.has(line.sku)) {
++    } else if (knownSkus && !knownSkus.has(sku)) {
+       lineErrors.sku = 'Unknown product';
+-    } else if (seen.has(line.sku)) {
+-      lineErrors.sku = `Duplicate of line ${(seen.get(line.sku) ?? 0) + 1}`;
++    } else if (seen.has(sku)) {
++      lineErrors.sku = `Duplicate of line ${(seen.get(sku) ?? 0) + 1}`;
+     } else {
+-      seen.set(line.sku, index);
++      seen.set(sku, index);
+     }
+     const quantityError = validateQuantity(line.quantity);
+     if (quantityError) lineErrors.quantity = quantityError;

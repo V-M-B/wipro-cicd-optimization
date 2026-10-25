@@ -1,0 +1,11 @@
+--- a/apps/orders-api/src/main/java/com/retailops/orders/order/OrderStateMachine.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/order/OrderStateMachine.java
+@@ -45,7 +45,7 @@
+     /** Returns {@code to} if the transition is legal, otherwise throws. */
+     public static OrderStatus transition(OrderStatus from, OrderStatus to) {
+         Objects.requireNonNull(to, "to");
+-        if (!canTransition(from, to)) {
++        if (canTransition(from, to)) {
+             throw new IllegalStatusTransitionException(from, to, allowedTargets(from));
+         }
+         return to;

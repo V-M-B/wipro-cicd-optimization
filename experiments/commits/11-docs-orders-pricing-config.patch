@@ -1,0 +1,26 @@
+diff --git a/apps/orders-api/README.md b/apps/orders-api/README.md
+index 9e2b54a..dc1a36d 100644
+--- a/apps/orders-api/README.md
++++ b/apps/orders-api/README.md
+@@ -46,7 +46,20 @@ transitions of the same order cannot both succeed.
+    WEST 6.99) plus 0.50 for each unit beyond the fifth.
+ 7. Total = net + tax + shipping.
+ 
+-The threshold, tax rates, shipping rates and surcharge can be configured under `orders.pricing.*`.
++The threshold, tax rates, shipping rates and surcharge can be configured under `orders.pricing.*`
++(bound to `PricingProperties`). Unset values fall back to the defaults above, and the two region maps
++are merged over the defaults, so overriding one region leaves the others unchanged:
++
++| Property | Default | Example override |
++|---|---|---|
++| `orders.pricing.free-shipping-threshold` | `75.00` | `orders.pricing.free-shipping-threshold=500.00` |
++| `orders.pricing.tax-rates.<REGION>` | NORTH `0.0800`, SOUTH `0.0650`, EAST `0.0725`, WEST `0.0900` | `orders.pricing.tax-rates.WEST=0.1000` |
++| `orders.pricing.shipping-base-rates.<REGION>` | NORTH `5.99`, SOUTH `4.99`, EAST `5.49`, WEST `6.99` | `orders.pricing.shipping-base-rates.NORTH=9.99` |
++| `orders.pricing.per-unit-shipping-surcharge` | `0.50` | `orders.pricing.per-unit-shipping-surcharge=0.75` |
++| `orders.pricing.surcharge-free-units` | `5` | `orders.pricing.surcharge-free-units=3` |
++
++Negative values are rejected at startup. `PricingConfigurationIT` boots the application with the
++first three example overrides and checks that quotes use them.
+ 
+ ## Endpoints
+ 

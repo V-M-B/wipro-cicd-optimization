@@ -1,0 +1,37 @@
+diff --git a/apps/orders-api/src/main/java/com/retailops/orders/pricing/ShippingPolicy.java b/apps/orders-api/src/main/java/com/retailops/orders/pricing/ShippingPolicy.java
+index b4b54a8..7834500 100644
+--- a/apps/orders-api/src/main/java/com/retailops/orders/pricing/ShippingPolicy.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/pricing/ShippingPolicy.java
+@@ -35,6 +35,10 @@ public class ShippingPolicy {
+         if (units <= 0) {
+             throw new IllegalArgumentException("units must be positive: " + units);
+         }
++        if (Money.isNegative(netMerchandise)) {
++            // Discounts are capped at the merchandise amount, so a negative value means a pricing bug upstream.
++            throw new IllegalArgumentException("netMerchandise must not be negative: " + netMerchandise);
++        }
+         if (qualifiesForFreeShipping(netMerchandise, tier, freeShippingCoupon)) {
+             return Money.ZERO;
+         }
+diff --git a/apps/orders-api/src/test/java/com/retailops/orders/pricing/ShippingPolicyTest.java b/apps/orders-api/src/test/java/com/retailops/orders/pricing/ShippingPolicyTest.java
+index dd4412b..d7b21b5 100644
+--- a/apps/orders-api/src/test/java/com/retailops/orders/pricing/ShippingPolicyTest.java
++++ b/apps/orders-api/src/test/java/com/retailops/orders/pricing/ShippingPolicyTest.java
+@@ -62,4 +62,17 @@ class ShippingPolicyTest {
+         assertThatThrownBy(() -> policy.cost(new BigDecimal("10.00"), 0, Region.EAST, CustomerTier.STANDARD, false))
+                 .isInstanceOf(IllegalArgumentException.class);
+     }
++
++    @Test
++    void negativeMerchandiseIsRejected() {
++        assertThatThrownBy(() -> policy.cost(new BigDecimal("-0.01"), 1, Region.EAST, CustomerTier.STANDARD, false))
++                .isInstanceOf(IllegalArgumentException.class)
++                .hasMessageContaining("netMerchandise");
++    }
++
++    @Test
++    void fullyDiscountedOrderStillPaysShipping() {
++        assertThat(policy.cost(Money.ZERO, 1, Region.NORTH, CustomerTier.STANDARD, false))
++                .isEqualTo(new BigDecimal("5.99"));
++    }
+ }

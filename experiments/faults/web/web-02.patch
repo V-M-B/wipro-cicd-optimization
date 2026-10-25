@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/csv.ts
++++ b/apps/web/src/lib/csv.ts
+@@ -60,7 +60,7 @@
+           field += '"';
+           i += 1;
+         } else {
+-          inQuotes = false;
++          inQuotes = true;
+         }
+       } else {
+         field += ch;

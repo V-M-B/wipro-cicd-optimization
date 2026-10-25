@@ -1,0 +1,102 @@
+diff --git a/apps/analytics/app/generated/schemas.py b/apps/analytics/app/generated/schemas.py
+index f9f356e..6a5c4c3 100644
+--- a/apps/analytics/app/generated/schemas.py
++++ b/apps/analytics/app/generated/schemas.py
+@@ -67,6 +67,7 @@ class PriceQuote(BaseModel):
+     tax: float
+     shipping: float
+     total: float
++    currency: str | None = None
+ 
+ 
+ class Product(BaseModel):
+diff --git a/apps/orders-api/src/main/java/com/retailops/orders/pricing/PriceBreakdown.java b/apps/orders-api/src/main/java/com/retailops/orders/pricing/PriceBreakdown.java
+index 7332626..3134ada 100644
+--- a/apps/orders-api/src/main/java/com/retailops/orders/pricing/PriceBreakdown.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/pricing/PriceBreakdown.java
+@@ -4,7 +4,10 @@ import java.math.BigDecimal;
+ 
+ import com.retailops.schemas.PriceQuote;
+ 
+-/** Full pricing result. {@link #toPriceQuote()} collapses the three discounts into one. */
++/**
++ * Full pricing result. {@link #toPriceQuote()} collapses the three discounts into one. All amounts are in
++ * {@link #CURRENCY}; the service does not support other currencies yet.
++ */
+ public record PriceBreakdown(
+         BigDecimal subtotal,
+         BigDecimal bulkDiscount,
+@@ -14,6 +17,9 @@ public record PriceBreakdown(
+         BigDecimal shipping,
+         BigDecimal total) {
+ 
++    /** ISO 4217 code of every amount the pricing service produces. */
++    public static final String CURRENCY = "USD";
++
+     public BigDecimal discount() {
+         return bulkDiscount.add(tierDiscount).add(couponDiscount);
+     }
+@@ -23,6 +29,6 @@ public record PriceBreakdown(
+     }
+ 
+     public PriceQuote toPriceQuote() {
+-        return new PriceQuote(subtotal, discount(), tax, shipping, total);
++        return new PriceQuote(subtotal, discount(), tax, shipping, total, CURRENCY);
+     }
+ }
+diff --git a/apps/orders-api/src/main/java/com/retailops/schemas/PriceQuote.java b/apps/orders-api/src/main/java/com/retailops/schemas/PriceQuote.java
+index 5e6e328..63df385 100644
+--- a/apps/orders-api/src/main/java/com/retailops/schemas/PriceQuote.java
++++ b/apps/orders-api/src/main/java/com/retailops/schemas/PriceQuote.java
+@@ -6,5 +6,6 @@ public record PriceQuote(
+         java.math.BigDecimal discount,
+         java.math.BigDecimal tax,
+         java.math.BigDecimal shipping,
+-        java.math.BigDecimal total) {
++        java.math.BigDecimal total,
++        String currency) {
+ }
+diff --git a/apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java b/apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java
+index 1c241c2..b4686ec 100644
+--- a/apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java
++++ b/apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java
+@@ -196,11 +196,12 @@ class OrderControllerTest {
+     @Test
+     void quoteReturnsBreakdown() throws Exception {
+         when(orderService.quote(any())).thenReturn(new PriceQuote(new BigDecimal("49.98"), new BigDecimal("0.00"),
+-                new BigDecimal("4.00"), new BigDecimal("5.99"), new BigDecimal("59.97")));
++                new BigDecimal("4.00"), new BigDecimal("5.99"), new BigDecimal("59.97"), "USD"));
+         mvc.perform(post("/api/orders/quote").contentType(MediaType.APPLICATION_JSON).content(BODY))
+                 .andExpect(status().isOk())
+                 .andExpect(jsonPath("$.subtotal").value(49.98))
+                 .andExpect(jsonPath("$.shipping").value(5.99))
+-                .andExpect(jsonPath("$.total").value(59.97));
++                .andExpect(jsonPath("$.total").value(59.97))
++                .andExpect(jsonPath("$.currency").value("USD"));
+     }
+ }
+diff --git a/apps/web/src/generated/schemas.ts b/apps/web/src/generated/schemas.ts
+index cc22428..0c501ea 100644
+--- a/apps/web/src/generated/schemas.ts
++++ b/apps/web/src/generated/schemas.ts
+@@ -42,6 +42,7 @@ export interface PriceQuote {
+   tax: number;
+   shipping: number;
+   total: number;
++  currency?: string;
+ }
+ 
+ export interface Product {
+diff --git a/libs/shared-schemas/schemas/price-quote.schema.json b/libs/shared-schemas/schemas/price-quote.schema.json
+index d3fc61c..baf78f5 100644
+--- a/libs/shared-schemas/schemas/price-quote.schema.json
++++ b/libs/shared-schemas/schemas/price-quote.schema.json
+@@ -8,6 +8,7 @@
+     "discount": {"type": "number"},
+     "tax": {"type": "number"},
+     "shipping": {"type": "number"},
+-    "total": {"type": "number"}
++    "total": {"type": "number"},
++    "currency": {"type": "string"}
+   }
+ }

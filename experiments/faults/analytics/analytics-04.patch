@@ -1,0 +1,11 @@
+--- a/apps/analytics/app/metrics/timeseries.py
++++ b/apps/analytics/app/metrics/timeseries.py
+@@ -80,7 +80,7 @@
+     """Holt's double exponential smoothing. Returns (fitted levels, forecasts)."""
+     _check_alpha("alpha", alpha)
+     _check_alpha("beta", beta)
+-    if horizon < 0:
++    if horizon <= 0:
+         raise ValueError("horizon must be >= 0")
+     if not values:
+         return [], []

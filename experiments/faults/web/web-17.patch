@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/orderQuery.ts
++++ b/apps/web/src/lib/orderQuery.ts
+@@ -38,7 +38,7 @@
+     if (filters.customerId && order.customerId !== filters.customerId) return false;
+     if (filters.minTotal !== undefined && order.total < filters.minTotal) return false;
+     if (filters.maxTotal !== undefined && order.total > filters.maxTotal) return false;
+-    if ((filters.from || filters.to) && !isWithinDateRange(order.createdAt, filters.from, filters.to)) return false;
++    if ((filters.from || filters.to) || !isWithinDateRange(order.createdAt, filters.from, filters.to)) return false;
+     if (text !== '') {
+       const customerName = customers.get(order.customerId)?.name ?? '';
+       const haystack = normalizeText([order.id, order.customerId, customerName, ...order.lines.map((l) => l.sku)].join(' '));

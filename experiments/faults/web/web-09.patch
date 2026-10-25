@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/format.ts
++++ b/apps/web/src/lib/format.ts
+@@ -11,7 +11,7 @@
+ function currencyFormatter(locale: string, currency: string): Intl.NumberFormat {
+   const key = `${locale}|${currency}`;
+   let formatter = currencyFormatters.get(key);
+-  if (!formatter) {
++  if (formatter) {
+     formatter = new Intl.NumberFormat(locale, { style: 'currency', currency });
+     currencyFormatters.set(key, formatter);
+   }

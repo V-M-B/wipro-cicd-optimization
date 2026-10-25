@@ -1,0 +1,11 @@
+--- a/apps/analytics/app/api_models.py
++++ b/apps/analytics/app/api_models.py
+@@ -34,7 +34,7 @@
+ class AbcRequest(BaseModel):
+     orders: list[Order]
+     products: list[Product] = Field(default_factory=list)
+-    a: float = 0.8
++    a: float = 0.9
+     b: float = 0.95
+ 
+ 

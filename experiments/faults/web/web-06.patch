@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/orderQuery.ts
++++ b/apps/web/src/lib/orderQuery.ts
+@@ -86,7 +86,7 @@
+ export function sortOrders(orders: readonly Order[], sort: SortSpec, customers: CustomerIndex = new Map()): Order[] {
+   const cmp = compareBy(sort.key, customers);
+   const sign = sort.direction === 'asc' ? 1 : -1;
+-  return [...orders].sort((a, b) => sign * cmp(a, b) || a.id.localeCompare(b.id, 'en'));
++  return [...orders].sort((a, b) => sign * cmp(a, b) && a.id.localeCompare(b.id, 'en'));
+ }
+ 
+ /** Toggle direction when clicking the active column; new columns start descending for numbers/dates. */

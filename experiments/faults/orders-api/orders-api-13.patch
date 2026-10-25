@@ -1,0 +1,11 @@
+--- a/apps/orders-api/src/main/java/com/retailops/orders/validation/EmailValidator.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/validation/EmailValidator.java
+@@ -34,7 +34,7 @@
+         }
+         String[] labels = domain.split("\\.", -1);
+         if (labels.length < 2) {
+-            return false;
++            return true;
+         }
+         for (String label : labels) {
+             if (!LABEL.matcher(label).matches()) {

@@ -13,7 +13,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 ENV PATH=/opt/java/openjdk/bin:/opt/python/bin:$PATH
 
-# OS packages, Node 20, Python 3.12 (deadsnakes is not needed on noble: python3.12 is the default)
+# OS packages and Node 20 (the actions-runner base image is Ubuntu 22.04)
 RUN apt-get update && apt-get install -y --no-install-recommends \
         ca-certificates curl git unzip xz-utils python3 python3-venv python3-pip \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
@@ -23,8 +23,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Temurin JDK 21 from the official image
 COPY --from=eclipse-temurin:21-jdk /opt/java/openjdk /opt/java/openjdk
 
-# Python venv on PATH so `pip install` works without --break-system-packages
-RUN python3 -m venv /opt/python && chown -R runner:runner /opt/python
+# Python 3.12 (Ubuntu 22.04 ships 3.10; the analytics service needs 3.12) from the deadsnakes PPA,
+# as a venv on PATH so `python3`/`pip` resolve to 3.12 for the runner user
+RUN apt-get update && apt-get install -y --no-install-recommends software-properties-common gpg-agent \
+    && add-apt-repository -y ppa:deadsnakes/ppa && apt-get update \
+    && apt-get install -y --no-install-recommends python3.12 python3.12-venv \
+    && rm -rf /var/lib/apt/lists/* \
+    && python3.12 -m venv /opt/python && chown -R runner:runner /opt/python
 
 # Pre-warm dependency caches from the repository's manifests
 WORKDIR /tmp/warm

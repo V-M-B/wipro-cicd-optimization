@@ -1,0 +1,10 @@
+--- a/apps/orders-api/src/main/java/com/retailops/orders/api/PageResponse.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/api/PageResponse.java
+@@ -18,6 +18,6 @@
+     }
+ 
+     public boolean hasNext() {
+-        return page + 1 < totalPages;
++        return page + 1 <= totalPages;
+     }
+ }

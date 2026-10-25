@@ -1,0 +1,11 @@
+--- a/apps/analytics/app/metrics/revenue.py
++++ b/apps/analytics/app/metrics/revenue.py
+@@ -87,7 +87,7 @@
+         days = [order_day(o) for o in selected]
+         lo = start if start is not None else (min(days) if days else None)
+         hi = end if end is not None else (max(days) if days else None)
+-        if lo is None or hi is None:
++        if lo is None and hi is None:
+             return {}
+         return {key: money(totals.get(key, 0.0)) for key in period_range(lo, hi, granularity)}
+     return {key: money(totals[key]) for key in sorted(totals)}

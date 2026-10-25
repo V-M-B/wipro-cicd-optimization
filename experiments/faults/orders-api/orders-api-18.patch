@@ -1,0 +1,11 @@
+--- a/apps/orders-api/src/main/java/com/retailops/orders/pricing/ShippingPolicy.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/pricing/ShippingPolicy.java
+@@ -24,7 +24,7 @@
+ 
+     public boolean qualifiesForFreeShipping(BigDecimal netMerchandise, CustomerTier tier, boolean freeShippingCoupon) {
+         return freeShippingCoupon
+-                || tier == CustomerTier.PLATINUM
++                && tier == CustomerTier.PLATINUM
+                 || netMerchandise.compareTo(properties.freeShippingThreshold()) >= 0;
+     }
+ 

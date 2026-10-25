@@ -164,15 +164,32 @@ def decide(app: App, changed: list[str], settings: dict, now: float | None = Non
                          if use_dynamic else (None, "dynamic map disabled"))
     d.reasons.append(f"static graph over {len(all_tests)} test files; {dyn_note}")
     graph = app.build_graph()
-    hubs: list[str] = []
-    if dynamic is not None:
-        # A hub (e.g. a root conftest.py importing the whole API for a fixture) stays a dependency of every
-        # test, so a change to the hub selects everything; but edges *through* it are not followed. This is
-        # only safe with a fresh dynamic map: fixtures inject hub-imported code without a direct import, and
-        # the map is what records those tests (ADR-0005).
-        hubs = [n for n in graph if match(app.local(n), app.cfg.get("hub_globs", []))]
-        for h in hubs:
-            graph[h] = set()
+    hubs = [n for n in graph if match(app.local(n), app.cfg.get("hub_globs", []))]
+    for h in list(hubs):
+        # A hub (a conftest.py that imports most of the app for its fixtures) would make every test depend on
+        # every module. Fixture-aware handling: each test depends on the hub only through the fixtures it
+        # requests (plus autouse fixtures). A change to the hub itself runs every test beneath it. If the hub
+        # defines pytest hooks, it is treated as an ordinary dependency (ADR-0005 addendum 2).
+        if app.language != "python":
+            hubs.remove(h)
+            continue
+        roots = [app.repo / app.root / r for r in app.cfg.get("python_roots", ["."])]
+        test_paths = [app.repo / t for t in all_tests]
+        files = app._files(app.cfg["sources"] + [p for gl in app.cfg["suites"].values() for p in gl]
+                           + app.cfg.get("support", []))
+        edges = g.fixture_aware_hub_edges(app.repo / h, test_paths, files, app.repo, roots)
+        if edges is None:
+            hubs.remove(h)
+            continue
+        for t, deps in edges.items():
+            graph[t] = (graph.get(t, set()) - {h}) | deps
+        # Non-test modules beneath the hub (helpers such as factories.py, package __init__ files) cannot
+        # request fixtures; pytest's implicit conftest edge does not apply to them.
+        for n in graph:
+            if n not in edges and n != h:
+                graph[n] = graph[n] - {h}
+        if h in relevant:
+            return full(f"hub changed: {app.local(h)}")
     static = g.reverse_closure(graph, list(all_tests))
 
     def mirrored(f: str) -> set[str]:
@@ -218,7 +235,7 @@ def decide(app: App, changed: list[str], settings: dict, now: float | None = Non
     if empty_hits:
         d.reasons.append(f"no impacted tests found for {len(empty_hits)} file(s); used mirrored tests")
     if hubs:
-        d.reasons.append(f"hub files not traversed: {', '.join(app.local(h) for h in hubs)}")
+        d.reasons.append(f"hub dependencies resolved per requested fixture: {', '.join(app.local(h) for h in hubs)}")
 
     # Suites that boot the whole application (e.g. @SpringBootTest) run in full on any source change.
     source_changed = [f for f in relevant if f not in all_tests]

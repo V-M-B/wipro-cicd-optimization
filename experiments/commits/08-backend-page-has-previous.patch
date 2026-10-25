@@ -1,0 +1,52 @@
+diff --git a/apps/orders-api/src/main/java/com/retailops/orders/api/PageResponse.java b/apps/orders-api/src/main/java/com/retailops/orders/api/PageResponse.java
+index e6430d1..32f17a6 100644
+--- a/apps/orders-api/src/main/java/com/retailops/orders/api/PageResponse.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/api/PageResponse.java
+@@ -20,4 +20,9 @@ public record PageResponse<T>(List<T> content, int page, int size, long totalEle
+     public boolean hasNext() {
+         return page + 1 < totalPages;
+     }
++
++    /** True unless this is the first page. A page past the end still has a previous page. */
++    public boolean hasPrevious() {
++        return page > 0;
++    }
+ }
+diff --git a/apps/orders-api/src/test/java/com/retailops/orders/api/PageResponseTest.java b/apps/orders-api/src/test/java/com/retailops/orders/api/PageResponseTest.java
+index b7483e0..a61d082 100644
+--- a/apps/orders-api/src/test/java/com/retailops/orders/api/PageResponseTest.java
++++ b/apps/orders-api/src/test/java/com/retailops/orders/api/PageResponseTest.java
+@@ -22,6 +22,7 @@ class PageResponseTest {
+         assertThat(page.totalElements()).isEqualTo(10);
+         assertThat(page.totalPages()).isEqualTo(4);
+         assertThat(page.hasNext()).isTrue();
++        assertThat(page.hasPrevious()).isTrue();
+     }
+ 
+     @Test
+@@ -29,6 +30,18 @@ class PageResponseTest {
+         assertThat(new PageResponse<>(List.of("a"), 3, 3, 10, 4).hasNext()).isFalse();
+     }
+ 
++    @Test
++    void firstPageHasNoPrevious() {
++        assertThat(new PageResponse<>(List.of("a"), 0, 3, 10, 4).hasPrevious()).isFalse();
++    }
++
++    @Test
++    void pageBeyondTheEndHasPreviousButNoNext() {
++        PageResponse<String> page = new PageResponse<>(List.of(), 7, 3, 10, 4);
++        assertThat(page.hasPrevious()).isTrue();
++        assertThat(page.hasNext()).isFalse();
++    }
++
+     @Test
+     void contentIsDefensivelyCopied() {
+         List<String> source = new ArrayList<>(List.of("a"));
+@@ -45,5 +58,6 @@ class PageResponseTest {
+         assertThat(page.content()).isEmpty();
+         assertThat(page.totalPages()).isZero();
+         assertThat(page.hasNext()).isFalse();
++        assertThat(page.hasPrevious()).isFalse();
+     }
+ }

@@ -1,0 +1,11 @@
+--- a/apps/analytics/app/metrics/customers.py
++++ b/apps/analytics/app/metrics/customers.py
+@@ -264,7 +264,7 @@
+     if not active:
+         return 0.0
+     months = range(min(active), max(active))
+-    rates = [len(active[m] & active[m + 1]) / len(active[m]) for m in months if active[m]]
++    rates = [len(active[m] & active[m + 2]) / len(active[m]) for m in months if active[m]]
+     return round(safe_div(sum(rates), len(rates)), 4)
+ 
+ 

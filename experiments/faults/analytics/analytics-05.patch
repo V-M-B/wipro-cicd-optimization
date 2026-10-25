@@ -1,0 +1,11 @@
+--- a/apps/analytics/app/io/csv_io.py
++++ b/apps/analytics/app/io/csv_io.py
+@@ -266,7 +266,7 @@
+             status = col.field(row, line, "status", lambda s: parse_enum(s, OrderStatus))
+             created = col.field(row, line, "created_at", parse_datetime)
+             total = col.field(row, line, "total", parse_float)
+-            coupon = (row.get("coupon_code") or "").strip() or None
++            coupon = (row.get("coupon_code") or "").strip() and None
+             headers[oid] = {
+                 "customerId": customer_id,
+                 "status": status,

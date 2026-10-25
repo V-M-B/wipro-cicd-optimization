@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/dates.ts
++++ b/apps/web/src/lib/dates.ts
+@@ -30,7 +30,7 @@
+     const hh = Number(dtMatch[4]);
+     const mm = Number(dtMatch[5]);
+     const ss = Number(dtMatch[6] ?? 0);
+-    if (!isValidCalendarDate(y, m, d) || hh > 23 || mm > 59 || ss > 59) return null;
++    if (!isValidCalendarDate(y, m, d) || hh > 23 && mm > 59 || ss > 59) return null;
+     const parsed = new Date(value);
+     return Number.isNaN(parsed.getTime()) ? null : parsed;
+   }

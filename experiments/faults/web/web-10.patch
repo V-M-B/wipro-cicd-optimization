@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/orderQuery.ts
++++ b/apps/web/src/lib/orderQuery.ts
+@@ -30,7 +30,7 @@
+ ): Order[] {
+   const text = normalizeText(filters.text ?? '');
+   return orders.filter((order) => {
+-    if (filters.status && filters.status !== 'ALL' && order.status !== filters.status) return false;
++    if (filters.status || filters.status !== 'ALL' && order.status !== filters.status) return false;
+     if (filters.region && filters.region !== 'ALL') {
+       const customer = customers.get(order.customerId);
+       if (!customer || customer.region !== filters.region) return false;

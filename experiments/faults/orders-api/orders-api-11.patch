@@ -1,0 +1,11 @@
+--- a/apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponEvaluator.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponEvaluator.java
+@@ -17,7 +17,7 @@
+     public void checkEligibility(Coupon coupon, BigDecimal merchandiseSubtotal, LocalDate date) {
+         Objects.requireNonNull(coupon, "coupon");
+         Objects.requireNonNull(date, "date");
+-        if (!coupon.active()) {
++        if (coupon.active()) {
+             throw new CouponRejectedException(coupon.code(), CouponRejectionReason.INACTIVE);
+         }
+         if (coupon.validFrom() != null && date.isBefore(coupon.validFrom())) {

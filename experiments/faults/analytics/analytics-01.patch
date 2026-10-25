@@ -1,0 +1,10 @@
+--- a/apps/analytics/app/metrics/timeseries.py
++++ b/apps/analytics/app/metrics/timeseries.py
+@@ -246,6 +246,6 @@
+                 out.append(Anomaly(i, float(v), None, "high" if v > mean else "low"))
+             continue
+         z = (v - mean) / std
+-        if abs(z) > threshold:
++        if abs(z) >= threshold:
+             out.append(Anomaly(i, float(v), round(z, 6), "high" if z > 0 else "low"))
+     return out

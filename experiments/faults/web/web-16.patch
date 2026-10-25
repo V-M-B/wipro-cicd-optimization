@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/cart.ts
++++ b/apps/web/src/lib/cart.ts
+@@ -152,7 +152,7 @@
+ }
+ 
+ export function taxFor(amount: number, region: Region): number {
+-  if (amount <= 0) return 0;
++  if (amount < 0) return 0;
+   return applyRate(amount, taxRate(region));
+ }
+ 

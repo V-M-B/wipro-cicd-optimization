@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/cart.ts
++++ b/apps/web/src/lib/cart.ts
+@@ -5,7 +5,7 @@
+ export const TIER_DISCOUNT_RATES: Readonly<Record<CustomerTier, number>> = {
+   STANDARD: 0,
+   SILVER: 0.05,
+-  GOLD: 0.1,
++  GOLD: 0.2,
+   PLATINUM: 0.15,
+ };
+ 

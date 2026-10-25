@@ -1,0 +1,11 @@
+--- a/apps/orders-api/src/main/java/com/retailops/orders/validation/QuantityRules.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/validation/QuantityRules.java
+@@ -16,7 +16,7 @@
+     }
+ 
+     public static int requireValid(int quantity) {
+-        if (!isValid(quantity)) {
++        if (isValid(quantity)) {
+             throw new BusinessRuleException("QUANTITY_OUT_OF_RANGE",
+                     "Quantity " + quantity + " is outside the allowed range " + MIN + ".." + MAX);
+         }

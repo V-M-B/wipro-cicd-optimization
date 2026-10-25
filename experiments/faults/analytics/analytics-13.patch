@@ -1,0 +1,11 @@
+--- a/apps/analytics/app/metrics/customers.py
++++ b/apps/analytics/app/metrics/customers.py
+@@ -280,7 +280,7 @@
+ def customer_clv(
+     orders: Sequence[Order],
+     as_of: date,
+-    gross_margin: float = 0.3,
++    gross_margin: float = 0.4,
+     retention: float | None = None,
+     discount_rate: float = 0.01,
+ ) -> dict[str, float]:

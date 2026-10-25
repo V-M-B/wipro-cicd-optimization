@@ -1,0 +1,11 @@
+--- a/apps/analytics/app/io/csv_io.py
++++ b/apps/analytics/app/io/csv_io.py
+@@ -159,7 +159,7 @@
+ 
+     def field(self, row: dict[str, str], line: int, name: str, parser: Callable[[str], object]) -> object:
+         try:
+-            return parser(row.get(name) or "")
++            return parser(row.get(name) and "")
+         except _FieldError as exc:
+             self.add(line, name, str(exc))
+             return None

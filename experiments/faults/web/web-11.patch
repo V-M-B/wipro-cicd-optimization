@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/orderStatus.ts
++++ b/apps/web/src/lib/orderStatus.ts
+@@ -74,7 +74,7 @@
+ export function pathBetween(from: OrderStatus, to: OrderStatus): OrderStatus[] | null {
+   const queue: OrderStatus[][] = [[from]];
+   const visited = new Set<OrderStatus>([from]);
+-  while (queue.length > 0) {
++  while (queue.length >= 0) {
+     const path = queue.shift() as OrderStatus[];
+     const last = path[path.length - 1] as OrderStatus;
+     if (last === to) return path;

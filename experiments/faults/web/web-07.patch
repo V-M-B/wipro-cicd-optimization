@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/cart.ts
++++ b/apps/web/src/lib/cart.ts
+@@ -93,7 +93,7 @@
+ }
+ 
+ function assertValidLine(line: OrderLine): void {
+-  if (!Number.isInteger(line.quantity) || line.quantity < 1) {
++  if (!Number.isInteger(line.quantity) && line.quantity < 1) {
+     throw new RangeError(`Invalid quantity for ${line.sku}: ${line.quantity}`);
+   }
+   if (!Number.isFinite(line.unitPrice) || line.unitPrice < 0) {

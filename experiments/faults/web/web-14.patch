@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/api.ts
++++ b/apps/web/src/lib/api.ts
+@@ -42,7 +42,7 @@
+   if (status === 422) return 'validation';
+   if (status === 429) return 'rate_limited';
+   if (status === 502 || status === 503 || status === 504) return 'unavailable';
+-  if (status >= 500 && status <= 599) return 'server';
++  if (status >= 500 && status < 599) return 'server';
+   return 'unknown';
+ }
+ 

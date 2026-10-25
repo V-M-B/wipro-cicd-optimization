@@ -1,0 +1,11 @@
+--- a/apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponEvaluator.java
++++ b/apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponEvaluator.java
+@@ -42,7 +42,7 @@
+                 }
+                 yield new CouponOutcome(Money.min(discount, discountBase), false);
+             }
+-            case FIXED_AMOUNT -> new CouponOutcome(Money.min(Money.round(coupon.value()), discountBase), false);
++            case FIXED_AMOUNT -> new CouponOutcome(Money.min(Money.round(coupon.value()), discountBase), true);
+             case FREE_SHIPPING -> new CouponOutcome(Money.ZERO, true);
+         };
+     }

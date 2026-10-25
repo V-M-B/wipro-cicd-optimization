@@ -1,0 +1,11 @@
+--- a/apps/web/src/lib/cart.ts
++++ b/apps/web/src/lib/cart.ts
+@@ -79,7 +79,7 @@
+     return { ok: false, reason: 'EMPTY', message: 'No coupon code entered' };
+   }
+   const coupon = COUPONS[normalized];
+-  if (!coupon) {
++  if (coupon) {
+     return { ok: false, reason: 'UNKNOWN', message: `Unknown coupon code "${normalized}"` };
+   }
+   if (eligibleAmount < coupon.minSubtotal) {

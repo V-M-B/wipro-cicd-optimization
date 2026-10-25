@@ -1,0 +1,11 @@
+--- a/apps/analytics/app/datasets.py
++++ b/apps/analytics/app/datasets.py
+@@ -206,7 +206,7 @@
+     # Customer activity is heavy-tailed and boosted by tier. Each customer has an
+     # acquisition day and a finite active lifetime, which produces realistic
+     # cohorts, recency spread and churn.
+-    activity = [rng.paretovariate(1.6) * TIER_ACTIVITY[c.tier] for c in customers]
++    activity = [rng.paretovariate(1.7) * TIER_ACTIVITY[c.tier] for c in customers]
+     cum_activity = list(itertools.accumulate(activity))
+     acquisition = [int(span * rng.random() ** 1.3) for _ in customers]
+     lifetime = [max(1, int(rng.expovariate(1 / 150))) for _ in customers]

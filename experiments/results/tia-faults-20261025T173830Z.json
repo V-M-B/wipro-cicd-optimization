@@ -1,0 +1,1796 @@
+{
+  "head": "b17eecf2e72e7ad06e3f9c4ca33a089574640836",
+  "summary": {
+    "analytics": {
+      "faults": 20,
+      "detected_by_full": 12,
+      "not_viable": 0,
+      "undetected_by_suite": 8,
+      "hybrid_recall": 1.0,
+      "static_recall": 1.0,
+      "hybrid_mean_selected_share": 0.23232323232323232,
+      "static_mean_selected_share": 1.0,
+      "total_units": 33,
+      "hybrid_misses": [],
+      "static_misses": []
+    },
+    "orders-api": {
+      "faults": 20,
+      "detected_by_full": 17,
+      "not_viable": 0,
+      "undetected_by_suite": 3,
+      "hybrid_recall": 1.0,
+      "static_recall": 1.0,
+      "hybrid_mean_selected_share": 0.36176470588235293,
+      "static_mean_selected_share": 0.45588235294117646,
+      "total_units": 40,
+      "hybrid_misses": [],
+      "static_misses": []
+    },
+    "web": {
+      "faults": 20,
+      "detected_by_full": 15,
+      "not_viable": 0,
+      "undetected_by_suite": 5,
+      "hybrid_recall": 1.0,
+      "static_recall": 1.0,
+      "hybrid_mean_selected_share": 0.3121212121212121,
+      "static_mean_selected_share": 0.7757575757575758,
+      "total_units": 44,
+      "hybrid_misses": [],
+      "static_misses": []
+    }
+  },
+  "results": [
+    {
+      "id": "orders-api-01",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/pricing/PricingProperties.java",
+      "line": 46,
+      "operator": "logical",
+      "before": "if (freeShippingThreshold.signum() < 0 || perUnitShippingSurcharge.signum() < 0 || surchargeFreeUnits < 0) {",
+      "after": "if (freeShippingThreshold.signum() < 0 || perUnitShippingSurcharge.signum() < 0 && surchargeFreeUnits < 0) {",
+      "patch": "experiments/faults/orders-api/orders-api-01.patch",
+      "tests_run": 420,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 24,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 27,
+        "detected": false
+      },
+      "seconds": 106.2,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "orders-api-02",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponRepository.java",
+      "line": 15,
+      "operator": "relational",
+      "before": "and (c.validFrom is null or c.validFrom <= :date)",
+      "after": "and (c.validFrom is null or c.validFrom < :date)",
+      "patch": "experiments/faults/orders-api/orders-api-02.patch",
+      "tests_run": 420,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 10,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 20,
+        "detected": false
+      },
+      "seconds": 136.8,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "orders-api-03",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/api/PageResponse.java",
+      "line": 21,
+      "operator": "relational",
+      "before": "return page + 1 < totalPages;",
+      "after": "return page + 1 <= totalPages;",
+      "patch": "experiments/faults/orders-api/orders-api-03.patch",
+      "tests_run": 420,
+      "viable": true,
+      "failing_units": [
+        "com.retailops.orders.api.PageResponseTest"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 10,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 11,
+        "detected": true
+      },
+      "seconds": 111.0,
+      "status": "detected"
+    },
+    {
+      "id": "orders-api-04",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/validation/QuantityRules.java",
+      "line": 15,
+      "operator": "relational",
+      "before": "return quantity >= MIN && quantity <= MAX;",
+      "after": "return quantity > MIN && quantity <= MAX;",
+      "patch": "experiments/faults/orders-api/orders-api-04.patch",
+      "tests_run": 414,
+      "viable": true,
+      "failing_units": [
+        "com.retailops.orders.order.OrderLifecycleHttpIT",
+        "com.retailops.orders.order.OrderLinesTest",
+        "com.retailops.orders.order.OrderPaginationIT",
+        "com.retailops.orders.order.OrderServiceTest",
+        "com.retailops.orders.pricing.PricingConfigurationIT",
+        "com.retailops.orders.validation.QuantityRulesTest",
+        "com.retailops.orders.validation.RequestValidationTest"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 12,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 14,
+        "detected": true
+      },
+      "seconds": 121.9,
+      "status": "detected"
+    },
+    {
+      "id": "orders-api-05",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/validation/SkuValidator.java",
+      "line": 22,
+      "operator": "relational",
+      "before": "return sku == null ? null : sku.trim().toUpperCase(Locale.ROOT);",
+      "after": "return sku != null ? null : sku.trim().toUpperCase(Locale.ROOT);",
+      "patch": "experiments/faults/orders-api/orders-api-05.patch",
+      "tests_run": 414,
+      "viable": true,
+      "failing_units": [
+        "com.retailops.orders.catalog.ProductCatalogHttpIT",
+        "com.retailops.orders.catalog.ProductServiceTest",
+        "com.retailops.orders.inventory.ConcurrentStockReservationIT",
+        "com.retailops.orders.order.OrderLifecycleHttpIT",
+        "com.retailops.orders.order.OrderLinesTest",
+        "com.retailops.orders.order.OrderPaginationIT",
+        "com.retailops.orders.order.OrderServiceTest",
+        "com.retailops.orders.pricing.PricingConfigurationIT",
+        "com.retailops.orders.validation.SkuValidatorTest"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 14,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 16,
+        "detected": true
+      },
+      "seconds": 140.1,
+      "status": "detected"
+    },
+    {
+      "id": "orders-api-06",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/inventory/InventoryService.java",
+      "line": 61,
+      "operator": "relational",
+      "before": "if (stockRepository.release(sku, quantity) == 0) {",
+      "after": "if (stockRepository.release(sku, quantity) != 0) {",
+      "patch": "experiments/faults/orders-api/orders-api-06.patch",
+      "tests_run": 414,
+      "viable": true,
+      "failing_units": [
+        "com.retailops.orders.inventory.ConcurrentStockReservationIT",
+        "com.retailops.orders.inventory.InventoryServiceTest",
+        "com.retailops.orders.order.OrderLifecycleHttpIT",
+        "com.retailops.orders.order.OrderPaginationIT"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 14,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 15,
+        "detected": true
+      },
+      "seconds": 110.7,
+      "status": "detected"
+    },
+    {
+      "id": "orders-api-07",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/order/OrderFilter.java",
+      "line": 14,
+      "operator": "logical",
+      "before": "if (customerId != null && customerId.isBlank()) {",
+      "after": "if (customerId != null || customerId.isBlank()) {",
+      "patch": "experiments/faults/orders-api/orders-api-07.patch",
+      "tests_run": 420,
+      "viable": true,
+      "failing_units": [
+        "com.retailops.orders.catalog.RepositoryQueriesIT",
+        "com.retailops.orders.order.OrderControllerTest",
+        "com.retailops.orders.order.OrderFilterTest",
+        "com.retailops.orders.order.OrderServiceTest"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 10,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 14,
+        "detected": true
+      },
+      "seconds": 132.3,
+      "status": "detected"
+    },
+    {
+      "id": "orders-api-08",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/pricing/Coupon.java",
+      "line": 28,
+      "operator": "logical",
+      "before": "if (type == CouponType.PERCENTAGE && value.compareTo(new BigDecimal(\"100\")) > 0) {",
+      "after": "if (type == CouponType.PERCENTAGE || value.compareTo(new BigDecimal(\"100\")) > 0) {",
+      "patch": "experiments/faults/orders-api/orders-api-08.patch",
+      "tests_run": 415,
+      "viable": true,
+      "failing_units": [
+        "com.retailops.orders.order.OrderLifecycleHttpIT",
+        "com.retailops.orders.pricing.CouponEvaluatorTest",
+        "com.retailops.orders.pricing.GeneratedPricingScenariosTest",
+        "com.retailops.orders.pricing.PricingConfigurationIT",
+        "com.retailops.orders.pricing.PricingServiceTest",
+        "com.retailops.orders.pricing.QuoteServiceTest"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 22,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 29,
+        "detected": true
+      },
+      "seconds": 131.5,
+      "status": "detected"
+    },
+    {
+      "id": "orders-api-09",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponEvaluator.java",
+      "line": 45,
+      "operator": "boolean",
+      "before": "case FIXED_AMOUNT -> new CouponOutcome(Money.min(Money.round(coupon.value()), discountBase), false);",
+      "after": "case FIXED_AMOUNT -> new CouponOutcome(Money.min(Money.round(coupon.value()), discountBase), true);",
+      "patch": "experiments/faults/orders-api/orders-api-09.patch",
+      "tests_run": 420,
+      "viable": true,
+      "failing_units": [
+        "com.retailops.orders.pricing.CouponEvaluatorTest",
+        "com.retailops.orders.pricing.PricingServiceTest"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 20,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 27,
+        "detected": true
+      },
+      "seconds": 141.6,
+      "status": "detected"
+    },
+    {
+      "id": "orders-api-10",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/inventory/StockLevel.java",
+      "line": 9,
+      "operator": "logical",
+      "before": "if (onHand < 0 || reserved < 0) {",
+      "after": "if (onHand < 0 && reserved < 0) {",
+      "patch": "experiments/faults/orders-api/orders-api-10.patch",
+      "tests_run": 420,
+      "viable": true,
+      "failing_units": [
+        "com.retailops.orders.inventory.StockLevelTest"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 15,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 15,
+        "detected": true
+      },
+      "seconds": 147.8,
+      "status": "detected"
+    },
+    {
+      "id": "orders-api-11",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponEvaluator.java",
+      "line": 20,
+      "operator": "negation",
+      "before": "if (!coupon.active()) {",
+      "after": "if (coupon.active()) {",
+      "patch": "experiments/faults/orders-api/orders-api-11.patch",
+      "tests_run": 420,
+      "viable": true,
+      "failing_units": [
+        "com.retailops.orders.order.OrderLifecycleHttpIT",
+        "com.retailops.orders.pricing.CouponEvaluatorTest",
+        "com.retailops.orders.pricing.GeneratedPricingScenariosTest",
+        "com.retailops.orders.pricing.PricingConfigurationIT",
+        "com.retailops.orders.pricing.PricingServiceTest"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 20,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 27,
+        "detected": true
+      },
+      "seconds": 92.4,
+      "status": "detected"
+    },
+    {
+      "id": "orders-api-12",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponRepository.java",
+      "line": 14,
+      "operator": "boolean",
+      "before": "where c.active = true",
+      "after": "where c.active = false",
+      "patch": "experiments/faults/orders-api/orders-api-12.patch",
+      "tests_run": 420,
+      "viable": true,
+      "failing_units": [
+        "com.retailops.orders.catalog.RepositoryQueriesIT"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 10,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 20,
+        "detected": true
+      },
+      "seconds": 118.2,
+      "status": "detected"
+    },
+    {
+      "id": "orders-api-13",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/validation/EmailValidator.java",
+      "line": 37,
+      "operator": "boolean",
+      "before": "return false;",
+      "after": "return true;",
+      "patch": "experiments/faults/orders-api/orders-api-13.patch",
+      "tests_run": 420,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 11,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 13,
+        "detected": false
+      },
+      "seconds": 122.0,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "orders-api-14",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/order/OrderLines.java",
+      "line": 27,
+      "operator": "negation",
+      "before": "if (!SkuValidator.isValid(sku)) {",
+      "after": "if (SkuValidator.isValid(sku)) {",
+      "patch": "experiments/faults/orders-api/orders-api-14.patch",
+      "tests_run": 414,
+      "viable": true,
+      "failing_units": [
+        "com.retailops.orders.inventory.ConcurrentStockReservationIT",
+        "com.retailops.orders.order.OrderLifecycleHttpIT",
+        "com.retailops.orders.order.OrderLinesTest",
+        "com.retailops.orders.order.OrderPaginationIT",
+        "com.retailops.orders.order.OrderServiceTest",
+        "com.retailops.orders.pricing.PricingConfigurationIT"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 10,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 14,
+        "detected": true
+      },
+      "seconds": 131.6,
+      "status": "detected"
+    },
+    {
+      "id": "orders-api-15",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/pricing/CouponEvaluator.java",
+      "line": 43,
+      "operator": "boolean",
+      "before": "yield new CouponOutcome(Money.min(discount, discountBase), false);",
+      "after": "yield new CouponOutcome(Money.min(discount, discountBase), true);",
+      "patch": "experiments/faults/orders-api/orders-api-15.patch",
+      "tests_run": 420,
+      "viable": true,
+      "failing_units": [
+        "com.retailops.orders.order.OrderLifecycleHttpIT",
+        "com.retailops.orders.pricing.GeneratedPricingScenariosTest"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 20,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 27,
+        "detected": true
+      },
+      "seconds": 148.4,
+      "status": "detected"
+    },
+    {
+      "id": "orders-api-16",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/order/OrderStateMachine.java",
+      "line": 48,
+      "operator": "negation",
+      "before": "if (!canTransition(from, to)) {",
+      "after": "if (canTransition(from, to)) {",
+      "patch": "experiments/faults/orders-api/orders-api-16.patch",
+      "tests_run": 414,
+      "viable": true,
+      "failing_units": [
+        "com.retailops.orders.catalog.RepositoryQueriesIT",
+        "com.retailops.orders.inventory.ConcurrentStockReservationIT",
+        "com.retailops.orders.order.OrderEntityTest",
+        "com.retailops.orders.order.OrderLifecycleHttpIT",
+        "com.retailops.orders.order.OrderPaginationIT",
+        "com.retailops.orders.order.OrderServiceTest",
+        "com.retailops.orders.order.OrderStateMachineTest"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 13,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 14,
+        "detected": true
+      },
+      "seconds": 117.8,
+      "status": "detected"
+    },
+    {
+      "id": "orders-api-17",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/validation/EmailValidator.java",
+      "line": 24,
+      "operator": "boolean",
+      "before": "return false;",
+      "after": "return true;",
+      "patch": "experiments/faults/orders-api/orders-api-17.patch",
+      "tests_run": 420,
+      "viable": true,
+      "failing_units": [
+        "com.retailops.orders.validation.EmailValidatorTest"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 11,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 13,
+        "detected": true
+      },
+      "seconds": 136.4,
+      "status": "detected"
+    },
+    {
+      "id": "orders-api-18",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/pricing/ShippingPolicy.java",
+      "line": 27,
+      "operator": "logical",
+      "before": "|| tier == CustomerTier.PLATINUM",
+      "after": "&& tier == CustomerTier.PLATINUM",
+      "patch": "experiments/faults/orders-api/orders-api-18.patch",
+      "tests_run": 420,
+      "viable": true,
+      "failing_units": [
+        "com.retailops.orders.pricing.GeneratedPricingScenariosTest",
+        "com.retailops.orders.pricing.PricingConfigurationIT",
+        "com.retailops.orders.pricing.PricingServiceTest",
+        "com.retailops.orders.pricing.ShippingPolicyTest"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 22,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 27,
+        "detected": true
+      },
+      "seconds": 122.3,
+      "status": "detected"
+    },
+    {
+      "id": "orders-api-19",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/validation/QuantityRules.java",
+      "line": 19,
+      "operator": "negation",
+      "before": "if (!isValid(quantity)) {",
+      "after": "if (isValid(quantity)) {",
+      "patch": "experiments/faults/orders-api/orders-api-19.patch",
+      "tests_run": 414,
+      "viable": true,
+      "failing_units": [
+        "com.retailops.orders.inventory.ConcurrentStockReservationIT",
+        "com.retailops.orders.order.OrderLifecycleHttpIT",
+        "com.retailops.orders.order.OrderLinesTest",
+        "com.retailops.orders.order.OrderPaginationIT",
+        "com.retailops.orders.order.OrderServiceTest",
+        "com.retailops.orders.pricing.PricingConfigurationIT",
+        "com.retailops.orders.validation.QuantityRulesTest"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 12,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 14,
+        "detected": true
+      },
+      "seconds": 143.6,
+      "status": "detected"
+    },
+    {
+      "id": "orders-api-20",
+      "app": "orders-api",
+      "file": "apps/orders-api/src/main/java/com/retailops/orders/validation/EmailValidator.java",
+      "line": 32,
+      "operator": "negation",
+      "before": "if (local.length() > MAX_LOCAL_LENGTH || !LOCAL.matcher(local).matches()) {",
+      "after": "if (local.length() > MAX_LOCAL_LENGTH || LOCAL.matcher(local).matches()) {",
+      "patch": "experiments/faults/orders-api/orders-api-20.patch",
+      "tests_run": 420,
+      "viable": true,
+      "failing_units": [
+        "com.retailops.orders.customer.CustomerControllerTest",
+        "com.retailops.orders.order.OrderLifecycleHttpIT",
+        "com.retailops.orders.validation.EmailValidatorTest",
+        "com.retailops.orders.validation.RequestValidationTest"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 11,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 13,
+        "detected": true
+      },
+      "seconds": 118.5,
+      "status": "detected"
+    },
+    {
+      "id": "web-01",
+      "app": "web",
+      "file": "apps/web/src/lib/cart.ts",
+      "line": 8,
+      "operator": "constant",
+      "before": "GOLD: 0.1,",
+      "after": "GOLD: 0.2,",
+      "patch": "experiments/faults/web/web-01.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [
+        "src/lib/__generated__/quote.generated.test.ts",
+        "src/lib/cart.discounts.test.ts",
+        "src/lib/cart.quote.test.ts"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 18,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 36,
+        "detected": true
+      },
+      "seconds": 25.2,
+      "status": "detected"
+    },
+    {
+      "id": "web-02",
+      "app": "web",
+      "file": "apps/web/src/lib/csv.ts",
+      "line": 63,
+      "operator": "boolean",
+      "before": "inQuotes = false;",
+      "after": "inQuotes = true;",
+      "patch": "experiments/faults/web/web-02.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [
+        "src/lib/csv.test.ts"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 3,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 28,
+        "detected": true
+      },
+      "seconds": 24.6,
+      "status": "detected"
+    },
+    {
+      "id": "web-03",
+      "app": "web",
+      "file": "apps/web/src/lib/money.ts",
+      "line": 23,
+      "operator": "relational",
+      "before": "if (Math.abs(diff - 0.5) < HALF_EPSILON) {",
+      "after": "if (Math.abs(diff - 0.5) <= HALF_EPSILON) {",
+      "patch": "experiments/faults/web/web-03.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 24,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 37,
+        "detected": false
+      },
+      "seconds": 31.2,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "web-04",
+      "app": "web",
+      "file": "apps/web/src/lib/dates.ts",
+      "line": 9,
+      "operator": "boolean",
+      "before": "if (month < 1 || month > 12 || day < 1) return false;",
+      "after": "if (month < 1 || month > 12 || day < 1) return true;",
+      "patch": "experiments/faults/web/web-04.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 20,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 38,
+        "detected": false
+      },
+      "seconds": 34.5,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "web-05",
+      "app": "web",
+      "file": "apps/web/src/lib/orderQuery.ts",
+      "line": 40,
+      "operator": "boolean",
+      "before": "if (filters.maxTotal !== undefined && order.total > filters.maxTotal) return false;",
+      "after": "if (filters.maxTotal !== undefined && order.total > filters.maxTotal) return true;",
+      "patch": "experiments/faults/web/web-05.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [
+        "src/lib/orderQuery.filterSort.test.ts"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 12,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 28.6,
+      "status": "detected"
+    },
+    {
+      "id": "web-06",
+      "app": "web",
+      "file": "apps/web/src/lib/orderQuery.ts",
+      "line": 89,
+      "operator": "logical",
+      "before": "return [...orders].sort((a, b) => sign * cmp(a, b) || a.id.localeCompare(b.id, 'en'));",
+      "after": "return [...orders].sort((a, b) => sign * cmp(a, b) && a.id.localeCompare(b.id, 'en'));",
+      "patch": "experiments/faults/web/web-06.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [
+        "src/App.test.tsx",
+        "src/lib/orderQuery.filterSort.test.ts",
+        "src/pages/OrderListPage.test.tsx"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 12,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 27.5,
+      "status": "detected"
+    },
+    {
+      "id": "web-07",
+      "app": "web",
+      "file": "apps/web/src/lib/cart.ts",
+      "line": 96,
+      "operator": "logical",
+      "before": "if (!Number.isInteger(line.quantity) || line.quantity < 1) {",
+      "after": "if (!Number.isInteger(line.quantity) && line.quantity < 1) {",
+      "patch": "experiments/faults/web/web-07.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [
+        "src/lib/cart.quote.test.ts",
+        "src/lib/cart.subtotal.test.ts"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 18,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 36,
+        "detected": true
+      },
+      "seconds": 26.4,
+      "status": "detected"
+    },
+    {
+      "id": "web-08",
+      "app": "web",
+      "file": "apps/web/src/lib/dates.ts",
+      "line": 33,
+      "operator": "logical",
+      "before": "if (!isValidCalendarDate(y, m, d) || hh > 23 || mm > 59 || ss > 59) return null;",
+      "after": "if (!isValidCalendarDate(y, m, d) || hh > 23 && mm > 59 || ss > 59) return null;",
+      "patch": "experiments/faults/web/web-08.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [
+        "src/lib/dates.test.ts"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 20,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 38,
+        "detected": true
+      },
+      "seconds": 25.1,
+      "status": "detected"
+    },
+    {
+      "id": "web-09",
+      "app": "web",
+      "file": "apps/web/src/lib/format.ts",
+      "line": 14,
+      "operator": "negation",
+      "before": "if (!formatter) {",
+      "after": "if (formatter) {",
+      "patch": "experiments/faults/web/web-09.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [
+        "src/App.test.tsx",
+        "src/components/OrderLineEditor.test.tsx",
+        "src/components/OrderTable.test.tsx",
+        "src/components/QuoteSummary.test.tsx",
+        "src/lib/format.currency.test.ts",
+        "src/pages/CreateOrderPage.test.tsx",
+        "src/pages/CustomerListPage.test.tsx",
+        "src/pages/DashboardPage.test.tsx",
+        "src/pages/OrderDetailPage.test.tsx",
+        "src/pages/OrderListPage.test.tsx",
+        "src/pages/ProductCatalogPage.test.tsx"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 13,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 37,
+        "detected": true
+      },
+      "seconds": 27.5,
+      "status": "detected"
+    },
+    {
+      "id": "web-10",
+      "app": "web",
+      "file": "apps/web/src/lib/orderQuery.ts",
+      "line": 33,
+      "operator": "logical",
+      "before": "if (filters.status && filters.status !== 'ALL' && order.status !== filters.status) return false;",
+      "after": "if (filters.status || filters.status !== 'ALL' && order.status !== filters.status) return false;",
+      "patch": "experiments/faults/web/web-10.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [
+        "src/App.test.tsx",
+        "src/lib/orderQuery.filterSort.test.ts",
+        "src/pages/OrderListPage.test.tsx"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 12,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 30.2,
+      "status": "detected"
+    },
+    {
+      "id": "web-11",
+      "app": "web",
+      "file": "apps/web/src/lib/orderStatus.ts",
+      "line": 77,
+      "operator": "relational",
+      "before": "while (queue.length > 0) {",
+      "after": "while (queue.length >= 0) {",
+      "patch": "experiments/faults/web/web-11.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [
+        "src/lib/orderStatus.test.ts"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 17,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 36,
+        "detected": true
+      },
+      "seconds": 31.6,
+      "status": "detected"
+    },
+    {
+      "id": "web-12",
+      "app": "web",
+      "file": "apps/web/src/lib/orderQuery.ts",
+      "line": 47,
+      "operator": "boolean",
+      "before": "return true;",
+      "after": "return false;",
+      "patch": "experiments/faults/web/web-12.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [
+        "src/App.test.tsx",
+        "src/lib/orderQuery.filterSort.test.ts",
+        "src/pages/OrderListPage.test.tsx"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 12,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 26.8,
+      "status": "detected"
+    },
+    {
+      "id": "web-13",
+      "app": "web",
+      "file": "apps/web/src/lib/cart.ts",
+      "line": 7,
+      "operator": "constant",
+      "before": "SILVER: 0.05,",
+      "after": "SILVER: 0.06,",
+      "patch": "experiments/faults/web/web-13.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [
+        "src/lib/__generated__/quote.generated.test.ts",
+        "src/lib/cart.discounts.test.ts",
+        "src/lib/cart.quote.test.ts"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 18,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 36,
+        "detected": true
+      },
+      "seconds": 31.0,
+      "status": "detected"
+    },
+    {
+      "id": "web-14",
+      "app": "web",
+      "file": "apps/web/src/lib/api.ts",
+      "line": 45,
+      "operator": "relational",
+      "before": "if (status >= 500 && status <= 599) return 'server';",
+      "after": "if (status >= 500 && status < 599) return 'server';",
+      "patch": "experiments/faults/web/web-14.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 10,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": false
+      },
+      "seconds": 32.2,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "web-15",
+      "app": "web",
+      "file": "apps/web/src/lib/validators.ts",
+      "line": 80,
+      "operator": "negation",
+      "before": "} else if (!isValidCustomerId(draft.customerId)) {",
+      "after": "} else if (isValidCustomerId(draft.customerId)) {",
+      "patch": "experiments/faults/web/web-15.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [
+        "src/lib/validators.draft.test.ts",
+        "src/pages/CreateOrderPage.test.tsx"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 5,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 29,
+        "detected": true
+      },
+      "seconds": 25.0,
+      "status": "detected"
+    },
+    {
+      "id": "web-16",
+      "app": "web",
+      "file": "apps/web/src/lib/cart.ts",
+      "line": 155,
+      "operator": "relational",
+      "before": "if (amount <= 0) return 0;",
+      "after": "if (amount < 0) return 0;",
+      "patch": "experiments/faults/web/web-16.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 18,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 36,
+        "detected": false
+      },
+      "seconds": 23.1,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "web-17",
+      "app": "web",
+      "file": "apps/web/src/lib/orderQuery.ts",
+      "line": 41,
+      "operator": "logical",
+      "before": "if ((filters.from || filters.to) && !isWithinDateRange(order.createdAt, filters.from, filters.to)) return false;",
+      "after": "if ((filters.from || filters.to) || !isWithinDateRange(order.createdAt, filters.from, filters.to)) return false;",
+      "patch": "experiments/faults/web/web-17.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [
+        "src/lib/orderQuery.filterSort.test.ts"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 12,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 23.2,
+      "status": "detected"
+    },
+    {
+      "id": "web-18",
+      "app": "web",
+      "file": "apps/web/src/lib/api.ts",
+      "line": 204,
+      "operator": "relational",
+      "before": "for (let attempt = 0; attempt < maxAttempts; attempt += 1) {",
+      "after": "for (let attempt = 0; attempt <= maxAttempts; attempt += 1) {",
+      "patch": "experiments/faults/web/web-18.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 10,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": false
+      },
+      "seconds": 29.4,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "web-19",
+      "app": "web",
+      "file": "apps/web/src/lib/cart.ts",
+      "line": 82,
+      "operator": "negation",
+      "before": "if (!coupon) {",
+      "after": "if (coupon) {",
+      "patch": "experiments/faults/web/web-19.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [
+        "src/lib/__generated__/quote.generated.test.ts",
+        "src/lib/cart.coupon.test.ts",
+        "src/lib/cart.quote.test.ts",
+        "src/pages/CreateOrderPage.test.tsx"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 18,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 36,
+        "detected": true
+      },
+      "seconds": 33.8,
+      "status": "detected"
+    },
+    {
+      "id": "web-20",
+      "app": "web",
+      "file": "apps/web/src/lib/search.ts",
+      "line": 99,
+      "operator": "boolean",
+      "before": "if (ranges.length === 0) return [{ text, match: false }];",
+      "after": "if (ranges.length === 0) return [{ text, match: true }];",
+      "patch": "experiments/faults/web/web-20.patch",
+      "tests_run": 728,
+      "viable": true,
+      "failing_units": [
+        "src/components/Feedback.test.tsx",
+        "src/lib/highlight.test.ts"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 16,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 35,
+        "detected": true
+      },
+      "seconds": 29.0,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-01",
+      "app": "analytics",
+      "file": "apps/analytics/app/datasets.py",
+      "line": 193,
+      "operator": "constant",
+      "before": "active=rng.random() > 0.05,",
+      "after": "active=rng.random() > 0.06,",
+      "patch": "experiments/faults/analytics/analytics-01.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 20,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": false
+      },
+      "seconds": 39.5,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "analytics-02",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/customers.py",
+      "line": 145,
+      "operator": "relational",
+      "before": "if r == 2:",
+      "after": "if r != 2:",
+      "patch": "experiments/faults/analytics/analytics-02.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/metrics/test_customers_rfm.py",
+        "tests/metrics/test_customers_segments.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 8,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 29.7,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-03",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/timeseries.py",
+      "line": 196,
+      "operator": "relational",
+      "before": "if not 0.0 <= q <= 1.0:",
+      "after": "if not 0.0 < q <= 1.0:",
+      "patch": "experiments/faults/analytics/analytics-03.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/metrics/test_timeseries_anomalies.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 5,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 23.9,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-04",
+      "app": "analytics",
+      "file": "apps/analytics/app/api.py",
+      "line": 149,
+      "operator": "relational",
+      "before": "if req.method == \"zscore\":",
+      "after": "if req.method != \"zscore\":",
+      "patch": "experiments/faults/analytics/analytics-04.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/api/test_timeseries_api.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 8,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 23.7,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-05",
+      "app": "analytics",
+      "file": "apps/analytics/app/datasets.py",
+      "line": 243,
+      "operator": "relational",
+      "before": "if partner < n_products:",
+      "after": "if partner <= n_products:",
+      "patch": "experiments/faults/analytics/analytics-05.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/test_datasets.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 20,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 24.8,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-06",
+      "app": "analytics",
+      "file": "apps/analytics/app/datasets.py",
+      "line": 238,
+      "operator": "off-by-one",
+      "before": "pi = min(bisect.bisect_left(cum_popularity, rng.random() * total_popularity), n_products - 1)",
+      "after": "pi = min(bisect.bisect_left(cum_popularity, rng.random() * total_popularity), n_products - 2)",
+      "patch": "experiments/faults/analytics/analytics-06.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 20,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": false
+      },
+      "seconds": 26.4,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "analytics-07",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/customers.py",
+      "line": 285,
+      "operator": "constant",
+      "before": "discount_rate: float = 0.01,",
+      "after": "discount_rate: float = 0.02,",
+      "patch": "experiments/faults/analytics/analytics-07.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 8,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": false
+      },
+      "seconds": 24.3,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "analytics-08",
+      "app": "analytics",
+      "file": "apps/analytics/app/io/csv_io.py",
+      "line": 107,
+      "operator": "relational",
+      "before": "if minimum is not None and value < minimum:",
+      "after": "if minimum is not None and value <= minimum:",
+      "patch": "experiments/faults/analytics/analytics-08.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/api/test_csv_api.py",
+        "tests/io/test_csv_large.py",
+        "tests/io/test_csv_orders.py",
+        "tests/io/test_csv_parsers.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 6,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 23.3,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-09",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/timeseries.py",
+      "line": 199,
+      "operator": "off-by-one",
+      "before": "pos = (len(ordered) - 1) * q",
+      "after": "pos = (len(ordered) - 2) * q",
+      "patch": "experiments/faults/analytics/analytics-09.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/metrics/test_timeseries_anomalies.py",
+        "tests/metrics/test_timeseries_large.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 5,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 27.1,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-10",
+      "app": "analytics",
+      "file": "apps/analytics/app/io/csv_io.py",
+      "line": 190,
+      "operator": "logical",
+      "before": "if all(not (v or \"\").strip() for v in row.values()):",
+      "after": "if all(not (v and \"\").strip() for v in row.values()):",
+      "patch": "experiments/faults/analytics/analytics-10.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/api/test_csv_api.py",
+        "tests/io/test_csv_customers.py",
+        "tests/io/test_csv_large.py",
+        "tests/io/test_csv_orders.py",
+        "tests/io/test_csv_products.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 6,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 27.1,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-11",
+      "app": "analytics",
+      "file": "apps/analytics/app/io/csv_io.py",
+      "line": 269,
+      "operator": "logical",
+      "before": "coupon = (row.get(\"coupon_code\") or \"\").strip() or None",
+      "after": "coupon = (row.get(\"coupon_code\") and \"\").strip() or None",
+      "patch": "experiments/faults/analytics/analytics-11.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/io/test_csv_large.py",
+        "tests/io/test_csv_orders.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 6,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 25.6,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-12",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/customers.py",
+      "line": 198,
+      "operator": "negation",
+      "before": "if mode not in RETENTION_MODES:",
+      "after": "if mode in RETENTION_MODES:",
+      "patch": "experiments/faults/analytics/analytics-12.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/api/test_customers_api.py",
+        "tests/metrics/test_cohorts.py",
+        "tests/metrics/test_customers_large.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 8,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 30.2,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-13",
+      "app": "analytics",
+      "file": "apps/analytics/app/io/csv_io.py",
+      "line": 3,
+      "operator": "logical",
+      "before": "Readers collect *all* row errors (up to ``max_errors``) and raise a single",
+      "after": "Readers collect *all* row errors (up to ``max_errors``) or raise a single",
+      "patch": "experiments/faults/analytics/analytics-13.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 6,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": false
+      },
+      "seconds": 24.4,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "analytics-14",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/funnel.py",
+      "line": 4,
+      "operator": "logical",
+      "before": "passed through CREATED, PAID and SHIPPED. CANCELLED orders are assumed to have",
+      "after": "passed through CREATED, PAID or SHIPPED. CANCELLED orders are assumed to have",
+      "patch": "experiments/faults/analytics/analytics-14.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 5,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": false
+      },
+      "seconds": 24.4,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "analytics-15",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/customers.py",
+      "line": 204,
+      "operator": "negation",
+      "before": "if not months_by_customer:",
+      "after": "if months_by_customer:",
+      "patch": "experiments/faults/analytics/analytics-15.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/api/test_customers_api.py",
+        "tests/metrics/test_cohorts.py",
+        "tests/metrics/test_customers_large.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 8,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 26.5,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-16",
+      "app": "analytics",
+      "file": "apps/analytics/app/io/csv_io.py",
+      "line": 134,
+      "operator": "negation",
+      "before": "if not sep or not local or \".\" not in domain or domain.startswith(\".\") or domain.endswith(\".\") or \" \" in text:",
+      "after": "if not sep or not local or \".\" in domain or domain.startswith(\".\") or domain.endswith(\".\") or \" \" in text:",
+      "patch": "experiments/faults/analytics/analytics-16.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/api/test_csv_api.py",
+        "tests/io/test_csv_customers.py",
+        "tests/io/test_csv_large.py",
+        "tests/io/test_csv_parsers.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 6,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 27.6,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-17",
+      "app": "analytics",
+      "file": "apps/analytics/app/metrics/customers.py",
+      "line": 196,
+      "operator": "logical",
+      "before": "Columns run up to the last month with data (or ``end``), so the matrix is triangular.",
+      "after": "Columns run up to the last month with data (and ``end``), so the matrix is triangular.",
+      "patch": "experiments/faults/analytics/analytics-17.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 8,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": false
+      },
+      "seconds": 27.0,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "analytics-18",
+      "app": "analytics",
+      "file": "apps/analytics/app/io/csv_io.py",
+      "line": 141,
+      "operator": "negation",
+      "before": "if not text:",
+      "after": "if text:",
+      "patch": "experiments/faults/analytics/analytics-18.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [
+        "tests/api/test_csv_api.py",
+        "tests/io/test_csv_customers.py",
+        "tests/io/test_csv_large.py",
+        "tests/io/test_csv_orders.py",
+        "tests/io/test_csv_parsers.py",
+        "tests/io/test_csv_products.py"
+      ],
+      "detected_full": true,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 6,
+        "detected": true
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": true
+      },
+      "seconds": 24.5,
+      "status": "detected"
+    },
+    {
+      "id": "analytics-19",
+      "app": "analytics",
+      "file": "apps/analytics/app/io/csv_io.py",
+      "line": 260,
+      "operator": "boolean",
+      "before": "for fname, a, b in zip(ORDER_HEADER_FIELDS, first_raw, header_raw, strict=True):",
+      "after": "for fname, a, b in zip(ORDER_HEADER_FIELDS, first_raw, header_raw, strict=False):",
+      "patch": "experiments/faults/analytics/analytics-19.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 6,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": false
+      },
+      "seconds": 26.5,
+      "status": "undetected-by-suite"
+    },
+    {
+      "id": "analytics-20",
+      "app": "analytics",
+      "file": "apps/analytics/app/datasets.py",
+      "line": 239,
+      "operator": "constant",
+      "before": "quantities[pi] = quantities.get(pi, 0) + 1 + min(9, int(rng.expovariate(1.2)))",
+      "after": "quantities[pi] = quantities.get(pi, 0) + 1 + min(9, int(rng.expovariate(1.3)))",
+      "patch": "experiments/faults/analytics/analytics-20.patch",
+      "tests_run": 615,
+      "viable": true,
+      "failing_units": [],
+      "detected_full": false,
+      "hybrid": {
+        "mode": "subset",
+        "n_selected": 20,
+        "detected": false
+      },
+      "static": {
+        "mode": "subset",
+        "n_selected": 33,
+        "detected": false
+      },
+      "seconds": 24.2,
+      "status": "undetected-by-suite"
+    }
+  ]
+}

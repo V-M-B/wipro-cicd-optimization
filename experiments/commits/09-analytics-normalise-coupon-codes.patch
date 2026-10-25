@@ -1,0 +1,45 @@
+diff --git a/apps/analytics/app/metrics/revenue.py b/apps/analytics/app/metrics/revenue.py
+index 622344f..4618a1b 100644
+--- a/apps/analytics/app/metrics/revenue.py
++++ b/apps/analytics/app/metrics/revenue.py
+@@ -155,12 +155,17 @@ def aov_by_region(
+ 
+ 
+ def coupon_usage(orders: Iterable[Order], statuses: Statuses = REVENUE_STATUSES) -> dict[str, dict[str, float]]:
+-    """Per coupon code: number of orders, revenue and discount granted."""
++    """Per coupon code: number of orders, revenue and discount granted.
++
++    Codes are compared case-insensitively and without surrounding whitespace (``" save10"`` is
++    reported as ``"SAVE10"``); blank codes are treated as no coupon.
++    """
+     stats: dict[str, dict[str, float]] = {}
+     for o in revenue_orders(orders, statuses):
+-        if not o.couponCode:
++        code = (o.couponCode or "").strip().upper()
++        if not code:
+             continue
+-        entry = stats.setdefault(o.couponCode, {"orders": 0, "revenue": 0.0, "discount": 0.0})
++        entry = stats.setdefault(code, {"orders": 0, "revenue": 0.0, "discount": 0.0})
+         entry["orders"] += 1
+         entry["revenue"] += o.total
+         entry["discount"] += order_gross(o) - o.total
+diff --git a/apps/analytics/tests/metrics/test_revenue.py b/apps/analytics/tests/metrics/test_revenue.py
+index a1ac18f..d3f229b 100644
+--- a/apps/analytics/tests/metrics/test_revenue.py
++++ b/apps/analytics/tests/metrics/test_revenue.py
+@@ -159,6 +159,15 @@ def test_coupon_usage_ignores_cancelled_coupons():
+     assert revenue.coupon_usage(orders) == {"WELCOME5": {"orders": 1, "revenue": 19.0, "discount": 1.0}}
+ 
+ 
++def test_coupon_usage_normalises_codes():
++    orders = [
++        make_order("O1", lines=[("A", 1, 10.0)], total=9.0, coupon="SAVE10"),
++        make_order("O2", lines=[("A", 2, 10.0)], total=18.0, coupon=" save10 "),
++        make_order("O3", lines=[("A", 1, 10.0)], total=10.0, coupon="   "),
++    ]
++    assert revenue.coupon_usage(orders) == {"SAVE10": {"orders": 2, "revenue": 27.0, "discount": 3.0}}
++
++
+ @pytest.mark.parametrize(
+     ("breakdown", "expected"),
+     [

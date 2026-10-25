@@ -1,0 +1,16 @@
+diff --git a/apps/orders-api/src/main/resources/application.yml b/apps/orders-api/src/main/resources/application.yml
+index 6120335..8fecab7 100644
+--- a/apps/orders-api/src/main/resources/application.yml
++++ b/apps/orders-api/src/main/resources/application.yml
+@@ -26,6 +26,11 @@ spring:
+ server:
+   port: 8080
+   shutdown: graceful
++  # Order lists and the product catalog are large JSON arrays; compress them when the client accepts gzip.
++  compression:
++    enabled: true
++    mime-types: application/json,application/problem+json
++    min-response-size: 2KB
+ 
+ management:
+   endpoints:

@@ -1,0 +1,241 @@
+# Experiment commits replayed by scripts/replay.py. See README.md in this directory.
+
+[[commit]]
+id = 1
+category = "frontend"
+title = "Add signed percent-change formatter"
+patch = "01-frontend-percent-change.patch"
+files = ["apps/web/src/lib/format.percentChange.test.ts", "apps/web/src/lib/format.ts"]
+verified = "git apply --check, lint, typecheck, vitest, build, e2e(chromium,webkit)"
+
+[[commit]]
+id = 2
+category = "backend"
+title = "Add Money.sum and use it for discount and total sums"
+patch = "02-backend-money-sum.patch"
+files = ["apps/orders-api/src/main/java/com/retailops/orders/pricing/Money.java", "apps/orders-api/src/main/java/com/retailops/orders/pricing/PriceBreakdown.java", "apps/orders-api/src/main/java/com/retailops/orders/pricing/PricingService.java", "apps/orders-api/src/test/java/com/retailops/orders/pricing/MoneyTest.java"]
+verified = "git apply --check, mvn verify"
+
+[[commit]]
+id = 3
+category = "analytics"
+title = "Report overall conversion in the order funnel"
+patch = "03-analytics-funnel-overall-conversion.patch"
+files = ["apps/analytics/app/api.py", "apps/analytics/app/metrics/funnel.py", "apps/analytics/tests/api/test_funnel_api.py", "apps/analytics/tests/metrics/test_funnel.py"]
+verified = "git apply --check, ruff, pytest"
+
+[[commit]]
+id = 4
+category = "shared-lib"
+title = "Add optional currency to PriceQuote"
+patch = "04-shared-lib-quote-currency.patch"
+files = ["apps/analytics/app/generated/schemas.py", "apps/orders-api/src/main/java/com/retailops/orders/pricing/PriceBreakdown.java", "apps/orders-api/src/main/java/com/retailops/schemas/PriceQuote.java", "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java", "apps/web/src/generated/schemas.ts", "libs/shared-schemas/schemas/price-quote.schema.json"]
+verified = "git apply --check, codegen --check, mvn verify, lint, typecheck, vitest, build, e2e(chromium,webkit), ruff, pytest"
+
+[[commit]]
+id = 5
+category = "docs"
+title = "List tia, shardkit and scripts in the root README layout"
+patch = "05-docs-readme-layout-tools.patch"
+files = ["README.md"]
+verified = "git apply --check"
+
+[[commit]]
+id = 6
+category = "config"
+title = "Enable gzip compression for orders-api JSON responses"
+patch = "06-config-orders-api-compression.patch"
+files = ["apps/orders-api/src/main/resources/application.yml"]
+verified = "git apply --check, mvn verify"
+
+[[commit]]
+id = 7
+category = "frontend"
+title = "Show each top product's share of units on the dashboard"
+patch = "07-frontend-top-sku-share.patch"
+files = ["apps/web/src/lib/kpi.test.ts", "apps/web/src/lib/kpi.ts", "apps/web/src/pages/DashboardPage.test.tsx", "apps/web/src/pages/DashboardPage.tsx"]
+verified = "git apply --check, lint, typecheck, vitest, build, e2e(chromium,webkit)"
+
+[[commit]]
+id = 8
+category = "backend"
+title = "Add PageResponse.hasPrevious"
+patch = "08-backend-page-has-previous.patch"
+files = ["apps/orders-api/src/main/java/com/retailops/orders/api/PageResponse.java", "apps/orders-api/src/test/java/com/retailops/orders/api/PageResponseTest.java"]
+verified = "git apply --check, mvn verify"
+
+[[commit]]
+id = 9
+category = "analytics"
+title = "Normalise coupon codes in coupon usage stats"
+patch = "09-analytics-normalise-coupon-codes.patch"
+files = ["apps/analytics/app/metrics/revenue.py", "apps/analytics/tests/metrics/test_revenue.py"]
+verified = "git apply --check, ruff, pytest"
+
+[[commit]]
+id = 10
+category = "shared-lib"
+title = "Add shared InventoryLevel schema and StockLevel.toSchema"
+patch = "10-shared-lib-inventory-level-schema.patch"
+files = ["apps/analytics/app/generated/schemas.py", "apps/orders-api/src/main/java/com/retailops/orders/inventory/StockLevel.java", "apps/orders-api/src/main/java/com/retailops/schemas/InventoryLevel.java", "apps/orders-api/src/test/java/com/retailops/orders/inventory/StockLevelTest.java", "apps/web/src/generated/schemas.ts", "libs/shared-schemas/schemas/inventory-level.schema.json"]
+verified = "git apply --check, codegen --check, mvn verify, lint, typecheck, vitest, build, e2e(chromium,webkit), ruff, pytest"
+
+[[commit]]
+id = 11
+category = "docs"
+title = "Document orders.pricing configuration properties"
+patch = "11-docs-orders-pricing-config.patch"
+files = ["apps/orders-api/README.md"]
+verified = "git apply --check"
+
+[[commit]]
+id = 12
+category = "config"
+title = "Enable gzip in the web nginx config"
+patch = "12-config-nginx-gzip.patch"
+files = ["apps/web/nginx.conf"]
+verified = "git apply --check, lint, typecheck, vitest, build, e2e(chromium,webkit), nginx -t + gzip smoke test (web:local image)"
+
+[[commit]]
+id = 13
+category = "frontend"
+title = "Trim customer id and SKUs before validating order drafts"
+patch = "13-frontend-trim-draft-ids.patch"
+files = ["apps/web/src/lib/validators.draft.test.ts", "apps/web/src/lib/validators.ts"]
+verified = "git apply --check, lint, typecheck, vitest, build, e2e(chromium,webkit)"
+
+[[commit]]
+id = 14
+category = "backend"
+title = "Trim the customer id in OrderFilter"
+patch = "14-backend-trim-order-filter-customer.patch"
+files = ["apps/orders-api/src/main/java/com/retailops/orders/order/OrderFilter.java", "apps/orders-api/src/test/java/com/retailops/orders/order/OrderFilterTest.java"]
+verified = "git apply --check, mvn verify"
+
+[[commit]]
+id = 15
+category = "analytics"
+title = "Refactor region and tier revenue onto a shared grouping helper"
+patch = "15-analytics-refactor-customer-grouping.patch"
+files = ["apps/analytics/app/metrics/revenue.py"]
+verified = "git apply --check, ruff, pytest"
+
+[[commit]]
+id = 16
+category = "shared-lib"
+title = "Add optional updatedAt to Order"
+patch = "16-shared-lib-order-updated-at.patch"
+files = ["apps/analytics/app/generated/schemas.py", "apps/orders-api/src/main/java/com/retailops/orders/order/OrderMapper.java", "apps/orders-api/src/main/java/com/retailops/orders/order/OrderService.java", "apps/orders-api/src/main/java/com/retailops/schemas/Order.java", "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java", "apps/web/src/generated/schemas.ts", "libs/shared-schemas/schemas/order.schema.json"]
+verified = "git apply --check, codegen --check, mvn verify, lint, typecheck, vitest, build, e2e(chromium,webkit), ruff, pytest"
+
+[[commit]]
+id = 17
+category = "docs"
+title = "Add an 'Adding a metric' guide to the analytics README"
+patch = "17-docs-analytics-adding-metrics.patch"
+files = ["apps/analytics/README.md"]
+verified = "git apply --check"
+
+[[commit]]
+id = 18
+category = "config"
+title = "Enforce consistent type-only imports in ESLint"
+patch = "18-config-eslint-type-imports.patch"
+files = ["apps/web/eslint.config.js"]
+verified = "git apply --check, lint, typecheck, vitest, build, e2e(chromium,webkit)"
+
+[[commit]]
+id = 19
+category = "frontend"
+title = "Split CSV field quoting into a needsQuoting helper"
+patch = "19-frontend-csv-quoting-refactor.patch"
+files = ["apps/web/src/lib/csv.test.ts", "apps/web/src/lib/csv.ts"]
+verified = "git apply --check, lint, typecheck, vitest, build, e2e(chromium,webkit)"
+
+[[commit]]
+id = 20
+category = "backend"
+title = "Rename QuantityRules.requireValid to requireInRange"
+patch = "20-backend-rename-quantity-require.patch"
+files = ["apps/orders-api/src/main/java/com/retailops/orders/order/OrderLines.java", "apps/orders-api/src/main/java/com/retailops/orders/validation/QuantityRules.java", "apps/orders-api/src/test/java/com/retailops/orders/validation/QuantityRulesTest.java"]
+verified = "git apply --check, mvn verify"
+
+[[commit]]
+id = 21
+category = "analytics"
+title = "Reject doubled dots and extra @ in CSV e-mail parsing"
+patch = "21-analytics-stricter-email-parsing.patch"
+files = ["apps/analytics/app/io/csv_io.py", "apps/analytics/tests/io/test_csv_parsers.py"]
+verified = "git apply --check, ruff, pytest"
+
+[[commit]]
+id = 22
+category = "shared-lib"
+title = "Add optional lineTotal to OrderLine"
+patch = "22-shared-lib-order-line-total.patch"
+files = ["apps/analytics/app/generated/schemas.py", "apps/orders-api/src/main/java/com/retailops/orders/order/OrderMapper.java", "apps/orders-api/src/main/java/com/retailops/schemas/OrderLine.java", "apps/orders-api/src/test/java/com/retailops/orders/order/OrderControllerTest.java", "apps/orders-api/src/test/java/com/retailops/orders/order/OrderMapperTest.java", "apps/web/src/generated/schemas.ts", "libs/shared-schemas/schemas/order-line.schema.json"]
+verified = "git apply --check, codegen --check, mvn verify, lint, typecheck, vitest, build, e2e(chromium,webkit), ruff, pytest"
+
+[[commit]]
+id = 23
+category = "docs"
+title = "Document the schema change workflow and type mapping"
+patch = "23-docs-shared-schemas-workflow.patch"
+files = ["libs/shared-schemas/README.md"]
+verified = "git apply --check"
+
+[[commit]]
+id = 24
+category = "config"
+title = "Enable ruff PIE and PERF rules for analytics"
+patch = "24-config-ruff-pie-perf.patch"
+files = ["apps/analytics/pyproject.toml"]
+verified = "git apply --check, ruff, pytest"
+
+[[commit]]
+id = 25
+category = "frontend"
+title = "Explain order statuses in status badge tooltips"
+patch = "25-frontend-status-tooltips.patch"
+files = ["apps/web/src/components/StatusBadge.test.tsx", "apps/web/src/components/StatusBadge.tsx", "apps/web/src/lib/orderStatus.test.ts", "apps/web/src/lib/orderStatus.ts"]
+verified = "git apply --check, lint, typecheck, vitest, build, e2e(chromium,webkit)"
+
+[[commit]]
+id = 26
+category = "backend"
+title = "Reject negative merchandise amounts in ShippingPolicy"
+patch = "26-backend-shipping-negative-guard.patch"
+files = ["apps/orders-api/src/main/java/com/retailops/orders/pricing/ShippingPolicy.java", "apps/orders-api/src/test/java/com/retailops/orders/pricing/ShippingPolicyTest.java"]
+verified = "git apply --check, mvn verify"
+
+[[commit]]
+id = 27
+category = "analytics"
+title = "Add quarterly granularity to period metrics"
+patch = "27-analytics-quarter-granularity.patch"
+files = ["apps/analytics/app/api_models.py", "apps/analytics/app/metrics/common.py", "apps/analytics/tests/api/test_revenue_api.py", "apps/analytics/tests/metrics/test_common.py", "apps/analytics/tests/metrics/test_revenue.py"]
+verified = "git apply --check, ruff, pytest"
+
+[[commit]]
+id = 28
+category = "shared-lib"
+title = "Add shared Problem schema and read RFC 7807 detail in the web client"
+patch = "28-shared-lib-problem-schema.patch"
+files = ["apps/analytics/app/generated/schemas.py", "apps/orders-api/src/main/java/com/retailops/schemas/Problem.java", "apps/web/src/generated/schemas.ts", "apps/web/src/lib/api.errors.test.ts", "apps/web/src/lib/api.ts", "libs/shared-schemas/schemas/problem.schema.json"]
+verified = "git apply --check, codegen --check, mvn verify, lint, typecheck, vitest, build, e2e(chromium,webkit), ruff, pytest"
+
+[[commit]]
+id = 29
+category = "docs"
+title = "Document cross-browser e2e projects in the web README"
+patch = "29-docs-web-cross-browser-e2e.patch"
+files = ["apps/web/README.md"]
+verified = "git apply --check"
+
+[[commit]]
+id = 30
+category = "config"
+title = "Exclude docs and helper scripts from Docker build contexts"
+patch = "30-config-dockerignore-docs-scripts.patch"
+files = ["apps/analytics/.dockerignore", "apps/orders-api/.dockerignore"]
+verified = "git apply --check, mvn verify, ruff, pytest"

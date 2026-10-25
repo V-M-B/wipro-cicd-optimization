@@ -1,0 +1,11 @@
+--- a/apps/analytics/app/metrics/timeseries.py
++++ b/apps/analytics/app/metrics/timeseries.py
+@@ -55,7 +55,7 @@
+     denom = window * (window + 1) / 2
+     out: list[float | None] = []
+     for i in range(len(values)):
+-        if i < window - 1:
++        if i < window - 2:
+             out.append(None)
+             continue
+         chunk = values[i - window + 1 : i + 1]

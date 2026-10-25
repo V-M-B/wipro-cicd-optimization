@@ -1,0 +1,31 @@
+diff --git a/apps/web/README.md b/apps/web/README.md
+index bb8c1ea..429c7c2 100644
+--- a/apps/web/README.md
++++ b/apps/web/README.md
+@@ -16,7 +16,7 @@ Domain types (`Order`, `OrderLine`, `Customer`, `Product`, `PriceQuote`, enums)
+ 
+ - Node `^20.19.0 || >=22.12.0` (CI uses Node 20 LTS; also verified locally under the `node:20` image, v20.20.2)
+ - npm (lockfile committed; always install with `npm ci`)
+-- For e2e: Chromium for Playwright (`npx playwright install chromium`)
++- For e2e: the Playwright browsers (`npx playwright install chromium firefox webkit`)
+ 
+ ## Scripts
+ 
+@@ -29,7 +29,7 @@ Domain types (`Order`, `OrderLine`, `Customer`, `Product`, `PriceQuote`, enums)
+ | `npm run typecheck` | `tsc --noEmit` |
+ | `npm test` | Vitest (jsdom). Writes JUnit XML to `reports/junit.xml` plus the default console reporter |
+ | `npm run test:coverage` | Same, with V8 coverage (`coverage/`: text summary, HTML, lcov, json-summary) |
+-| `npm run e2e` | Playwright, Chromium only, against `vite preview` (started by Playwright's `webServer`). **Requires `npm run build` first.** JUnit XML to `reports/e2e-junit.xml` |
++| `npm run e2e` | Playwright against `vite preview` (started by Playwright's `webServer`), once per browser project: `chromium`, `firefox`, `webkit` (`playwright.config.ts`). Run a single browser with `npm run e2e -- --project=chromium`. **Requires `npm run build` first.** JUnit XML to `reports/e2e-junit.xml` |
+ | `npm run generate:tables` | Regenerates `src/lib/__generated__/*.generated.test.ts` (`node scripts/generate-tables.mjs --check` fails if stale) |
+ 
+ ## Layout
+@@ -84,7 +84,7 @@ Counts below are taken from the JUnit XML files written by the runs recorded in
+ | Vitest — `src/components/**` | 10 | 55 | Testing Library + user-event |
+ | Vitest — `src/pages/**` + `App.test.tsx` | 7 | 59 | full pages rendered with the API client mocked (`createMockApi`) |
+ | **Vitest total** (`reports/junit.xml`) | **44** | **728** | 0 failures, 0 skipped |
+-| **Playwright** (`reports/e2e-junit.xml`) | **6** | **35** | Chromium; backend mocked with `page.route` |
++| **Playwright** (`reports/e2e-junit.xml`) | **6** | **35** per browser | run on Chromium, Firefox and WebKit (105 runs in total); backend mocked with `page.route` |
+ 
+ The mix is intentionally uneven. In one plain `npm test` run the JUnit per-file times were: lib files
+ 6–125 ms, component files 0.15–1.4 s, page files 1.6–4.1 s (the slowest is usually
