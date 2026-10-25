@@ -14,27 +14,28 @@ export interface CsvOptions {
 
 const FORMULA_PREFIX = /^[=+\-@\t\r]/;
 
+/** Plain-text form of a cell value, before any quoting. */
+function cellText(value: unknown): string {
+  if (value === null || value === undefined) return '';
+  if (typeof value === 'number') return Number.isFinite(value) ? String(value) : '';
+  if (typeof value === 'boolean') return value ? 'true' : 'false';
+  if (value instanceof Date) return value.toISOString();
+  const text = String(value);
+  return FORMULA_PREFIX.test(text) ? `'${text}` : text;
+}
+
+/** Whether a field must be wrapped in double quotes (RFC 4180 §2.6). */
+export function needsQuoting(text: string, delimiter = ','): boolean {
+  return text.includes('"') || text.includes(delimiter) || text.includes('\n') || text.includes('\r');
+}
+
 /**
  * Escape a single CSV field (RFC 4180). Strings that a spreadsheet would interpret as a formula
  * are prefixed with a single quote to prevent CSV injection; numbers are left untouched.
  */
 export function escapeCsvField(value: unknown, delimiter = ','): string {
-  if (value === null || value === undefined) return '';
-  let text: string;
-  if (typeof value === 'number') {
-    text = Number.isFinite(value) ? String(value) : '';
-  } else if (typeof value === 'boolean') {
-    text = value ? 'true' : 'false';
-  } else if (value instanceof Date) {
-    text = value.toISOString();
-  } else {
-    text = String(value);
-    if (FORMULA_PREFIX.test(text)) text = `'${text}`;
-  }
-  if (text.includes('"') || text.includes(delimiter) || text.includes('\n') || text.includes('\r')) {
-    return `"${text.replace(/"/g, '""')}"`;
-  }
-  return text;
+  const text = cellText(value);
+  return needsQuoting(text, delimiter) ? `"${text.replace(/"/g, '""')}"` : text;
 }
 
 export function toCsv<T>(rows: readonly T[], columns: readonly CsvColumn<T>[], options: CsvOptions = {}): string {
