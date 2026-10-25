@@ -88,7 +88,7 @@ public class OrderService {
             before.lines().forEach(l -> inventoryService.commit(l.sku(), l.quantity()));
         }
         return new Order(before.id(), before.customerId(), target, before.lines(), before.couponCode(),
-                before.createdAt(), before.total());
+                before.createdAt(), order.getUpdatedAt(), before.total());
     }
 
     private OrderEntity find(String id) {

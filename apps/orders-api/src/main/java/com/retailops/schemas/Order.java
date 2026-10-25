@@ -8,5 +8,6 @@ public record Order(
         java.util.List<OrderLine> lines,
         String couponCode,
         java.time.OffsetDateTime createdAt,
+        java.time.OffsetDateTime updatedAt,
         java.math.BigDecimal total) {
 }
