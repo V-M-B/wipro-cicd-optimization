@@ -155,12 +155,17 @@ def aov_by_region(
 
 
 def coupon_usage(orders: Iterable[Order], statuses: Statuses = REVENUE_STATUSES) -> dict[str, dict[str, float]]:
-    """Per coupon code: number of orders, revenue and discount granted."""
+    """Per coupon code: number of orders, revenue and discount granted.
+
+    Codes are compared case-insensitively and without surrounding whitespace (``" save10"`` is
+    reported as ``"SAVE10"``); blank codes are treated as no coupon.
+    """
     stats: dict[str, dict[str, float]] = {}
     for o in revenue_orders(orders, statuses):
-        if not o.couponCode:
+        code = (o.couponCode or "").strip().upper()
+        if not code:
             continue
-        entry = stats.setdefault(o.couponCode, {"orders": 0, "revenue": 0.0, "discount": 0.0})
+        entry = stats.setdefault(code, {"orders": 0, "revenue": 0.0, "discount": 0.0})
         entry["orders"] += 1
         entry["revenue"] += o.total
         entry["discount"] += order_gross(o) - o.total

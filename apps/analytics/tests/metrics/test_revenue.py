@@ -159,6 +159,15 @@ def test_coupon_usage_ignores_cancelled_coupons():
     assert revenue.coupon_usage(orders) == {"WELCOME5": {"orders": 1, "revenue": 19.0, "discount": 1.0}}
 
 
+def test_coupon_usage_normalises_codes():
+    orders = [
+        make_order("O1", lines=[("A", 1, 10.0)], total=9.0, coupon="SAVE10"),
+        make_order("O2", lines=[("A", 2, 10.0)], total=18.0, coupon=" save10 "),
+        make_order("O3", lines=[("A", 1, 10.0)], total=10.0, coupon="   "),
+    ]
+    assert revenue.coupon_usage(orders) == {"SAVE10": {"orders": 2, "revenue": 27.0, "discount": 3.0}}
+
+
 @pytest.mark.parametrize(
     ("breakdown", "expected"),
     [
