@@ -44,6 +44,14 @@ export interface PriceQuote {
   total: number;
 }
 
+export interface Problem {
+  type: string;
+  title: string;
+  status: number;
+  detail?: string;
+  instance?: string;
+}
+
 export interface Product {
   id: string;
   sku: string;

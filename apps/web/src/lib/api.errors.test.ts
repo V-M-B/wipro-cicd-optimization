@@ -55,6 +55,22 @@ describe('error bodies', () => {
     });
   });
 
+  it('reads the detail of an RFC 7807 problem response', async () => {
+    const problem = {
+      type: 'https://retailops.example/problems/not-found',
+      title: 'Resource not found',
+      status: 404,
+      detail: 'Order O-10001 not found',
+    };
+    const api = fail(new Response(JSON.stringify(problem), { status: 404 }));
+    await expect(api.getOrder('O-10001')).rejects.toMatchObject({ kind: 'not_found', message: 'Order O-10001 not found' });
+  });
+
+  it('prefers the problem detail over a legacy message field', async () => {
+    const api = fail(new Response(JSON.stringify({ detail: 'From detail', message: 'From message' }), { status: 409 }));
+    await expect(api.getOrder('O-10001')).rejects.toMatchObject({ message: 'From detail' });
+  });
+
   it('falls back to a default message for non-JSON bodies', async () => {
     const api = fail(new Response('<html>Bad gateway</html>', { status: 409 }));
     await expect(api.getOrder('O-10001')).rejects.toMatchObject({ kind: 'conflict', message: defaultMessage('conflict') });
