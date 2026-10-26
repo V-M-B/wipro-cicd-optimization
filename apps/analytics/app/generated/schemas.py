@@ -58,6 +58,7 @@ class Order(BaseModel):
     lines: list[OrderLine]
     couponCode: str | None = None
     createdAt: datetime
+    updatedAt: datetime | None = None
     total: float
 
 
