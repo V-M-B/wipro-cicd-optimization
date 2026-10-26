@@ -1,4 +1,8 @@
 target/
+# Not needed to build the jar: docs, the Windows wrapper and the test-data generator.
+*.md
+mvnw.cmd
+scripts/
 .idea/
 .vscode/
 *.iml
