@@ -84,12 +84,15 @@ def test_parse_enum_invalid_lists_allowed_values():
         csv_io.parse_enum("CENTRAL", Region)
 
 
-@pytest.mark.parametrize("raw", ["a@b.co", "first.last+tag@example.com"])
+@pytest.mark.parametrize("raw", ["a@b.co", "first.last+tag@example.com", "ops@mail.retail.example"])
 def test_parse_email(raw):
     assert csv_io.parse_email(raw) == raw
 
 
-@pytest.mark.parametrize("raw", ["", "plainaddress", "@example.com", "a@", "a@example", "a@.com", "a@b.", "a b@c.com"])
+@pytest.mark.parametrize(
+    "raw",
+    ["", "plainaddress", "@example.com", "a@", "a@example", "a@.com", "a@b.", "a b@c.com", "a@b..com", "a@@b.com"],
+)
 def test_parse_email_invalid(raw):
     with pytest.raises(ValueError, match="invalid email"):
         csv_io.parse_email(raw)
