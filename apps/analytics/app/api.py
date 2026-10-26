@@ -170,6 +170,7 @@ def order_funnel(req: FunnelRequest) -> dict[str, object]:
         "stages": [s.as_dict() for s in stages],
         "status_counts": fun.status_counts(req.orders),
         "cancellation_rate": fun.cancellation_rate(req.orders),
+        "overall_conversion": fun.overall_conversion(stages),
         "bottleneck": fun.bottleneck(stages),
     }
     if req.by_region:

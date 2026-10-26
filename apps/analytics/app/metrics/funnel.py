@@ -77,6 +77,13 @@ def cancellation_rate(orders: Iterable[Order]) -> float:
     return round(safe_div(counts[OrderStatus.CANCELLED.value], total), 4)
 
 
+def overall_conversion(stages: list[FunnelStage]) -> float:
+    """Share of created orders that were delivered (0.0 for an empty funnel)."""
+    if not stages:
+        return 0.0
+    return stages[-1].conversion_from_start
+
+
 def bottleneck(stages: list[FunnelStage]) -> str | None:
     """Stage with the lowest conversion from its previous stage (first stage excluded)."""
     candidates = [s for s in stages[1:] if stages[0].reached > 0]

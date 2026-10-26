@@ -102,6 +102,27 @@ def test_funnel_by_region(tiny_orders, tiny_customers):
     }
 
 
+def test_overall_conversion_tiny(tiny_orders):
+    # 8 orders reach CREATED, 4 are delivered
+    assert funnel.overall_conversion(funnel.funnel(tiny_orders)) == 0.5
+
+
+@pytest.mark.parametrize(
+    ("statuses", "expected"),
+    [
+        ([], 0.0),
+        ([OrderStatus.CANCELLED, OrderStatus.CANCELLED], 0.0),
+        ([OrderStatus.DELIVERED, OrderStatus.DELIVERED, OrderStatus.SHIPPED], 0.6667),
+    ],
+)
+def test_overall_conversion(statuses, expected):
+    assert funnel.overall_conversion(funnel.funnel(_orders(statuses))) == expected
+
+
+def test_overall_conversion_without_stages():
+    assert funnel.overall_conversion([]) == 0.0
+
+
 def test_cancellation_by_period(tiny_orders):
     assert funnel.cancellation_by_period(tiny_orders) == {"2025-01": 0.0, "2025-02": 0.3333, "2025-03": 0.0}
 

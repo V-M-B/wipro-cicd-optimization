@@ -5,6 +5,7 @@ def test_funnel(client, tiny_payload):
     body = client.post("/funnel", json={"orders": tiny_payload["orders"]}).json()
     assert [s["reached"] for s in body["stages"]] == [8, 6, 5, 4]
     assert body["cancellation_rate"] == 0.125
+    assert body["overall_conversion"] == 0.5
     assert body["bottleneck"] == "PAID"
     assert body["status_counts"]["DELIVERED"] == 4
     assert "by_region" not in body
@@ -20,3 +21,4 @@ def test_funnel_empty(client):
     body = client.post("/funnel", json={"orders": []}).json()
     assert body["bottleneck"] is None
     assert body["cancellation_rate"] == 0.0
+    assert body["overall_conversion"] == 0.0
