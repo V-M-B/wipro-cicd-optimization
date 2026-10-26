@@ -67,6 +67,7 @@ class PriceQuote(BaseModel):
     tax: float
     shipping: float
     total: float
+    currency: str | None = None
 
 
 class Product(BaseModel):

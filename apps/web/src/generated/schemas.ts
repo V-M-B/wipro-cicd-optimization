@@ -42,6 +42,7 @@ export interface PriceQuote {
   tax: number;
   shipping: number;
   total: number;
+  currency?: string;
 }
 
 export interface Product {

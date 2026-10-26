@@ -6,5 +6,6 @@ public record PriceQuote(
         java.math.BigDecimal discount,
         java.math.BigDecimal tax,
         java.math.BigDecimal shipping,
-        java.math.BigDecimal total) {
+        java.math.BigDecimal total,
+        String currency) {
 }
