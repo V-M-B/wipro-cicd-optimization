@@ -93,7 +93,11 @@ def test_revenue_by_period_fill_gaps_empty():
 
 def test_revenue_by_period_rejects_bad_granularity(tiny_orders):
     with pytest.raises(ValueError, match="granularity"):
-        revenue.revenue_by_period(tiny_orders, "quarter")
+        revenue.revenue_by_period(tiny_orders, "year")
+
+
+def test_revenue_by_quarter(tiny_orders):
+    assert revenue.revenue_by_period(tiny_orders, "quarter") == {"2025-Q1": 450.0}
 
 
 def test_revenue_by_region(tiny_orders, tiny_customers):

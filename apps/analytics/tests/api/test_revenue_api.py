@@ -14,7 +14,14 @@ def test_summary(client, tiny_payload):
 
 @pytest.mark.parametrize(
     ("granularity", "fill_gaps", "expected_len"),
-    [("day", False, 6), ("week", False, 4), ("week", True, 8), ("month", True, 3), ("day", True, 56)],
+    [
+        ("day", False, 6),
+        ("week", False, 4),
+        ("week", True, 8),
+        ("month", True, 3),
+        ("day", True, 56),
+        ("quarter", True, 1),
+    ],
 )
 def test_by_period(client, tiny_payload, granularity, fill_gaps, expected_len):
     body = client.post("/revenue/by-period", json={**tiny_payload, "granularity": granularity, "fill_gaps": fill_gaps})
@@ -24,7 +31,7 @@ def test_by_period(client, tiny_payload, granularity, fill_gaps, expected_len):
 
 
 def test_by_period_rejects_unknown_granularity(client, tiny_payload):
-    response = client.post("/revenue/by-period", json={**tiny_payload, "granularity": "quarter"})
+    response = client.post("/revenue/by-period", json={**tiny_payload, "granularity": "year"})
     assert response.status_code == 422
 
 

@@ -8,8 +8,8 @@ from typing import Literal
 
 from app.generated.schemas import Customer, Order, OrderStatus, Product
 
-Granularity = Literal["day", "week", "month"]
-GRANULARITIES: tuple[str, ...] = ("day", "week", "month")
+Granularity = Literal["day", "week", "month", "quarter"]
+GRANULARITIES: tuple[str, ...] = ("day", "week", "month", "quarter")
 
 #: Statuses that count as recognised revenue (payment captured).
 REVENUE_STATUSES: frozenset[OrderStatus] = frozenset({OrderStatus.PAID, OrderStatus.SHIPPED, OrderStatus.DELIVERED})
@@ -50,17 +50,25 @@ def period_start(day: date, granularity: str) -> date:
         return day
     if granularity == "week":
         return day - timedelta(days=day.weekday())
+    if granularity == "quarter":
+        return date(day.year, _quarter_first_month(day.month), 1)
     return day.replace(day=1)
 
 
+def _quarter_first_month(month: int) -> int:
+    return 3 * ((month - 1) // 3) + 1
+
+
 def period_key(day: date, granularity: str) -> str:
-    """Stable, sortable label: ``2025-03-07`` / ``2025-W10`` (ISO week) / ``2025-03``."""
+    """Stable, sortable label: ``2025-03-07`` / ``2025-W10`` (ISO week) / ``2025-03`` / ``2025-Q1``."""
     check_granularity(granularity)
     if granularity == "day":
         return day.isoformat()
     if granularity == "week":
         iso_year, iso_week, _ = day.isocalendar()
         return f"{iso_year}-W{iso_week:02d}"
+    if granularity == "quarter":
+        return f"{day.year:04d}-Q{(day.month - 1) // 3 + 1}"
     return f"{day.year:04d}-{day.month:02d}"
 
 
@@ -70,9 +78,9 @@ def next_period_start(start: date, granularity: str) -> date:
         return start + timedelta(days=1)
     if granularity == "week":
         return start + timedelta(days=7)
-    if start.month == 12:
-        return date(start.year + 1, 1, 1)
-    return date(start.year, start.month + 1, 1)
+    step = 3 if granularity == "quarter" else 1
+    month_index0 = start.year * 12 + (start.month - 1) + step
+    return date(month_index0 // 12, month_index0 % 12 + 1, 1)
 
 
 def period_range(start: date, end: date, granularity: str) -> list[str]:
