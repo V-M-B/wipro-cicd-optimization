@@ -36,9 +36,18 @@ def repo_slug() -> str:
     return sh("gh", "repo", "view", "--json", "nameWithOwner", "-q", ".nameWithOwner")
 
 
-def runs_for_sha(repo: str, sha: str) -> list[dict]:
-    out = sh("gh", "api", f"repos/{repo}/actions/runs?head_sha={sha}&per_page=100")
-    return json.loads(out)["workflow_runs"]
+def runs_for_sha(repo: str, sha: str, attempts: int = 10) -> list[dict]:
+    # Transient network errors must not kill a multi-hour replay; retry with a pause.
+    for i in range(attempts):
+        try:
+            out = sh("gh", "api", f"repos/{repo}/actions/runs?head_sha={sha}&per_page=100")
+            return json.loads(out)["workflow_runs"]
+        except (SystemExit, json.JSONDecodeError) as e:
+            if i == attempts - 1:
+                raise
+            print(f"  gh api failed ({str(e)[:80]}), retrying in 60s", flush=True)
+            time.sleep(60)
+    return []
 
 
 def wait_for(repo: str, sha: str, workflows: list[str], poll_s: int, timeout_s: int) -> dict[str, str]:
