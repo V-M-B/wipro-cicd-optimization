@@ -45,3 +45,9 @@ and job time separately so that the warm-image effect can be separated from hard
   about 15 GB free.
 - **Credential:** the token in the `gh-pat` secret is the repository owner's `gh` CLI token (scopes: repo, workflow),
   used with the owner's explicit approval. It exists only inside the local cluster, and deleting the cluster removes it.
+
+## Addendum 2 (2026-10-26): not executed locally
+
+On the repository owner's instruction, Phase 5 was not run on the author's laptop because of disk space (see
+`docs/phase-results/phase-5-results.md`). The infrastructure stays in the repository, ready to run on a machine or
+cluster with about 15 GB free. No Phase 5 numbers are reported.

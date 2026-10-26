@@ -166,6 +166,8 @@ Each phase ends with: a git tag, a `docs/phase-results/phase-N-results.md` conta
 
 ### Phase 5 — Ephemeral autoscaled runners
 
+> **Status (2026-10-26): not measured.** Infrastructure built and ready to run; execution stopped for lack of disk space on the author machine. See `docs/phase-results/phase-5-results.md` and ADR-0007.
+
 **Build**
 1. `infra/runner-image/Dockerfile`: based on the ARC runner image, pre-installed Java 21, Maven, Node 20, Python 3.12, Playwright browsers, Docker CLI, with the Maven/npm/pip caches **pre-warmed** at image build time. Rebuilt weekly by a workflow.
 2. `k3d` cluster config; ARC installed via Helm in runner-scale-set mode with `minRunners: 0`, `maxRunners: 6`, ephemeral (one job per pod). Docker-in-Docker or Kaniko for image builds inside the pod (choose DinD for simplicity; note the security trade-off in an ADR).
