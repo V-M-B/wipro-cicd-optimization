@@ -28,3 +28,20 @@ cloud budget; the laptop has 16 CPUs and ~20 GB RAM available to Docker Desktop.
 ## Consequences
 Laptop runners are not representative of cloud network bandwidth; results report queue time, pod cold-start
 and job time separately so that the warm-image effect can be separated from hardware differences.
+
+## Addendum (2026-10-26): what changed when it was actually run
+
+- **Runner version:** the image now pins `actions/runner` 2.338.1. The original pin, 2.329.0, was a year old, and
+  GitHub stops accepting registrations from runner versions that are too old.
+- **No registry:** the runner image is loaded into the cluster with `k3d image import`. This avoids running a
+  registry container next to the cluster.
+- **Windows kubeconfig:** k3d wrote `host.docker.internal` into the kubeconfig, which resolved to an unreachable LAN
+  address. `kubeAPI.host: 127.0.0.1` is pinned in `infra/arc/k3d-cluster.yaml`.
+- **Versions:** ARC 0.15.0 (0.15.1 was three days old and was skipped), k3d 5.9.0, Helm 3.22.1, k3s 1.35.5.
+  k3d and Helm were downloaded from their release pages and checksum-verified.
+- **Disk:** the image is about 6.5 GB, and the k3d import stores a second copy. The author's C: drive filled up during
+  the first attempt (6 MB free) and Docker's storage failed. Recovery: the project's images and build cache were
+  removed, then Docker's virtual disk was compacted with diskpart (40.44 GB → 16.56 GB). Teams reproducing this need
+  about 15 GB free.
+- **Credential:** the token in the `gh-pat` secret is the repository owner's `gh` CLI token (scopes: repo, workflow),
+  used with the owner's explicit approval. It exists only inside the local cluster, and deleting the cluster removes it.

@@ -3,7 +3,7 @@
 #   docker build -f infra/runner-image/Dockerfile -t retailops-runner:local .
 # Everything a RetailOps job needs is baked in: JDK 21, Maven deps, Node 20 + npm cache,
 # Python 3.12 + pip wheels, Playwright browsers with system deps, Docker CLI (DinD sidecar provides the daemon).
-ARG RUNNER_VERSION=2.329.0
+ARG RUNNER_VERSION=2.338.1
 FROM ghcr.io/actions/actions-runner:${RUNNER_VERSION}
 
 USER root
@@ -39,8 +39,10 @@ COPY apps/web/package.json apps/web/package-lock.json web/
 COPY apps/analytics/requirements.txt apps/analytics/requirements-dev.txt analytics/
 RUN chown -R runner:runner /tmp/warm
 USER runner
-RUN cd orders && ./mvnw -B -q dependency:go-offline -DexcludeReactor=true \
-    && cd ../web && npm ci --no-audit --no-fund && npx playwright --version \
+# Maven Central occasionally answers 502; retry the pre-fetch up to three times.
+RUN cd orders && for i in 1 2 3; do ./mvnw -B -q dependency:go-offline -DexcludeReactor=true && break; \
+      [ "$i" = 3 ] && exit 1; sleep 15; done
+RUN cd web && npm ci --no-audit --no-fund && npx playwright --version \
     && cd ../analytics && pip install -r requirements-dev.txt
 USER root
 RUN cd /tmp/warm/web && npx playwright install --with-deps chromium firefox webkit \

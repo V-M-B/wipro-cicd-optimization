@@ -1,18 +1,16 @@
 # k3d cluster for ARC (Phase 5). Create with: k3d cluster create --config infra/arc/k3d-cluster.yaml
+# The runner image is loaded with `k3d image import` (no registry needed).
 apiVersion: k3d.io/v1alpha5
 kind: Simple
 metadata:
   name: retailops-ci
 servers: 1
 agents: 0
-image: rancher/k3s:v1.31.5-k3s1
+# On Windows, k3d otherwise writes host.docker.internal into kubeconfig, which may resolve to an unreachable LAN IP.
+kubeAPI:
+  host: "127.0.0.1"
 options:
   k3s:
     extraArgs:
       - arg: --disable=traefik
         nodeFilters: [server:*]
-registries:
-  create:
-    name: registry.localhost
-    host: "0.0.0.0"
-    hostPort: "5050"
