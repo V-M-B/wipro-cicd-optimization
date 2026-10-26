@@ -4,6 +4,7 @@ import type { Order } from '../generated/schemas';
 import {
   ACTION_LABELS,
   InvalidTransitionError,
+  STATUS_DESCRIPTIONS,
   STATUS_LABELS,
   allowedTransitions,
   isCancellable,
@@ -81,6 +82,7 @@ describe('order status state machine', () => {
     for (const status of OrderStatusValues) {
       expect(STATUS_LABELS[status]).toMatch(/^[A-Z][a-z]+$/);
       expect(ACTION_LABELS[status]).toBeTruthy();
+      expect(STATUS_DESCRIPTIONS[status]).toMatch(/^[A-Z].+[^.]$/);
     }
   });
 });

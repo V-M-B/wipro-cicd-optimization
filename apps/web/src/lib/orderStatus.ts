@@ -20,6 +20,15 @@ export const STATUS_LABELS: Readonly<Record<OrderStatus, string>> = {
   CANCELLED: 'Cancelled',
 };
 
+/** One-line explanation of each status, shown as a tooltip on status badges. */
+export const STATUS_DESCRIPTIONS: Readonly<Record<OrderStatus, string>> = {
+  CREATED: 'Order placed; awaiting payment',
+  PAID: 'Payment captured; ready to ship',
+  SHIPPED: 'Handed to the carrier',
+  DELIVERED: 'Received by the customer',
+  CANCELLED: 'Cancelled before shipping; stock released',
+};
+
 /** Button label for moving an order *into* the given status. */
 export const ACTION_LABELS: Readonly<Record<OrderStatus, string>> = {
   CREATED: 'Reopen',
