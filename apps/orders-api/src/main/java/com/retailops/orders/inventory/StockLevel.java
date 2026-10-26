@@ -2,6 +2,8 @@ package com.retailops.orders.inventory;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.retailops.schemas.InventoryLevel;
+
 /** Snapshot of stock for one SKU. Invariant: 0 <= reserved <= onHand. */
 public record StockLevel(String sku, int onHand, int reserved) {
 
@@ -25,5 +27,10 @@ public record StockLevel(String sku, int onHand, int reserved) {
 
     public boolean isOutOfStock() {
         return available() == 0;
+    }
+
+    /** The shared-schema form of this snapshot; it has the same JSON shape as {@code GET /api/inventory/{sku}}. */
+    public InventoryLevel toSchema() {
+        return new InventoryLevel(sku, onHand, reserved, available());
     }
 }
