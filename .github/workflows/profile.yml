@@ -50,6 +50,9 @@ jobs:
         with:
           path: site
   deploy:
+    # Publishing needs GitHub Pages enabled for the repository (Settings > Pages > Source: GitHub Actions).
+    # Set the repository variable PAGES_ENABLED=true after enabling it; until then only the artifact is built.
+    if: vars.PAGES_ENABLED == 'true'
     needs: profile
     runs-on: ubuntu-latest
     timeout-minutes: 10
