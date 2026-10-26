@@ -15,6 +15,6 @@ public final class OrderMapper {
     }
 
     public static OrderLine toDto(OrderLineEntity line) {
-        return new OrderLine(line.getSku(), line.getQuantity(), line.getUnitPrice());
+        return new OrderLine(line.getSku(), line.getQuantity(), line.getUnitPrice(), line.getLineTotal());
     }
 }

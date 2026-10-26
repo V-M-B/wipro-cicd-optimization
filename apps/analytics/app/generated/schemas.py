@@ -41,6 +41,7 @@ class OrderLine(BaseModel):
     sku: str
     quantity: int
     unitPrice: float
+    lineTotal: float | None = None
 
 
 class Customer(BaseModel):

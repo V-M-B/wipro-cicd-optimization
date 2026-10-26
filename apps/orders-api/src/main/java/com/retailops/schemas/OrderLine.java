@@ -4,5 +4,6 @@ package com.retailops.schemas;
 public record OrderLine(
         String sku,
         int quantity,
-        java.math.BigDecimal unitPrice) {
+        java.math.BigDecimal unitPrice,
+        java.math.BigDecimal lineTotal) {
 }
