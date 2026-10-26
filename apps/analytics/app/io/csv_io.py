@@ -129,9 +129,11 @@ def parse_enum[E: Enum](raw: str, enum_type: type[E]) -> E:
 
 
 def parse_email(raw: str) -> str:
+    """Light-weight address check: one ``@``, a non-empty local part and a dotted domain without empty labels."""
     text = raw.strip()
     local, sep, domain = text.partition("@")
-    if not sep or not local or "." not in domain or domain.startswith(".") or domain.endswith(".") or " " in text:
+    labels = domain.split(".")
+    if not sep or not local or " " in text or "@" in domain or len(labels) < 2 or not all(labels):
         raise _FieldError(f"invalid email address {raw!r}")
     return text
 
