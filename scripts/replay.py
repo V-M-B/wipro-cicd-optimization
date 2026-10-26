@@ -125,7 +125,17 @@ def main() -> int:
             if a.dry_run:
                 print(f"[dry-run] {branch} {sha[:8]} {e['title']}")
             else:
-                sh("git", "push", "-q", "-f", "origin", branch)
+                # A push can fail transiently (network, or a credential helper that broke while the disk was
+                # full). Retry before giving up on a multi-hour replay.
+                for attempt in range(6):
+                    r = subprocess.run(["git", "push", "-q", "-f", "origin", branch], cwd=ROOT,
+                                       capture_output=True, text=True, env={**os.environ, "GIT_TERMINAL_PROMPT": "0"})
+                    if r.returncode == 0:
+                        break
+                    print(f"  push failed ({r.stderr.strip()[:80]}), retry {attempt + 1}/5 in 120s", flush=True)
+                    if attempt == 5:
+                        raise SystemExit(f"push failed: {r.stderr}")
+                    time.sleep(120)
                 print(f"pushed {branch} {sha[:8]}")
             in_flight.append((e, sha))
             sh("git", "checkout", "-q", start_branch)
