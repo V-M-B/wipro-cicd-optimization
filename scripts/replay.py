@@ -128,7 +128,12 @@ def main() -> int:
                 # A push can fail transiently (network, or a credential helper that broke while the disk was
                 # full). Retry before giving up on a multi-hour replay.
                 for attempt in range(6):
-                    r = subprocess.run(["git", "push", "-q", "-f", "origin", branch], cwd=ROOT,
+                    # Authenticate this push through the gh CLI token, so a detached, non-interactive process
+                    # never depends on the OS credential manager (which may want to prompt). Scoped to this
+                    # command only; the user's git configuration is not changed.
+                    r = subprocess.run(["git", "-c", "credential.helper=", "-c",
+                                        "credential.helper=!gh auth git-credential",
+                                        "push", "-q", "-f", "origin", branch], cwd=ROOT,
                                        capture_output=True, text=True, env={**os.environ, "GIT_TERMINAL_PROMPT": "0"})
                     if r.returncode == 0:
                         break
