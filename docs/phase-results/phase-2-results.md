@@ -66,6 +66,6 @@ Where the median saving comes from (median per-run seconds, same 30 commits):
 
 | Criterion | Status |
 |---|---|
-| Cache hit rate ≥ 90% on warm runs | **Not computed for this report:** cache-event log parsing for round A was interrupted by the full disk and is being re-run; the step durations above show the caches being used |
+| Cache hit rate ≥ 90% on warm runs | **Met:** 100% for `ci-cache.yml` on round A, computed by `cipro report` from parsed job logs (`docs/dashboard/round-a/index.html`): every `actions/cache` restore hit, none missed |
 | Time saved reported per cache type | **Met, by step attribution** (not by separate PRs; deviation noted) |
 | Tag `opt-cache-v1` | **Met** |
