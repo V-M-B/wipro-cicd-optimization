@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { customers, orders } from '../test/fixtures';
-import { escapeCsvField, ordersToCsv, parseCsv, toCsv } from './csv';
+import { escapeCsvField, needsQuoting, ordersToCsv, parseCsv, toCsv } from './csv';
 import { indexCustomers } from './orderQuery';
 
 describe('escapeCsvField', () => {
@@ -28,6 +28,24 @@ describe('escapeCsvField', () => {
   it('quotes fields containing a custom delimiter', () => {
     expect(escapeCsvField('a;b', ';')).toBe('"a;b"');
     expect(escapeCsvField('a,b', ';')).toBe('a,b');
+  });
+
+  it('quotes formula-like strings that also contain the delimiter', () => {
+    expect(escapeCsvField('=1,2')).toBe(`"'=1,2"`);
+  });
+});
+
+describe('needsQuoting', () => {
+  it.each([
+    ['plain', ',', false],
+    ['', ',', false],
+    ['a,b', ',', true],
+    ['a,b', '\t', false],
+    ['a\tb', '\t', true],
+    ['"', ',', true],
+    ['x\r\ny', ',', true],
+  ])('needsQuoting(%j, %j) = %s', (text, delimiter, expected) => {
+    expect(needsQuoting(text, delimiter)).toBe(expected);
   });
 });
 
