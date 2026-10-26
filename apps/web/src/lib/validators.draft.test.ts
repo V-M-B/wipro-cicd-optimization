@@ -49,6 +49,10 @@ describe('validateOrderDraft', () => {
     expect(validateOrderDraft({ ...valid, customerId }).customerId).toBe(message);
   });
 
+  it('ignores whitespace around the customer id', () => {
+    expect(validateOrderDraft({ ...valid, customerId: ' C-0001 ' }).customerId).toBeUndefined();
+  });
+
   it('requires at least one line', () => {
     expect(validateOrderDraft({ ...valid, lines: [] }).form).toBe('Add at least one line');
   });
@@ -80,6 +84,20 @@ describe('validateOrderDraft', () => {
       ],
     });
     expect(errors.lines).toEqual({ 2: { sku: 'Duplicate of line 1' } });
+  });
+
+  it('trims SKUs before validating and de-duplicating them', () => {
+    const errors = validateOrderDraft(
+      {
+        ...valid,
+        lines: [
+          { sku: ' ELE-1001', quantity: 1 },
+          { sku: 'ELE-1001 ', quantity: 2 },
+        ],
+      },
+      new Set(['ELE-1001']),
+    );
+    expect(errors.lines).toEqual({ 1: { sku: 'Duplicate of line 1' } });
   });
 
   it('reports quantity errors per line', () => {
