@@ -29,6 +29,15 @@ public final class Money {
         return round(Objects.requireNonNull(amount, "amount").multiply(rate));
     }
 
+    /** Sum of the given amounts, rounded to cents. An empty argument list sums to {@link #ZERO}. */
+    public static BigDecimal sum(BigDecimal... amounts) {
+        BigDecimal total = ZERO;
+        for (BigDecimal amount : amounts) {
+            total = total.add(Objects.requireNonNull(amount, "amount"));
+        }
+        return round(total);
+    }
+
     public static BigDecimal min(BigDecimal a, BigDecimal b) {
         return a.compareTo(b) <= 0 ? a : b;
     }
