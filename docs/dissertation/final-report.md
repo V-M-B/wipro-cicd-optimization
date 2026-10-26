@@ -1,6 +1,6 @@
-# CI/CD Pipeline Performance Optimization: Measuring the Impact of Caching, Parallelization, Test Impact Analysis and Ephemeral Runners
+# Performance Optimization of CI/CD Pipelines Using Parallelization, Caching, and Automated Resource Management
 
-*Dissertation draft. (Insert Student Name), (Insert BITS ID). Carried out at Wipro Limited, (Insert Location).*
+*Dissertation draft. M.Tech Computing Systems and Infrastructure (WIMS), research area: Cloud Computing. Carried out at Wipro. Student and supervisor details are in the submitted outline, not in this public repository.*
 *Every number in this draft is taken from a file under `docs/phase-results/` or `experiments/results/` in the
 project repository and can be regenerated from the archived GitHub API data (README, "Reproduce the numbers").
 Placeholders in [brackets] are filled in when replay round B is complete.*

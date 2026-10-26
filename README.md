@@ -1,5 +1,7 @@
 # CI/CD Pipeline Performance Optimization
 
+Registered dissertation title: *Performance Optimization of CI/CD Pipelines Using Parallelization, Caching, and Automated Resource Management* (research area: Cloud Computing).
+
 Dissertation project (BITS Pilani WILP, carried out at Wipro). It profiles a realistic CI pipeline, then reduces its
 build time and cost with caching, parallelization and duration-balanced sharding, and test impact analysis. Every
 technique is measured against a frozen baseline on the same commits. An ephemeral-runner stage is built but was not
