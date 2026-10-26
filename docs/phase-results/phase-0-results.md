@@ -39,8 +39,8 @@ all 10 green. Tables: [phase-0-1-baseline-tables.md](phase-0-1-baseline-tables.m
    spent in `npx playwright install --with-deps` waiting on Ubuntu's apt mirror (one log shows 119 MB fetched at
    139 kB/s). p50 is 6m 13s but p95 is 39m 03s, and the mean (14m 30s) is more than double the median. Mean cost per
    1000 runs is $89.40 against $42.00 at the median: the tail, not the typical run, dominates the bill.
-2. **The tail is not fixed by caching browser binaries**, because the system packages still come from apt on every
-   job. It is addressed by a pre-built image with the packages baked in (Phase 5 warm runner image).
+2. ~~The tail is not fixed by caching browser binaries, because the system packages still come from apt on every
+   job.~~ **Corrected 2026-10-26 (see below):** the paired replay data contradicts this prediction.
 3. **Tests are about half of the median run**; image builds and dependency installs are about a fifth each.
 
 ## Reproduce
@@ -57,3 +57,19 @@ python scripts/report_export.py experiments/results/<new export dir>
 - The web app and orders-api disagree on two API details (status update method; error body field). The web
   tests mock the backend so CI is unaffected; replay patch 28 fixes the error-body field.
 - Firefox e2e does not start on the author's Windows machine (missing system runtime); it runs in CI.
+
+## Correction (2026-10-26)
+
+Finding 2 above was a prediction, and replay round A contradicts it. Step durations from every run collected so
+far, computed from `experiments/results/cipro.sqlite`, which is rebuilt from the raw JSON:
+
+| Workflow | Step | Successful steps | Longer than 5 min |
+|---|---|---:|---:|
+| ci-baseline | `npx playwright install --with-deps chromium firefox webkit` | 48 | 11 (897–2066 s) |
+| ci-cache, ci-parallel, ci-optimized | `npx playwright install-deps <browser(s)>` after a browser-cache hit | 101 | 2 (434 s, 447 s) |
+
+Both commands install the same 181 apt packages (119 MB). In the paired runs on `exp/a/19-frontend`, started within
+30 s of each other, the baseline fetched them at 63.5 kB/s (31 min) and the cache stage at 16.6 MB/s (7 s). The cause
+of the difference in the slow-run rate was not identified. The browser downloads themselves took seconds in both.
+The fact that matters for the results is the measured one: the stages with a browser cache had a much shorter tail.
+This is reported as an observation, not as a mechanism.
