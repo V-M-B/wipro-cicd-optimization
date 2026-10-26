@@ -27,10 +27,10 @@ public final class OrderLines {
             if (!SkuValidator.isValid(sku)) {
                 throw new BusinessRuleException("INVALID_SKU", "Invalid SKU '" + line.sku() + "'");
             }
-            QuantityRules.requireValid(line.quantity());
+            QuantityRules.requireInRange(line.quantity());
             merged.merge(sku, line.quantity(), Integer::sum);
         }
-        merged.values().forEach(QuantityRules::requireValid);
+        merged.values().forEach(QuantityRules::requireInRange);
         if (merged.size() > MAX_DISTINCT_LINES) {
             throw new BusinessRuleException("TOO_MANY_LINES",
                     "An order may contain at most " + MAX_DISTINCT_LINES + " distinct SKUs");
