@@ -7,12 +7,18 @@ import org.springframework.data.jpa.domain.Specification;
 import com.retailops.orders.common.BusinessRuleException;
 import com.retailops.schemas.OrderStatus;
 
-/** Optional list filters; null fields are ignored. {@code from} is inclusive, {@code to} exclusive. */
+/**
+ * Optional list filters; null fields are ignored. {@code from} is inclusive, {@code to} exclusive.
+ * The customer id is trimmed, so {@code ?customerId=%20cus-1} matches {@code cus-1}.
+ */
 public record OrderFilter(String customerId, OrderStatus status, OffsetDateTime from, OffsetDateTime to) {
 
     public OrderFilter {
-        if (customerId != null && customerId.isBlank()) {
-            customerId = null;
+        if (customerId != null) {
+            customerId = customerId.strip();
+            if (customerId.isEmpty()) {
+                customerId = null;
+            }
         }
         if (from != null && to != null && !from.isBefore(to)) {
             throw new BusinessRuleException("INVALID_DATE_RANGE", "'from' must be before 'to'");

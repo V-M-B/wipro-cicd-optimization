@@ -23,6 +23,11 @@ class OrderFilterTest {
     }
 
     @Test
+    void customerIdIsTrimmed() {
+        assertThat(new OrderFilter(" cus-1\t", null, null, null).customerId()).isEqualTo("cus-1");
+    }
+
+    @Test
     void anyCriterionMakesFilterNonEmpty() {
         assertThat(new OrderFilter(null, OrderStatus.PAID, null, null).isEmpty()).isFalse();
         assertThat(new OrderFilter("cus-1", null, null, null).isEmpty()).isFalse();
