@@ -53,6 +53,19 @@ Metric conventions:
 `orders`, `customers`, `products` are lists of the generated `Order`, `Customer`, `Product` models.
 Invalid metric parameters return HTTP 422 with `{"detail": "..."}`. OpenAPI docs: `/docs`.
 
+## Adding a metric
+
+1. Put the computation in the matching `app/metrics/*.py` module as a pure function over the
+   generated models. Reuse `app/metrics/common.py` for periods, status sets, allocation and `money()`
+   rounding instead of re-implementing them. Raise `ValueError` for invalid parameters; the API turns
+   it into HTTP 422.
+2. Take time as an argument (`as_of`, `end`); never read the clock.
+3. Add hand-checked tests in `tests/metrics/` against `tests/factories.py` (`tiny_orders()` documents
+   its expected values). Add a `*_large.py` test marked `@pytest.mark.slow` only for scale invariants.
+4. If the metric is exposed over HTTP: add the request model to `app/api_models.py`, the route to the
+   router in `app/api.py`, an API test in `tests/api/`, and a row to the endpoint table above.
+5. Run `ruff check .` and `pytest` before pushing.
+
 ## Commands
 
 ```bash
