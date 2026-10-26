@@ -1,0 +1,13 @@
+{
+  "label": "roundA-30commits",
+  "exported_at": "20261026T071508Z",
+  "repo": "V-M-B/wipro-cicd-optimization",
+  "workflows": [
+    "ci-baseline.yml",
+    "ci-cache.yml",
+    "ci-optimized.yml"
+  ],
+  "branch_glob": "exp/a/*",
+  "since": null,
+  "include_failed": false
+}

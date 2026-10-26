@@ -1,0 +1,29 @@
+{
+  "runs": 30,
+  "wall_clock_p50_s": 365.0,
+  "wall_clock_p95_s": 1623.7,
+  "wall_clock_min_s": 299.0,
+  "wall_clock_max_s": 2207.0,
+  "time_to_first_job_p50_s": 2.5,
+  "queue_total_p50_s": 2.5,
+  "job_seconds_p50": 363.0,
+  "billable_min_p50": 7.0,
+  "cost_usd_p50": 0.042,
+  "cost_usd_per_1000_runs_p50": 42.0,
+  "wall_clock_mean_s": 572.7333333333333,
+  "billable_min_mean": 9.966666666666667,
+  "cost_usd_mean": 0.0598,
+  "cost_usd_per_1000_runs_mean": 59.8,
+  "overhead_share_p50": 0.19134199134199134,
+  "category_p50_s": {
+    "build": 5.0,
+    "checkout": 1.0,
+    "image-build": 64.5,
+    "install": 58.5,
+    "lint": 6.0,
+    "publish": 19.0,
+    "runner-overhead": 2.0,
+    "test": 192.5,
+    "toolchain": 5.0
+  }
+}

@@ -1,0 +1,1766 @@
+[
+  {
+    "job": "orders-it (1)",
+    "step": "orders-api - integration tests (shard 1)",
+    "category": "test",
+    "n": 12,
+    "p50_s": 45.0,
+    "p95_s": 48.45,
+    "mean_s": 44.833333333333336
+  },
+  {
+    "job": "images (orders-api)",
+    "step": "Build image orders-api (cache warm-up, no push)",
+    "category": "cache",
+    "n": 12,
+    "p50_s": 38.5,
+    "p95_s": 71.39999999999999,
+    "mean_s": 40.0
+  },
+  {
+    "job": "publish (orders-api)",
+    "step": "Push orders-api (from cache)",
+    "category": "cache",
+    "n": 12,
+    "p50_s": 36.5,
+    "p95_s": 58.14999999999998,
+    "mean_s": 36.916666666666664
+  },
+  {
+    "job": "publish (web)",
+    "step": "Push web (from cache)",
+    "category": "cache",
+    "n": 12,
+    "p50_s": 32.5,
+    "p95_s": 40.45,
+    "mean_s": 33.416666666666664
+  },
+  {
+    "job": "orders-it (0)",
+    "step": "orders-api - integration tests (shard 0)",
+    "category": "test",
+    "n": 12,
+    "p50_s": 30.5,
+    "p95_s": 35.8,
+    "mean_s": 31.0
+  },
+  {
+    "job": "images (web)",
+    "step": "Build image web (cache warm-up, no push)",
+    "category": "cache",
+    "n": 12,
+    "p50_s": 30.0,
+    "p95_s": 43.349999999999994,
+    "mean_s": 33.083333333333336
+  },
+  {
+    "job": "web-e2e (webkit)",
+    "step": "Install Playwright system dependencies",
+    "category": "install",
+    "n": 12,
+    "p50_s": 27.5,
+    "p95_s": 232.49999999999972,
+    "mean_s": 66.83333333333333
+  },
+  {
+    "job": "analytics-test (1)",
+    "step": "analytics - tests with coverage (shard 1)",
+    "category": "test",
+    "n": 10,
+    "p50_s": 23.0,
+    "p95_s": 30.55,
+    "mean_s": 21.9
+  },
+  {
+    "job": "analytics-test (0)",
+    "step": "analytics - tests with coverage (shard 0)",
+    "category": "test",
+    "n": 11,
+    "p50_s": 22.0,
+    "p95_s": 33.5,
+    "mean_s": 19.09090909090909
+  },
+  {
+    "job": "web-e2e (firefox)",
+    "step": "web - selected e2e tests (firefox)",
+    "category": "test",
+    "n": 12,
+    "p50_s": 20.5,
+    "p95_s": 23.0,
+    "mean_s": 20.166666666666668
+  },
+  {
+    "job": "web-e2e (firefox)",
+    "step": "Install Playwright system dependencies",
+    "category": "install",
+    "n": 12,
+    "p50_s": 20.0,
+    "p95_s": 36.29999999999999,
+    "mean_s": 22.166666666666668
+  },
+  {
+    "job": "web-e2e (webkit)",
+    "step": "web - selected e2e tests (webkit)",
+    "category": "test",
+    "n": 12,
+    "p50_s": 19.5,
+    "p95_s": 23.45,
+    "mean_s": 19.0
+  },
+  {
+    "job": "orders-unit",
+    "step": "orders-api - selected unit tests",
+    "category": "test",
+    "n": 10,
+    "p50_s": 18.5,
+    "p95_s": 23.0,
+    "mean_s": 18.1
+  },
+  {
+    "job": "web-e2e (chromium)",
+    "step": "Install Playwright system dependencies",
+    "category": "install",
+    "n": 12,
+    "p50_s": 16.0,
+    "p95_s": 27.599999999999994,
+    "mean_s": 17.583333333333332
+  },
+  {
+    "job": "web-e2e (chromium)",
+    "step": "web - selected e2e tests (chromium)",
+    "category": "test",
+    "n": 12,
+    "p50_s": 11.5,
+    "p95_s": 12.0,
+    "mean_s": 11.25
+  },
+  {
+    "job": "web-unit (1)",
+    "step": "web - unit tests with coverage (shard 1)",
+    "category": "test",
+    "n": 9,
+    "p50_s": 10.0,
+    "p95_s": 11.6,
+    "mean_s": 8.444444444444445
+  },
+  {
+    "job": "images (orders-api)",
+    "step": "Run docker/setup-buildx-action@v3",
+    "category": "image-build",
+    "n": 12,
+    "p50_s": 8.0,
+    "p95_s": 12.45,
+    "mean_s": 8.5
+  },
+  {
+    "job": "web-unit (0)",
+    "step": "web - unit tests with coverage (shard 0)",
+    "category": "test",
+    "n": 12,
+    "p50_s": 7.5,
+    "p95_s": 11.899999999999999,
+    "mean_s": 7.416666666666667
+  },
+  {
+    "job": "publish (web)",
+    "step": "Run docker/setup-buildx-action@v3",
+    "category": "image-build",
+    "n": 12,
+    "p50_s": 7.0,
+    "p95_s": 10.45,
+    "mean_s": 7.416666666666667
+  },
+  {
+    "job": "images (analytics)",
+    "step": "Run docker/setup-buildx-action@v3",
+    "category": "image-build",
+    "n": 11,
+    "p50_s": 7.0,
+    "p95_s": 18.5,
+    "mean_s": 8.909090909090908
+  },
+  {
+    "job": "images (analytics)",
+    "step": "Build image analytics (cache warm-up, no push)",
+    "category": "cache",
+    "n": 11,
+    "p50_s": 7.0,
+    "p95_s": 10.0,
+    "mean_s": 7.454545454545454
+  },
+  {
+    "job": "publish (analytics)",
+    "step": "Push analytics (from cache)",
+    "category": "cache",
+    "n": 11,
+    "p50_s": 7.0,
+    "p95_s": 12.0,
+    "mean_s": 7.818181818181818
+  },
+  {
+    "job": "images (web)",
+    "step": "Run docker/setup-buildx-action@v3",
+    "category": "image-build",
+    "n": 12,
+    "p50_s": 6.5,
+    "p95_s": 15.349999999999998,
+    "mean_s": 8.0
+  },
+  {
+    "job": "web-e2e (chromium)",
+    "step": "Run actions/setup-node@v4",
+    "category": "other",
+    "n": 12,
+    "p50_s": 6.5,
+    "p95_s": 8.0,
+    "mean_s": 6.25
+  },
+  {
+    "job": "publish (orders-api)",
+    "step": "Run docker/setup-buildx-action@v3",
+    "category": "image-build",
+    "n": 12,
+    "p50_s": 6.5,
+    "p95_s": 12.45,
+    "mean_s": 7.833333333333333
+  },
+  {
+    "job": "static-checks",
+    "step": "Run actions/setup-node@v4",
+    "category": "other",
+    "n": 26,
+    "p50_s": 6.0,
+    "p95_s": 9.75,
+    "mean_s": 5.884615384615385
+  },
+  {
+    "job": "static-checks",
+    "step": "web - lint and typecheck",
+    "category": "lint",
+    "n": 26,
+    "p50_s": 6.0,
+    "p95_s": 7.0,
+    "mean_s": 6.115384615384615
+  },
+  {
+    "job": "analytics-test (0)",
+    "step": "analytics - install",
+    "category": "install",
+    "n": 11,
+    "p50_s": 6.0,
+    "p95_s": 8.0,
+    "mean_s": 5.636363636363637
+  },
+  {
+    "job": "publish (analytics)",
+    "step": "Run docker/setup-buildx-action@v3",
+    "category": "image-build",
+    "n": 11,
+    "p50_s": 6.0,
+    "p95_s": 11.5,
+    "mean_s": 6.636363636363637
+  },
+  {
+    "job": "analytics-test (1)",
+    "step": "analytics - install",
+    "category": "install",
+    "n": 10,
+    "p50_s": 6.0,
+    "p95_s": 10.55,
+    "mean_s": 6.9
+  },
+  {
+    "job": "web-e2e (webkit)",
+    "step": "Run actions/setup-node@v4",
+    "category": "other",
+    "n": 12,
+    "p50_s": 5.5,
+    "p95_s": 6.449999999999999,
+    "mean_s": 5.583333333333333
+  },
+  {
+    "job": "web-e2e (firefox)",
+    "step": "Run actions/setup-node@v4",
+    "category": "other",
+    "n": 12,
+    "p50_s": 5.5,
+    "p95_s": 7.799999999999997,
+    "mean_s": 5.833333333333333
+  },
+  {
+    "job": "web-build",
+    "step": "Run actions/setup-node@v4",
+    "category": "other",
+    "n": 12,
+    "p50_s": 5.0,
+    "p95_s": 6.0,
+    "mean_s": 5.166666666666667
+  },
+  {
+    "job": "web-build",
+    "step": "web - build",
+    "category": "build",
+    "n": 12,
+    "p50_s": 5.0,
+    "p95_s": 6.0,
+    "mean_s": 5.083333333333333
+  },
+  {
+    "job": "web-unit (0)",
+    "step": "Run actions/setup-node@v4",
+    "category": "other",
+    "n": 12,
+    "p50_s": 5.0,
+    "p95_s": 9.349999999999998,
+    "mean_s": 5.916666666666667
+  },
+  {
+    "job": "web-unit (1)",
+    "step": "Run actions/setup-node@v4",
+    "category": "other",
+    "n": 9,
+    "p50_s": 5.0,
+    "p95_s": 7.0,
+    "mean_s": 5.666666666666667
+  },
+  {
+    "job": "web-e2e (chromium)",
+    "step": "Restore Playwright browser cache",
+    "category": "cache",
+    "n": 12,
+    "p50_s": 5.0,
+    "p95_s": 6.449999999999999,
+    "mean_s": 4.583333333333333
+  },
+  {
+    "job": "publish (web)",
+    "step": "Post Run docker/setup-buildx-action@v3",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 4.5,
+    "p95_s": 6.0,
+    "mean_s": 4.583333333333333
+  },
+  {
+    "job": "images (web)",
+    "step": "Post Run docker/setup-buildx-action@v3",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 4.0,
+    "p95_s": 6.0,
+    "mean_s": 4.833333333333333
+  },
+  {
+    "job": "static-checks",
+    "step": "web - install",
+    "category": "install",
+    "n": 26,
+    "p50_s": 3.0,
+    "p95_s": 3.0,
+    "mean_s": 2.5384615384615383
+  },
+  {
+    "job": "web-e2e (chromium)",
+    "step": "web - install",
+    "category": "install",
+    "n": 12,
+    "p50_s": 3.0,
+    "p95_s": 3.0,
+    "mean_s": 2.6666666666666665
+  },
+  {
+    "job": "publish (web)",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 3.0,
+    "p95_s": 3.4499999999999993,
+    "mean_s": 2.5833333333333335
+  },
+  {
+    "job": "web-build",
+    "step": "web - install",
+    "category": "install",
+    "n": 12,
+    "p50_s": 2.5,
+    "p95_s": 3.0,
+    "mean_s": 2.4166666666666665
+  },
+  {
+    "job": "web-e2e (webkit)",
+    "step": "web - install",
+    "category": "install",
+    "n": 12,
+    "p50_s": 2.5,
+    "p95_s": 3.0,
+    "mean_s": 2.1666666666666665
+  },
+  {
+    "job": "images (orders-api)",
+    "step": "Post Run docker/setup-buildx-action@v3",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 2.5,
+    "p95_s": 4.0,
+    "mean_s": 2.5833333333333335
+  },
+  {
+    "job": "publish (orders-api)",
+    "step": "Post Run docker/setup-buildx-action@v3",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 2.5,
+    "p95_s": 4.799999999999997,
+    "mean_s": 2.6666666666666665
+  },
+  {
+    "job": "web-unit (0)",
+    "step": "web - install",
+    "category": "install",
+    "n": 12,
+    "p50_s": 2.0,
+    "p95_s": 3.0,
+    "mean_s": 2.25
+  },
+  {
+    "job": "static-checks",
+    "step": "Run actions/setup-python@v5",
+    "category": "other",
+    "n": 26,
+    "p50_s": 2.0,
+    "p95_s": 4.0,
+    "mean_s": 1.9615384615384615
+  },
+  {
+    "job": "web-unit (1)",
+    "step": "web - install",
+    "category": "install",
+    "n": 9,
+    "p50_s": 2.0,
+    "p95_s": 3.0,
+    "mean_s": 2.3333333333333335
+  },
+  {
+    "job": "web-e2e (webkit)",
+    "step": "Restore Playwright browser cache",
+    "category": "cache",
+    "n": 12,
+    "p50_s": 2.0,
+    "p95_s": 3.0,
+    "mean_s": 1.9166666666666667
+  },
+  {
+    "job": "web-e2e (firefox)",
+    "step": "web - install",
+    "category": "install",
+    "n": 12,
+    "p50_s": 2.0,
+    "p95_s": 3.0,
+    "mean_s": 2.4166666666666665
+  },
+  {
+    "job": "web-e2e (firefox)",
+    "step": "Restore Playwright browser cache",
+    "category": "cache",
+    "n": 12,
+    "p50_s": 2.0,
+    "p95_s": 3.0,
+    "mean_s": 1.9166666666666667
+  },
+  {
+    "job": "orders-it (0)",
+    "step": "Run actions/setup-java@v4",
+    "category": "other",
+    "n": 12,
+    "p50_s": 2.0,
+    "p95_s": 2.4499999999999993,
+    "mean_s": 1.8333333333333333
+  },
+  {
+    "job": "orders-it (1)",
+    "step": "Run actions/setup-java@v4",
+    "category": "other",
+    "n": 12,
+    "p50_s": 2.0,
+    "p95_s": 3.0,
+    "mean_s": 2.0
+  },
+  {
+    "job": "images (orders-api)",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 2.0,
+    "p95_s": 2.0,
+    "mean_s": 1.6666666666666667
+  },
+  {
+    "job": "orders-unit",
+    "step": "Run actions/setup-java@v4",
+    "category": "other",
+    "n": 10,
+    "p50_s": 2.0,
+    "p95_s": 3.0,
+    "mean_s": 1.8
+  },
+  {
+    "job": "publish (orders-api)",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 2.0,
+    "p95_s": 4.0,
+    "mean_s": 2.4166666666666665
+  },
+  {
+    "job": "publish (orders-api)",
+    "step": "Post Push orders-api (from cache)",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 2.0,
+    "p95_s": 2.0,
+    "mean_s": 1.5833333333333333
+  },
+  {
+    "job": "images (analytics)",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 11,
+    "p50_s": 2.0,
+    "p95_s": 2.0,
+    "mean_s": 1.5454545454545454
+  },
+  {
+    "job": "images (analytics)",
+    "step": "Post Build image analytics (cache warm-up, no push)",
+    "category": "runner-overhead",
+    "n": 11,
+    "p50_s": 2.0,
+    "p95_s": 2.0,
+    "mean_s": 1.8181818181818181
+  },
+  {
+    "job": "analytics-test (0)",
+    "step": "Run actions/setup-python@v5",
+    "category": "other",
+    "n": 11,
+    "p50_s": 2.0,
+    "p95_s": 3.0,
+    "mean_s": 1.9090909090909092
+  },
+  {
+    "job": "publish (analytics)",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 11,
+    "p50_s": 2.0,
+    "p95_s": 3.0,
+    "mean_s": 2.0
+  },
+  {
+    "job": "analytics-test (1)",
+    "step": "Run actions/setup-python@v5",
+    "category": "other",
+    "n": 10,
+    "p50_s": 2.0,
+    "p95_s": 4.0,
+    "mean_s": 2.0
+  },
+  {
+    "job": "web-e2e (chromium)",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 1.5,
+    "p95_s": 2.0,
+    "mean_s": 1.5
+  },
+  {
+    "job": "web-e2e (webkit)",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 1.5,
+    "p95_s": 3.0,
+    "mean_s": 1.6666666666666667
+  },
+  {
+    "job": "web-e2e (firefox)",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 1.5,
+    "p95_s": 4.449999999999999,
+    "mean_s": 2.0
+  },
+  {
+    "job": "images (orders-api)",
+    "step": "Post Build image orders-api (cache warm-up, no push)",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 1.5,
+    "p95_s": 2.4499999999999993,
+    "mean_s": 1.5833333333333333
+  },
+  {
+    "job": "select",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 30,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.6666666666666666
+  },
+  {
+    "job": "select",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 30,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.9
+  },
+  {
+    "job": "select",
+    "step": "Run actions/upload-artifact@v4",
+    "category": "publish",
+    "n": 30,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.0333333333333334
+  },
+  {
+    "job": "web-build",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.4499999999999993,
+    "mean_s": 0.8333333333333334
+  },
+  {
+    "job": "web-build",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.9166666666666666
+  },
+  {
+    "job": "web-build",
+    "step": "Run actions/upload-artifact@v4",
+    "category": "publish",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.4499999999999993,
+    "mean_s": 1.0833333333333333
+  },
+  {
+    "job": "web-unit (0)",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.8333333333333334
+  },
+  {
+    "job": "web-unit (0)",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.4499999999999993,
+    "mean_s": 0.8333333333333334
+  },
+  {
+    "job": "web-unit (0)",
+    "step": "Run actions/upload-artifact@v4",
+    "category": "publish",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.4499999999999993,
+    "mean_s": 1.0
+  },
+  {
+    "job": "images (web)",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 2.4499999999999993,
+    "mean_s": 1.3333333333333333
+  },
+  {
+    "job": "images (web)",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.8333333333333334
+  },
+  {
+    "job": "images (web)",
+    "step": "Post Build image web (cache warm-up, no push)",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.3333333333333333
+  },
+  {
+    "job": "static-checks",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 26,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.6923076923076923
+  },
+  {
+    "job": "static-checks",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 26,
+    "p50_s": 1.0,
+    "p95_s": 1.75,
+    "mean_s": 1.0
+  },
+  {
+    "job": "static-checks",
+    "step": "analytics - lint",
+    "category": "lint",
+    "n": 26,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.5
+  },
+  {
+    "job": "web-unit (1)",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 9,
+    "p50_s": 1.0,
+    "p95_s": 1.5999999999999996,
+    "mean_s": 1.0
+  },
+  {
+    "job": "web-unit (1)",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 9,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.8888888888888888
+  },
+  {
+    "job": "web-unit (1)",
+    "step": "Run actions/upload-artifact@v4",
+    "category": "publish",
+    "n": 9,
+    "p50_s": 1.0,
+    "p95_s": 1.5999999999999996,
+    "mean_s": 1.1111111111111112
+  },
+  {
+    "job": "web-e2e (chromium)",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.8333333333333334
+  },
+  {
+    "job": "web-e2e (chromium)",
+    "step": "Run actions/download-artifact@v4",
+    "category": "install",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.0
+  },
+  {
+    "job": "web-e2e (chromium)",
+    "step": "Run actions/upload-artifact@v4",
+    "category": "publish",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.1666666666666667
+  },
+  {
+    "job": "web-e2e (webkit)",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.6666666666666666
+  },
+  {
+    "job": "web-e2e (webkit)",
+    "step": "Run actions/download-artifact@v4",
+    "category": "install",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.4499999999999993,
+    "mean_s": 0.8333333333333334
+  },
+  {
+    "job": "web-e2e (webkit)",
+    "step": "Run actions/upload-artifact@v4",
+    "category": "publish",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.0833333333333333
+  },
+  {
+    "job": "web-e2e (firefox)",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.0833333333333333
+  },
+  {
+    "job": "web-e2e (firefox)",
+    "step": "Run actions/download-artifact@v4",
+    "category": "install",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.4499999999999993,
+    "mean_s": 0.9166666666666666
+  },
+  {
+    "job": "web-e2e (firefox)",
+    "step": "Run actions/upload-artifact@v4",
+    "category": "publish",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.0833333333333333
+  },
+  {
+    "job": "publish (web)",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.75
+  },
+  {
+    "job": "publish (web)",
+    "step": "Run docker/login-action@v3",
+    "category": "publish",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.6666666666666666
+  },
+  {
+    "job": "publish (web)",
+    "step": "Post Push web (from cache)",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.4166666666666667
+  },
+  {
+    "job": "publish (web)",
+    "step": "Post Run docker/login-action@v3",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.5833333333333334
+  },
+  {
+    "job": "orders-it (0)",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.25
+  },
+  {
+    "job": "orders-it (0)",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.4499999999999993,
+    "mean_s": 0.6666666666666666
+  },
+  {
+    "job": "orders-it (0)",
+    "step": "Run actions/upload-artifact@v4",
+    "category": "publish",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.4499999999999993,
+    "mean_s": 1.0
+  },
+  {
+    "job": "orders-it (1)",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 2.4499999999999993,
+    "mean_s": 1.3333333333333333
+  },
+  {
+    "job": "orders-it (1)",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.4499999999999993,
+    "mean_s": 0.75
+  },
+  {
+    "job": "orders-it (1)",
+    "step": "Run actions/upload-artifact@v4",
+    "category": "publish",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.1666666666666667
+  },
+  {
+    "job": "images (orders-api)",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.75
+  },
+  {
+    "job": "orders-unit",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 10,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.2
+  },
+  {
+    "job": "orders-unit",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 10,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.9
+  },
+  {
+    "job": "orders-unit",
+    "step": "Run actions/upload-artifact@v4",
+    "category": "publish",
+    "n": 10,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.2
+  },
+  {
+    "job": "publish (orders-api)",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.8333333333333334
+  },
+  {
+    "job": "publish (orders-api)",
+    "step": "Run docker/login-action@v3",
+    "category": "publish",
+    "n": 12,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.75
+  },
+  {
+    "job": "images (analytics)",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 11,
+    "p50_s": 1.0,
+    "p95_s": 1.5,
+    "mean_s": 0.9090909090909091
+  },
+  {
+    "job": "images (analytics)",
+    "step": "Post Run docker/setup-buildx-action@v3",
+    "category": "runner-overhead",
+    "n": 11,
+    "p50_s": 1.0,
+    "p95_s": 1.5,
+    "mean_s": 1.0
+  },
+  {
+    "job": "analytics-test (0)",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 11,
+    "p50_s": 1.0,
+    "p95_s": 2.5,
+    "mean_s": 1.0909090909090908
+  },
+  {
+    "job": "analytics-test (0)",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 11,
+    "p50_s": 1.0,
+    "p95_s": 1.5,
+    "mean_s": 0.9090909090909091
+  },
+  {
+    "job": "analytics-test (0)",
+    "step": "Run actions/upload-artifact@v4",
+    "category": "publish",
+    "n": 11,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.2727272727272727
+  },
+  {
+    "job": "publish (analytics)",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 11,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.8181818181818182
+  },
+  {
+    "job": "publish (analytics)",
+    "step": "Run docker/login-action@v3",
+    "category": "publish",
+    "n": 11,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.5454545454545454
+  },
+  {
+    "job": "publish (analytics)",
+    "step": "Post Push analytics (from cache)",
+    "category": "runner-overhead",
+    "n": 11,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.3636363636363635
+  },
+  {
+    "job": "publish (analytics)",
+    "step": "Post Run docker/setup-buildx-action@v3",
+    "category": "runner-overhead",
+    "n": 11,
+    "p50_s": 1.0,
+    "p95_s": 1.5,
+    "mean_s": 1.0909090909090908
+  },
+  {
+    "job": "analytics-test (1)",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 10,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.8
+  },
+  {
+    "job": "analytics-test (1)",
+    "step": "Run actions/checkout@v4",
+    "category": "checkout",
+    "n": 10,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.7
+  },
+  {
+    "job": "analytics-test (1)",
+    "step": "Run actions/upload-artifact@v4",
+    "category": "publish",
+    "n": 10,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.2
+  },
+  {
+    "job": "publish (orders-api)",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.5,
+    "p95_s": 1.0,
+    "mean_s": 0.5
+  },
+  {
+    "job": "select",
+    "step": "Test impact analysis",
+    "category": "test",
+    "n": 30,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.3333333333333333
+  },
+  {
+    "job": "select",
+    "step": "Record selection",
+    "category": "other",
+    "n": 30,
+    "p50_s": 0.0,
+    "p95_s": 0.5500000000000007,
+    "mean_s": 0.06666666666666667
+  },
+  {
+    "job": "select",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 30,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.3
+  },
+  {
+    "job": "select",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 30,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.03333333333333333
+  },
+  {
+    "job": "web-build",
+    "step": "Post Run actions/setup-node@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.25
+  },
+  {
+    "job": "web-build",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.16666666666666666
+  },
+  {
+    "job": "web-build",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.4499999999999993,
+    "mean_s": 0.08333333333333333
+  },
+  {
+    "job": "web-unit (0)",
+    "step": "Shard selected test files (shardkit)",
+    "category": "test",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.4499999999999993,
+    "mean_s": 0.08333333333333333
+  },
+  {
+    "job": "web-unit (0)",
+    "step": "Post Run actions/setup-node@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.16666666666666666
+  },
+  {
+    "job": "web-unit (0)",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.16666666666666666
+  },
+  {
+    "job": "web-unit (0)",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.4499999999999993,
+    "mean_s": 0.08333333333333333
+  },
+  {
+    "job": "images (web)",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.16666666666666666
+  },
+  {
+    "job": "images (web)",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.4499999999999993,
+    "mean_s": 0.08333333333333333
+  },
+  {
+    "job": "static-checks",
+    "step": "Shared schemas - verify generated code",
+    "category": "lint",
+    "n": 26,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.11538461538461539
+  },
+  {
+    "job": "static-checks",
+    "step": "Post Run actions/setup-python@v5",
+    "category": "runner-overhead",
+    "n": 26,
+    "p50_s": 0.0,
+    "p95_s": 0.75,
+    "mean_s": 0.07692307692307693
+  },
+  {
+    "job": "static-checks",
+    "step": "Post Run actions/setup-node@v4",
+    "category": "runner-overhead",
+    "n": 26,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.15384615384615385
+  },
+  {
+    "job": "static-checks",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 26,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.2692307692307692
+  },
+  {
+    "job": "static-checks",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 26,
+    "p50_s": 0.0,
+    "p95_s": 0.75,
+    "mean_s": 0.07692307692307693
+  },
+  {
+    "job": "web-unit (1)",
+    "step": "Shard selected test files (shardkit)",
+    "category": "test",
+    "n": 9,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "web-unit (1)",
+    "step": "Post Run actions/setup-node@v4",
+    "category": "runner-overhead",
+    "n": 9,
+    "p50_s": 0.0,
+    "p95_s": 0.5999999999999996,
+    "mean_s": 0.1111111111111111
+  },
+  {
+    "job": "web-unit (1)",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 9,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.2222222222222222
+  },
+  {
+    "job": "web-unit (1)",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 9,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "web-e2e (chromium)",
+    "step": "Resolve Playwright version",
+    "category": "test",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "web-e2e (chromium)",
+    "step": "Install Playwright browser",
+    "category": "install",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "web-e2e (chromium)",
+    "step": "Post Restore Playwright browser cache",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "web-e2e (chromium)",
+    "step": "Post Run actions/setup-node@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.4499999999999993,
+    "mean_s": 0.08333333333333333
+  },
+  {
+    "job": "web-e2e (chromium)",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.16666666666666666
+  },
+  {
+    "job": "web-e2e (chromium)",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "web-e2e (webkit)",
+    "step": "Resolve Playwright version",
+    "category": "test",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "web-e2e (webkit)",
+    "step": "Install Playwright browser",
+    "category": "install",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "web-e2e (webkit)",
+    "step": "Post Restore Playwright browser cache",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.25
+  },
+  {
+    "job": "web-e2e (webkit)",
+    "step": "Post Run actions/setup-node@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.4499999999999993,
+    "mean_s": 0.08333333333333333
+  },
+  {
+    "job": "web-e2e (webkit)",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.16666666666666666
+  },
+  {
+    "job": "web-e2e (webkit)",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "web-e2e (firefox)",
+    "step": "Resolve Playwright version",
+    "category": "test",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "web-e2e (firefox)",
+    "step": "Install Playwright browser",
+    "category": "install",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "web-e2e (firefox)",
+    "step": "Post Restore Playwright browser cache",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.25
+  },
+  {
+    "job": "web-e2e (firefox)",
+    "step": "Post Run actions/setup-node@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "web-e2e (firefox)",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.4166666666666667
+  },
+  {
+    "job": "web-e2e (firefox)",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "publish (web)",
+    "step": "Run echo \"prefix=$(echo \"$IMAGE_PREFIX\" | tr '[:upper:]' '[:lower:]')\" >> \"$GITHUB_OUTPUT\"",
+    "category": "image-build",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.25
+  },
+  {
+    "job": "publish (web)",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.25
+  },
+  {
+    "job": "publish (web)",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "orders-it (0)",
+    "step": "Shard selected integration tests (shardkit)",
+    "category": "test",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "orders-it (0)",
+    "step": "Post Run actions/setup-java@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.4499999999999993,
+    "mean_s": 0.08333333333333333
+  },
+  {
+    "job": "orders-it (0)",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.25
+  },
+  {
+    "job": "orders-it (0)",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.4499999999999993,
+    "mean_s": 0.08333333333333333
+  },
+  {
+    "job": "orders-it (1)",
+    "step": "Shard selected integration tests (shardkit)",
+    "category": "test",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.25
+  },
+  {
+    "job": "orders-it (1)",
+    "step": "Post Run actions/setup-java@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.16666666666666666
+  },
+  {
+    "job": "orders-it (1)",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.25
+  },
+  {
+    "job": "orders-it (1)",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "images (orders-api)",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.25
+  },
+  {
+    "job": "images (orders-api)",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "orders-unit",
+    "step": "Post Run actions/setup-java@v4",
+    "category": "runner-overhead",
+    "n": 10,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "orders-unit",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 10,
+    "p50_s": 0.0,
+    "p95_s": 0.5500000000000007,
+    "mean_s": 0.1
+  },
+  {
+    "job": "orders-unit",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 10,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "publish (orders-api)",
+    "step": "Run echo \"prefix=$(echo \"$IMAGE_PREFIX\" | tr '[:upper:]' '[:lower:]')\" >> \"$GITHUB_OUTPUT\"",
+    "category": "image-build",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "publish (orders-api)",
+    "step": "Post Run docker/login-action@v3",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.4166666666666667
+  },
+  {
+    "job": "publish (orders-api)",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 12,
+    "p50_s": 0.0,
+    "p95_s": 0.4499999999999993,
+    "mean_s": 0.08333333333333333
+  },
+  {
+    "job": "images (analytics)",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 11,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.18181818181818182
+  },
+  {
+    "job": "images (analytics)",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 11,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "analytics-test (0)",
+    "step": "Shard selected test modules (shardkit)",
+    "category": "test",
+    "n": 11,
+    "p50_s": 0.0,
+    "p95_s": 0.5,
+    "mean_s": 0.09090909090909091
+  },
+  {
+    "job": "analytics-test (0)",
+    "step": "Post Run actions/setup-python@v5",
+    "category": "runner-overhead",
+    "n": 11,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "analytics-test (0)",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 11,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.18181818181818182
+  },
+  {
+    "job": "analytics-test (0)",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 11,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "publish (analytics)",
+    "step": "Run echo \"prefix=$(echo \"$IMAGE_PREFIX\" | tr '[:upper:]' '[:lower:]')\" >> \"$GITHUB_OUTPUT\"",
+    "category": "image-build",
+    "n": 11,
+    "p50_s": 0.0,
+    "p95_s": 0.5,
+    "mean_s": 0.09090909090909091
+  },
+  {
+    "job": "publish (analytics)",
+    "step": "Post Run docker/login-action@v3",
+    "category": "runner-overhead",
+    "n": 11,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.2727272727272727
+  },
+  {
+    "job": "publish (analytics)",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 11,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.2727272727272727
+  },
+  {
+    "job": "publish (analytics)",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 11,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "analytics-test (1)",
+    "step": "Shard selected test modules (shardkit)",
+    "category": "test",
+    "n": 10,
+    "p50_s": 0.0,
+    "p95_s": 0.5500000000000007,
+    "mean_s": 0.1
+  },
+  {
+    "job": "analytics-test (1)",
+    "step": "Post Run actions/setup-python@v5",
+    "category": "runner-overhead",
+    "n": 10,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.2
+  },
+  {
+    "job": "analytics-test (1)",
+    "step": "Post Run actions/checkout@v4",
+    "category": "runner-overhead",
+    "n": 10,
+    "p50_s": 0.0,
+    "p95_s": 0.5500000000000007,
+    "mean_s": 0.1
+  },
+  {
+    "job": "analytics-test (1)",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 10,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  }
+]

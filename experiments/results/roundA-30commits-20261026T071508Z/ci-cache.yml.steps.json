@@ -1,0 +1,335 @@
+[
+  {
+    "job": "build-test-publish",
+    "step": "orders-api - build and test",
+    "category": "test",
+    "n": 30,
+    "p50_s": 59.5,
+    "p95_s": 71.30000000000001,
+    "mean_s": 59.13333333333333
+  },
+  {
+    "job": "build-test-publish",
+    "step": "analytics - tests with coverage",
+    "category": "test",
+    "n": 30,
+    "p50_s": 53.5,
+    "p95_s": 55.55,
+    "mean_s": 50.0
+  },
+  {
+    "job": "build-test-publish",
+    "step": "web - e2e tests (chromium, firefox, webkit)",
+    "category": "test",
+    "n": 30,
+    "p50_s": 48.0,
+    "p95_s": 58.50000000000001,
+    "mean_s": 47.666666666666664
+  },
+  {
+    "job": "build-test-publish",
+    "step": "web - install Playwright system dependencies",
+    "category": "install",
+    "n": 30,
+    "p50_s": 31.0,
+    "p95_s": 58.95,
+    "mean_s": 37.56666666666667
+  },
+  {
+    "job": "build-test-publish",
+    "step": "web - unit tests with coverage",
+    "category": "test",
+    "n": 30,
+    "p50_s": 22.0,
+    "p95_s": 24.0,
+    "mean_s": 20.533333333333335
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Set up Node 20 (with npm cache)",
+    "category": "cache",
+    "n": 30,
+    "p50_s": 6.0,
+    "p95_s": 9.0,
+    "mean_s": 6.166666666666667
+  },
+  {
+    "job": "build-test-publish",
+    "step": "web - lint and typecheck",
+    "category": "lint",
+    "n": 30,
+    "p50_s": 6.0,
+    "p95_s": 7.550000000000001,
+    "mean_s": 6.033333333333333
+  },
+  {
+    "job": "build-test-publish",
+    "step": "analytics - install",
+    "category": "install",
+    "n": 30,
+    "p50_s": 6.0,
+    "p95_s": 9.55,
+    "mean_s": 6.6
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Build and push image orders-api",
+    "category": "publish",
+    "n": 30,
+    "p50_s": 6.0,
+    "p95_s": 45.300000000000004,
+    "mean_s": 17.433333333333334
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Build and push image web",
+    "category": "publish",
+    "n": 30,
+    "p50_s": 6.0,
+    "p95_s": 37.1,
+    "mean_s": 16.166666666666668
+  },
+  {
+    "job": "build-test-publish",
+    "step": "web - build",
+    "category": "build",
+    "n": 30,
+    "p50_s": 5.0,
+    "p95_s": 6.0,
+    "mean_s": 5.166666666666667
+  },
+  {
+    "job": "build-test-publish",
+    "step": "web - restore Playwright browsers cache",
+    "category": "cache",
+    "n": 30,
+    "p50_s": 5.0,
+    "p95_s": 9.0,
+    "mean_s": 6.033333333333333
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Set up Docker Buildx",
+    "category": "toolchain",
+    "n": 30,
+    "p50_s": 5.0,
+    "p95_s": 10.0,
+    "mean_s": 5.933333333333334
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Build and push image analytics",
+    "category": "publish",
+    "n": 30,
+    "p50_s": 5.0,
+    "p95_s": 8.55,
+    "mean_s": 5.066666666666666
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Set up job",
+    "category": "runner-overhead",
+    "n": 30,
+    "p50_s": 3.0,
+    "p95_s": 4.0,
+    "mean_s": 2.966666666666667
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Post Set up Docker Buildx",
+    "category": "runner-overhead",
+    "n": 30,
+    "p50_s": 3.0,
+    "p95_s": 8.650000000000002,
+    "mean_s": 3.566666666666667
+  },
+  {
+    "job": "build-test-publish",
+    "step": "web - install",
+    "category": "install",
+    "n": 30,
+    "p50_s": 2.5,
+    "p95_s": 3.0,
+    "mean_s": 2.4
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Set up Java 21 (with Maven cache)",
+    "category": "cache",
+    "n": 30,
+    "p50_s": 2.0,
+    "p95_s": 3.0,
+    "mean_s": 1.8
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Set up Python 3.12 (with pip cache)",
+    "category": "cache",
+    "n": 30,
+    "p50_s": 2.0,
+    "p95_s": 4.0,
+    "mean_s": 1.9666666666666666
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Post Build and push image web",
+    "category": "runner-overhead",
+    "n": 30,
+    "p50_s": 2.0,
+    "p95_s": 2.0,
+    "mean_s": 1.6333333333333333
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Post Build and push image orders-api",
+    "category": "runner-overhead",
+    "n": 30,
+    "p50_s": 2.0,
+    "p95_s": 2.0,
+    "mean_s": 1.6
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Checkout",
+    "category": "checkout",
+    "n": 30,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.7666666666666667
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Upload test and coverage reports",
+    "category": "publish",
+    "n": 30,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.2666666666666666
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Log in to GHCR",
+    "category": "publish",
+    "n": 30,
+    "p50_s": 1.0,
+    "p95_s": 1.0,
+    "mean_s": 0.6666666666666666
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Post Build and push image analytics",
+    "category": "runner-overhead",
+    "n": 30,
+    "p50_s": 1.0,
+    "p95_s": 2.0,
+    "mean_s": 1.4
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Shared schemas - verify generated code",
+    "category": "lint",
+    "n": 30,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "build-test-publish",
+    "step": "web - resolve Playwright version",
+    "category": "test",
+    "n": 30,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "build-test-publish",
+    "step": "web - install Playwright browsers",
+    "category": "install",
+    "n": 30,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.0
+  },
+  {
+    "job": "build-test-publish",
+    "step": "analytics - lint",
+    "category": "lint",
+    "n": 30,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.1
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Image tag prefix",
+    "category": "image-build",
+    "n": 30,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.03333333333333333
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Post Log in to GHCR",
+    "category": "runner-overhead",
+    "n": 30,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.3
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Post web - restore Playwright browsers cache",
+    "category": "runner-overhead",
+    "n": 30,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.2
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Post Set up Python 3.12 (with pip cache)",
+    "category": "runner-overhead",
+    "n": 30,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.2
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Post Set up Node 20 (with npm cache)",
+    "category": "runner-overhead",
+    "n": 30,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.13333333333333333
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Post Set up Java 21 (with Maven cache)",
+    "category": "runner-overhead",
+    "n": 30,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.13333333333333333
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Post Checkout",
+    "category": "runner-overhead",
+    "n": 30,
+    "p50_s": 0.0,
+    "p95_s": 1.0,
+    "mean_s": 0.13333333333333333
+  },
+  {
+    "job": "build-test-publish",
+    "step": "Complete job",
+    "category": "runner-overhead",
+    "n": 30,
+    "p50_s": 0.0,
+    "p95_s": 0.0,
+    "mean_s": 0.03333333333333333
+  }
+]

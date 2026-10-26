@@ -1,0 +1,63 @@
+{
+  "threshold_s": 300,
+  "rows": [
+    {
+      "workflow": "ci-baseline.yml",
+      "step": "web - install Playwright browsers",
+      "n": 48,
+      "slow": 11,
+      "slow_seconds": [
+        897,
+        1977,
+        1034,
+        1205,
+        2066,
+        962,
+        1912,
+        900,
+        1281,
+        493,
+        1361
+      ]
+    },
+    {
+      "workflow": "ci-cache.yml",
+      "step": "web - install Playwright browsers",
+      "n": 2,
+      "slow": 0,
+      "slow_seconds": []
+    },
+    {
+      "workflow": "ci-cache.yml",
+      "step": "web - install Playwright system dependencies",
+      "n": 33,
+      "slow": 0,
+      "slow_seconds": []
+    },
+    {
+      "workflow": "ci-optimized.yml",
+      "step": "Install Playwright system dependencies",
+      "n": 47,
+      "slow": 1,
+      "slow_seconds": [
+        447
+      ]
+    },
+    {
+      "workflow": "ci-parallel.yml",
+      "step": "Install Playwright browser",
+      "n": 3,
+      "slow": 0,
+      "slow_seconds": []
+    },
+    {
+      "workflow": "ci-parallel.yml",
+      "step": "Install Playwright system dependencies",
+      "n": 21,
+      "slow": 1,
+      "slow_seconds": [
+        434
+      ]
+    }
+  ]
+}

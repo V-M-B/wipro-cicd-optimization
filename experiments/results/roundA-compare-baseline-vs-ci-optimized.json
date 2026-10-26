@@ -1,0 +1,112 @@
+{
+  "pairs": 30,
+  "shas": [
+    "33ea69d4c7d163fb889fdb8e6dbd053bb28e7ee8",
+    "3625b88e1b9a81f4ffbbcd6c6740c08d91812dbd",
+    "3fd0fec716c6eddeff69246eeb3ca5d3d5c6445e",
+    "42a51b8619f3b2d7d983b8fa7dfc2a8d8eacb29a",
+    "43a86a9b9f9229e5bc8f76121b932e8076ab5a51",
+    "476943cd270d98635444536728cb778063be757d",
+    "4a87f881094bca307082a12db3c7ffd3aa454060",
+    "4b9a3b2c5c6bd9af1d4ec16789a0013ada6a58fb",
+    "54639072aceec09299ef430469842cac221ee8c3",
+    "546b858d672f2e4371e2acab691e3099070d1f77",
+    "5b1420123f3d050a5445be71ef956fb95dc0f5af",
+    "6696b54d378f04e72ca62216f1456b96899777c2",
+    "67f3223fa960a09629e4ca18a01459566038aadb",
+    "7b4d590711be5bd7d9f794799d5ba54bed270c26",
+    "8ae325b0ba1885ed28fd82b67c74511f7de0c341",
+    "8d0922b602c0fae9f38aae68a5dfc46a2fef54f0",
+    "928b3448a3d5777b9a0bf261dbb4841ed366113d",
+    "962e179fce66bf8604cc568da39aa9e4f0ed8f3d",
+    "995ecf941ea84762e627b6582e4ae3e096ba0678",
+    "a0131eeaa6501dd6335604a8f2a3f9a062ea6fca",
+    "a0f2e3f35f329f38fbd302b514bf4b9a45fe4d4d",
+    "ad75609a6550dd1551aef515284ce5160ffef748",
+    "c767365ce3da924bc56caa4563d59b80f45d6398",
+    "d3b43830a2759e1e9d1b0a581a3e92ad2f7e338b",
+    "dc41592c97382756f87b0e2f3e5f98b889b53a8c",
+    "dd6a59f7ea1e6e20d9e6331968f050adfd13f8a7",
+    "ee1e52fee3ba81a67df8ba59558e3efc8c135737",
+    "f3541162f293d80840aac3054aac8e314761c108",
+    "f5022ba6529dadb1351cc4bad7a48efc0fa56fe5",
+    "f737e44d1495248b8e5ccfeb0b6e929a02b2c901"
+  ],
+  "rows": [
+    {
+      "metric": "wall_clock_s",
+      "label": "Wall-clock (s)",
+      "n_pairs": 30,
+      "a_p50": 365.0,
+      "a_p95": 1623.7,
+      "b_p50": 137.0,
+      "b_p95": 191.75,
+      "diff_p50": -228.0,
+      "diff_ci95": [
+        -291.0,
+        -204.0
+      ],
+      "reduction_pct": 62.465753424657535
+    },
+    {
+      "metric": "time_to_first_job_s",
+      "label": "Time to first job (s)",
+      "n_pairs": 30,
+      "a_p50": 2.5,
+      "a_p95": 3.0,
+      "b_p50": 3.0,
+      "b_p95": 3.0,
+      "diff_p50": 0.5,
+      "diff_ci95": [
+        0.0,
+        1.0
+      ],
+      "reduction_pct": -20.0
+    },
+    {
+      "metric": "job_seconds",
+      "label": "Compute used (job-seconds)",
+      "n_pairs": 30,
+      "a_p50": 363.0,
+      "a_p95": 1620.7,
+      "b_p50": 269.0,
+      "b_p95": 760.45,
+      "diff_p50": -94.0,
+      "diff_ci95": [
+        -219.0,
+        -5.5
+      ],
+      "reduction_pct": 25.895316804407713
+    },
+    {
+      "metric": "billable_min",
+      "label": "Billable minutes",
+      "n_pairs": 30,
+      "a_p50": 7.0,
+      "a_p95": 27.1,
+      "b_p50": 8.0,
+      "b_p95": 21.0,
+      "diff_p50": 1.0,
+      "diff_ci95": [
+        -1.0,
+        5.0
+      ],
+      "reduction_pct": -14.285714285714285
+    },
+    {
+      "metric": "cost_usd",
+      "label": "Cost per run (USD)",
+      "n_pairs": 30,
+      "a_p50": 0.042,
+      "a_p95": 0.16260000000000002,
+      "b_p50": 0.048,
+      "b_p95": 0.126,
+      "diff_p50": 0.005999999999999998,
+      "diff_ci95": [
+        -0.006000000000000005,
+        0.030000000000000006
+      ],
+      "reduction_pct": -14.285714285714283
+    }
+  ]
+}

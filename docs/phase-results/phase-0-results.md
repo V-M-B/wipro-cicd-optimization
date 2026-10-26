@@ -61,7 +61,7 @@ python scripts/report_export.py experiments/results/<new export dir>
 ## Correction (2026-10-26)
 
 Finding 2 above was a prediction, and replay round A contradicts it. Step durations from every run collected so
-far, computed from `experiments/results/cipro.sqlite`, which is rebuilt from the raw JSON:
+far, from `python scripts/report_playwright_steps.py` (output saved as `experiments/results/playwright-install-steps-*.json`):
 
 | Workflow | Step | Successful steps | Longer than 5 min |
 |---|---|---:|---:|
