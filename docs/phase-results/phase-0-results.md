@@ -65,7 +65,7 @@ far, from `python scripts/report_playwright_steps.py` (output saved as `experime
 
 | Workflow | Step | Successful steps | Longer than 5 min |
 |---|---|---:|---:|
-| ci-baseline | `npx playwright install --with-deps chromium firefox webkit` | 48 | 11 (897–2066 s) |
+| ci-baseline | `npx playwright install --with-deps chromium firefox webkit` | 48 | 11 (493–2066 s) |
 | ci-cache, ci-parallel, ci-optimized | `npx playwright install-deps <browser(s)>` after a browser-cache hit | 101 | 2 (434 s, 447 s) |
 
 Both commands install the same 181 apt packages (119 MB). In the paired runs on `exp/a/19-frontend`, started within
