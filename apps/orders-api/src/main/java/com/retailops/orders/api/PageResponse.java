@@ -20,4 +20,9 @@ public record PageResponse<T>(List<T> content, int page, int size, long totalEle
     public boolean hasNext() {
         return page + 1 < totalPages;
     }
+
+    /** True unless this is the first page. A page past the end still has a previous page. */
+    public boolean hasPrevious() {
+        return page > 0;
+    }
 }
