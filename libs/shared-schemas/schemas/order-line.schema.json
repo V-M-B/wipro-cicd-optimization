@@ -6,6 +6,7 @@
   "properties": {
     "sku": {"type": "string"},
     "quantity": {"type": "integer"},
-    "unitPrice": {"type": "number"}
+    "unitPrice": {"type": "number"},
+    "lineTotal": {"type": "number"}
   }
 }

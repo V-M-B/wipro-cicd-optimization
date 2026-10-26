@@ -29,14 +29,15 @@ class OrderMapperTest {
         assertThat(dto.createdAt()).isEqualTo(TestFixtures.NOW_UTC);
         assertThat(dto.total()).isEqualTo(new BigDecimal("70.79"));
         assertThat(dto.lines()).containsExactly(
-                new OrderLine("APP-3001", 2, new BigDecimal("15.00")),
-                new OrderLine("HOM-4001", 3, new BigDecimal("10.00")));
+                new OrderLine("APP-3001", 2, new BigDecimal("15.00"), new BigDecimal("30.00")),
+                new OrderLine("HOM-4001", 3, new BigDecimal("10.00"), new BigDecimal("30.00")));
     }
 
     @Test
     void mapsSingleLine() {
         OrderLineEntity line = new OrderLineEntity(1, "TOY-5001", 1, new BigDecimal("44.99"), new BigDecimal("44.99"));
-        assertThat(OrderMapper.toDto(line)).isEqualTo(new OrderLine("TOY-5001", 1, new BigDecimal("44.99")));
+        assertThat(OrderMapper.toDto(line))
+                .isEqualTo(new OrderLine("TOY-5001", 1, new BigDecimal("44.99"), new BigDecimal("44.99")));
     }
 
     @Test
