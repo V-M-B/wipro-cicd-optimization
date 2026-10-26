@@ -1,0 +1,49 @@
+{
+  "a": "ci-baseline.yml",
+  "b": "ci-cache.yml",
+  "branch_glob": "exp/a/*",
+  "groups": {
+    "Toolchain setup (Java/Node/Python)": {
+      "a_p50_s": 5.0,
+      "b_p50_s": 9.0,
+      "paired_diff_p50_s": 4.5,
+      "n": 30
+    },
+    "orders-api build and tests (Maven dependencies)": {
+      "a_p50_s": 72.0,
+      "b_p50_s": 59.5,
+      "paired_diff_p50_s": -12.0,
+      "n": 30
+    },
+    "web npm ci": {
+      "a_p50_s": 4.0,
+      "b_p50_s": 2.5,
+      "paired_diff_p50_s": -1.0,
+      "n": 30
+    },
+    "Playwright browsers and system packages": {
+      "a_p50_s": 46.5,
+      "b_p50_s": 36.5,
+      "paired_diff_p50_s": -10.5,
+      "n": 30
+    },
+    "analytics pip install": {
+      "a_p50_s": 7.0,
+      "b_p50_s": 6.0,
+      "paired_diff_p50_s": -1.0,
+      "n": 30
+    },
+    "Docker image build, push and registry login": {
+      "a_p50_s": 83.5,
+      "b_p50_s": 42.0,
+      "paired_diff_p50_s": -44.5,
+      "n": 30
+    },
+    "Post-job cache save and cleanup": {
+      "a_p50_s": 0.0,
+      "b_p50_s": 8.5,
+      "paired_diff_p50_s": 8.0,
+      "n": 30
+    }
+  }
+}
