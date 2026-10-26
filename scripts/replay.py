@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 import time
@@ -86,7 +87,8 @@ def main() -> int:
         raise SystemExit("working tree not clean")
     start_branch = sh("git", "rev-parse", "--abbrev-ref", "HEAD")
     repo = "DRY/RUN" if a.dry_run else repo_slug()
-    log_path = ROOT / f"experiments/results/replay-{a.label}.jsonl"
+    # Log outside the repository tree so it can never be committed into an experiment branch.
+    log_path = Path(os.environ.get("REPLAY_LOG_DIR", str(ROOT.parent))) / f"replay-{a.label}.jsonl"
     in_flight: list[tuple[dict, str]] = []
 
     def drain(limit: int) -> None:
@@ -106,8 +108,9 @@ def main() -> int:
             branch = f"exp/{a.label}/{int(e['id']):02d}-{e['category']}"
             patch = ROOT / "experiments/commits" / e["patch"]
             sh("git", "checkout", "-q", "-B", branch, a.base)
-            sh("git", "apply", "--whitespace=nowarn", str(patch))
-            sh("git", "add", "-A")
+            # --index stages exactly the patch's files. Never `git add -A`: in rounds A #2-#20 that swept this
+            # script's own log (experiments/results/replay-a.jsonl) into the experiment commits.
+            sh("git", "apply", "--index", "--whitespace=nowarn", str(patch))
             sh("git", "commit", "-q", "-m", f"experiment {a.label} #{e['id']} ({e['category']}): {e['title']}")
             sha = sh("git", "rev-parse", "HEAD")
             if a.dry_run:
