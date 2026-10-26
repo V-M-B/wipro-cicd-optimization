@@ -51,17 +51,23 @@ export function cancellationRate(orders: readonly Order[]): number {
 export interface SkuVolume {
   sku: string;
   quantity: number;
+  /** Share of all units sold (0..1), across every SKU and not just the ones returned. */
+  share: number;
 }
 
 /** Best-selling SKUs by units across non-cancelled orders; ties broken by SKU. */
 export function topSkus(orders: readonly Order[], limit = 5): SkuVolume[] {
   const volume = new Map<string, number>();
+  let totalUnits = 0;
   for (const order of orders) {
     if (order.status === 'CANCELLED') continue;
-    for (const line of order.lines) volume.set(line.sku, (volume.get(line.sku) ?? 0) + line.quantity);
+    for (const line of order.lines) {
+      volume.set(line.sku, (volume.get(line.sku) ?? 0) + line.quantity);
+      totalUnits += line.quantity;
+    }
   }
   return [...volume.entries()]
-    .map(([sku, quantity]) => ({ sku, quantity }))
+    .map(([sku, quantity]) => ({ sku, quantity, share: totalUnits === 0 ? 0 : quantity / totalUnits }))
     .sort((a, b) => b.quantity - a.quantity || a.sku.localeCompare(b.sku, 'en'))
     .slice(0, limit);
 }
