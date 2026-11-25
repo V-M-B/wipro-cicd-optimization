@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field
 
 from app.generated.schemas import Customer, Order, Product
 
-GranularityParam = Literal["day", "week", "month"]
+GranularityParam = Literal["day", "week", "month", "quarter"]
 
 
 class OrdersRequest(BaseModel):

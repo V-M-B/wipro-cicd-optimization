@@ -38,6 +38,9 @@ def test_safe_div_custom_default():
         (date(2021, 1, 3), "week", "2020-W53"),
         (date(2026, 12, 31), "week", "2026-W53"),
         (date(2025, 12, 1), "month", "2025-12"),
+        (date(2025, 1, 1), "quarter", "2025-Q1"),
+        (date(2025, 6, 30), "quarter", "2025-Q2"),
+        (date(2025, 12, 31), "quarter", "2025-Q4"),
     ],
 )
 def test_period_key(day, granularity, expected):
@@ -52,6 +55,8 @@ def test_period_key(day, granularity, expected):
         (date(2025, 3, 3), "week", date(2025, 3, 3)),
         (date(2025, 3, 9), "week", date(2025, 3, 3)),
         (date(2025, 3, 31), "month", date(2025, 3, 1)),
+        (date(2025, 3, 31), "quarter", date(2025, 1, 1)),
+        (date(2025, 8, 15), "quarter", date(2025, 7, 1)),
     ],
 )
 def test_period_start(day, granularity, expected):
@@ -65,6 +70,8 @@ def test_period_start(day, granularity, expected):
         (date(2025, 12, 29), "week", date(2026, 1, 5)),
         (date(2025, 11, 1), "month", date(2025, 12, 1)),
         (date(2025, 12, 1), "month", date(2026, 1, 1)),
+        (date(2025, 4, 1), "quarter", date(2025, 7, 1)),
+        (date(2025, 10, 1), "quarter", date(2026, 1, 1)),
     ],
 )
 def test_next_period_start(start, granularity, expected):
@@ -79,6 +86,7 @@ def test_next_period_start(start, granularity, expected):
         (date(2025, 1, 1), date(2025, 1, 20), "week", ["2025-W01", "2025-W02", "2025-W03", "2025-W04"]),
         (date(2025, 11, 15), date(2026, 2, 1), "month", ["2025-11", "2025-12", "2026-01", "2026-02"]),
         (date(2024, 12, 28), date(2025, 1, 6), "week", ["2024-W52", "2025-W01", "2025-W02"]),
+        (date(2024, 11, 20), date(2025, 4, 1), "quarter", ["2024-Q4", "2025-Q1", "2025-Q2"]),
     ],
 )
 def test_period_range(start, end, granularity, expected):
@@ -90,7 +98,7 @@ def test_period_range_rejects_reversed_range():
         common.period_range(date(2025, 2, 1), date(2025, 1, 1), "day")
 
 
-@pytest.mark.parametrize("bad", ["year", "DAY", "", "quarter"])
+@pytest.mark.parametrize("bad", ["year", "DAY", "", "Quarter"])
 def test_invalid_granularity(bad):
     with pytest.raises(ValueError, match="granularity"):
         common.period_key(date(2025, 1, 1), bad)
