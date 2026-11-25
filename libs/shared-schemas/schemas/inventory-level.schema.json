@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InventoryLevel",
+  "type": "object",
+  "required": ["sku", "onHand", "reserved", "available"],
+  "properties": {
+    "sku": {"type": "string"},
+    "onHand": {"type": "integer"},
+    "reserved": {"type": "integer"},
+    "available": {"type": "integer"}
+  }
+}
