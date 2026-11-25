@@ -35,6 +35,10 @@ public class ShippingPolicy {
         if (units <= 0) {
             throw new IllegalArgumentException("units must be positive: " + units);
         }
+        if (Money.isNegative(netMerchandise)) {
+            // Discounts are capped at the merchandise amount, so a negative value means a pricing bug upstream.
+            throw new IllegalArgumentException("netMerchandise must not be negative: " + netMerchandise);
+        }
         if (qualifiesForFreeShipping(netMerchandise, tier, freeShippingCoupon)) {
             return Money.ZERO;
         }

@@ -62,4 +62,17 @@ class ShippingPolicyTest {
         assertThatThrownBy(() -> policy.cost(new BigDecimal("10.00"), 0, Region.EAST, CustomerTier.STANDARD, false))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void negativeMerchandiseIsRejected() {
+        assertThatThrownBy(() -> policy.cost(new BigDecimal("-0.01"), 1, Region.EAST, CustomerTier.STANDARD, false))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("netMerchandise");
+    }
+
+    @Test
+    void fullyDiscountedOrderStillPaysShipping() {
+        assertThat(policy.cost(Money.ZERO, 1, Region.NORTH, CustomerTier.STANDARD, false))
+                .isEqualTo(new BigDecimal("5.99"));
+    }
 }
