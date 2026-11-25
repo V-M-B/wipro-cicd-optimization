@@ -8,3 +8,30 @@ JSON Schemas for the RetailOps domain, and a dependency-free generator that emit
 
 Generated files are committed. CI runs `python libs/shared-schemas/codegen.py --check` to fail on stale output.
 A change here impacts all three services, which is what makes it interesting for test impact analysis.
+
+## Changing a schema
+
+1. Edit `schemas/*.schema.json` (one model per file, named by `title`) or `schemas/enums.json`.
+2. Regenerate from the repository root: `python libs/shared-schemas/codegen.py`.
+3. Build and test all three apps, then commit the schema and the regenerated files together.
+
+How properties map:
+
+| JSON Schema | Java | TypeScript | Python |
+|---|---|---|---|
+| `string` | `String` | `string` | `str` |
+| `string` + `"format": "date-time"` | `java.time.OffsetDateTime` | `string` | `datetime` |
+| `number` | `java.math.BigDecimal` | `number` | `float` |
+| `integer` | `int` (`Integer` if optional) | `number` | `int` |
+| `boolean` | `boolean` (`Boolean` if optional) | `boolean` | `bool` |
+| `array` + `items` | `java.util.List<...>` | `T[]` | `list[T]` |
+| `{"$ref": "enums#Name"}` / `{"$ref": "Model"}` | enum / record | union type / interface | `str` Enum / model |
+
+A property that is not listed in `required` becomes `field?: T` in TypeScript and `field: T | None = None`
+in Python. Java models are records, so **adding any property changes the canonical constructor**:
+every `new Order(...)`, `new Customer(...)` and so on in `apps/orders-api` (mappers and tests) has to pass
+the new argument.
+
+Adding an enum value is not free either. The orders-api database restricts some enum columns with
+`CHECK` constraints in `db/migration/V1__create_schema.sql` (a new value needs a migration), and the
+analytics data generator (`apps/analytics/app/datasets.py`) has per-value tables for categories and tiers.
