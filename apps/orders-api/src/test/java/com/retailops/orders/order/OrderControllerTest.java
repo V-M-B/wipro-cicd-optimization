@@ -51,7 +51,7 @@ class OrderControllerTest {
 
     private Order order(OrderStatus status) {
         return new Order("ord-1", "cus-0001", status, List.of(new OrderLine("ELE-1001", 2, new BigDecimal("24.99"))),
-                null, TestFixtures.NOW_UTC, new BigDecimal("59.97"));
+                null, TestFixtures.NOW_UTC, TestFixtures.NOW_UTC, new BigDecimal("59.97"));
     }
 
     @Test

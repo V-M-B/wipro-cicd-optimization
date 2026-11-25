@@ -33,6 +33,7 @@ export interface Order {
   lines: OrderLine[];
   couponCode?: string;
   createdAt: string;
+  updatedAt?: string;
   total: number;
 }
 

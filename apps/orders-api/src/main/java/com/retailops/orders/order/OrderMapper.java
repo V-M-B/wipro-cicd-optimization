@@ -11,7 +11,7 @@ public final class OrderMapper {
     public static Order toDto(OrderEntity entity) {
         return new Order(entity.getId(), entity.getCustomerId(), entity.getStatus(),
                 entity.getLines().stream().map(OrderMapper::toDto).toList(),
-                entity.getCouponCode(), entity.getCreatedAt(), entity.getTotal());
+                entity.getCouponCode(), entity.getCreatedAt(), entity.getUpdatedAt(), entity.getTotal());
     }
 
     public static OrderLine toDto(OrderLineEntity line) {
