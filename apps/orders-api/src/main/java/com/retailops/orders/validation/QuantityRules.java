@@ -15,7 +15,8 @@ public final class QuantityRules {
         return quantity >= MIN && quantity <= MAX;
     }
 
-    public static int requireValid(int quantity) {
+    /** Returns {@code quantity} unchanged, or throws {@code QUANTITY_OUT_OF_RANGE}. */
+    public static int requireInRange(int quantity) {
         if (!isValid(quantity)) {
             throw new BusinessRuleException("QUANTITY_OUT_OF_RANGE",
                     "Quantity " + quantity + " is outside the allowed range " + MIN + ".." + MAX);
