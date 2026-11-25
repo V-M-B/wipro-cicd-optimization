@@ -83,7 +83,7 @@ export function DashboardPage() {
             <ol className="plain-list" aria-label="Top products">
               {kpis.topSkus.map((item) => (
                 <li key={item.sku}>
-                  <code>{item.sku}</code> &middot; {formatNumber(item.quantity)} units
+                  <code>{item.sku}</code> &middot; {formatNumber(item.quantity)} units ({formatPercent(item.share)})
                 </li>
               ))}
             </ol>

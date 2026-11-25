@@ -40,6 +40,9 @@ describe('DashboardPage', () => {
     const top = screen.getByRole('list', { name: 'Top products' });
     expect(within(top).getAllByRole('listitem').length).toBeGreaterThan(0);
     expect(within(top).getAllByRole('listitem').length).toBeLessThanOrEqual(5);
+    for (const item of within(top).getAllByRole('listitem')) {
+      expect(item).toHaveTextContent(/^[A-Z]{3}-\d{4} · [\d,]+ units \(\d+%\)$/);
+    }
   });
 
   it('charts the last seven days relative to the current date', async () => {
