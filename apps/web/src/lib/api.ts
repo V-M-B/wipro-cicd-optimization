@@ -1,4 +1,4 @@
-import type { Customer, Order, OrderStatus, PriceQuote, Product } from '../generated/schemas';
+import type { Customer, Order, OrderStatus, PriceQuote, Problem, Product } from '../generated/schemas';
 
 export type ApiErrorKind =
   | 'network'
@@ -156,8 +156,10 @@ async function errorFromResponse(response: Response): Promise<ApiError> {
   try {
     const text = await response.text();
     if (text) {
-      const body = JSON.parse(text) as { message?: unknown; errors?: unknown };
-      if (typeof body.message === 'string' && body.message !== '') message = body.message;
+      const body = JSON.parse(text) as { [K in keyof Problem]?: unknown } & { message?: unknown; errors?: unknown };
+      // orders-api answers with RFC 7807 problem details (`detail`); other services send `message`.
+      const serverMessage = typeof body.detail === 'string' && body.detail !== '' ? body.detail : body.message;
+      if (typeof serverMessage === 'string' && serverMessage !== '') message = serverMessage;
       if (body.errors && typeof body.errors === 'object') {
         details = Object.fromEntries(
           Object.entries(body.errors as Record<string, unknown>).map(([k, v]) => [k, String(v)]),

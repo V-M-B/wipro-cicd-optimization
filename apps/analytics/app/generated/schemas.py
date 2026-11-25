@@ -69,6 +69,14 @@ class PriceQuote(BaseModel):
     total: float
 
 
+class Problem(BaseModel):
+    type: str
+    title: str
+    status: int
+    detail: str | None = None
+    instance: str | None = None
+
+
 class Product(BaseModel):
     id: str
     sku: str
